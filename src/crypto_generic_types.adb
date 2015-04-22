@@ -1,0 +1,482 @@
+with Crypto_Core_Types; use Crypto_Core_Types;
+
+-- --------------------------
+-- - Generic Functions / Procedures -
+-- --------------------------
+
+-- --------------------------
+-- - Functions / Procedures -
+-- --------------------------
+package body Crypto_Generic_Types is
+
+   -- xor each element on the left with the corresponding element on the right
+   function "xor"(Left, Right : T_Array ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      if Left'Length /= Right'Length then
+         raise Constraint_Error;
+      end if;
+      for i in r'Range loop
+         r(i) := Left(i) xor Right(Right'First - Left'First + i);
+      end loop;
+      return r;
+   end "xor";
+
+   -- xor the left element with each element on the right
+   function "xor"(Left : T;  Right : T_Array ) return T is
+      r : T := Left;
+   begin
+      for i in Right'Range loop
+         r := r xor Right(i);
+      end loop;
+      return r;
+   end "xor";
+
+   -- xor each element on the left with the element on the right
+   function "xor"(Left : T_Array;  Right : T ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      for i in r'Range loop
+         r(i) := Left(i) xor Right;
+      end loop;
+      return r;
+   end "xor";
+
+   -- and each element on the left with the corresponding element on the right
+   function "and"(Left, Right : T_Array ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      if Left'Length /= Right'Length then
+         raise Constraint_Error;
+      end if;
+      for i in r'Range loop
+         r(i) := Left(i) and Right(Right'First - Left'First + i);
+      end loop;
+      return r;
+   end "and";
+
+   -- and the left element with each element on the right
+   function "and"(Left : T;  Right : T_Array ) return T is
+      r : T := Left;
+   begin
+      for i in Right'Range loop
+         r := r and Right(i);
+      end loop;
+      return r;
+   end "and";
+
+   -- and each element on the left with the element on the right
+   function "and"(Left : T_Array;  Right : T ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      for i in r'Range loop
+         r(i) := Left(i) and Right;
+      end loop;
+      return r;
+   end "and";
+
+   -- or each element on the left with the corresponding element on the right
+   function "or"(Left, Right : T_Array ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      if Left'Length /= Right'Length then
+         raise Constraint_Error;
+      end if;
+      for i in r'Range loop
+         r(i) := Left(i) or Right(Right'First - Left'First + i);
+      end loop;
+      return r;
+   end "or";
+
+   -- or the left element with each element on the right
+   function "or"(Left : T;  Right : T_Array ) return T is
+      r : T := Left;
+   begin
+      for i in Right'Range loop
+         r := r or Right(i);
+      end loop;
+      return r;
+   end "or";
+
+   -- or each element on the left with the element on the right
+   function "or"(Left : T_Array;  Right : T ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      for i in r'Range loop
+         r(i) := Left(i) or Right;
+      end loop;
+      return r;
+   end "or";
+
+   -- add each element on the left with the corresponding element on the right
+   function "+"(Left, Right : T_Array ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      if Left'Length /= Right'Length then
+         raise Constraint_Error;
+      end if;
+      for i in r'Range loop
+         r(i) := Left(i) + Right(Right'First - Left'First + i);
+      end loop;
+      return r;
+   end "+";
+
+   -- add the left element with each element on the right
+   function "+"(Left : T;  Right : T_Array ) return T is
+      r : T := Left;
+   begin
+      for i in Right'Range loop
+         r := r + Right(i);
+      end loop;
+      return r;
+   end "+";
+
+   -- add each element on the left with the element on the right
+   function "+"(Left : T_Array;  Right : T ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      for i in r'Range loop
+         r(i) := Left(i) + Right;
+      end loop;
+      return r;
+   end "+";
+
+   -- subtract from each element on the left the corresponding element on the right
+   function "-"(Left, Right : T_Array ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      if Left'Length /= Right'Length then
+         raise Constraint_Error;
+      end if;
+      for i in r'Range loop
+         r(i) := Left(i) - Right(Right'First - Left'First + i);
+      end loop;
+      return r;
+   end "-";
+
+   -- subtract from the left element each element on the right
+   function "-"(Left : T;  Right : T_Array ) return T is
+      r : T := Left;
+   begin
+      for i in Right'Range loop
+         r := r - Right(i);
+      end loop;
+      return r;
+   end "-";
+
+   -- subtract from each element on the left the element on the right
+   function "-"(Left : T_Array;  Right : T ) return T_Array is
+      r : T_Array(Left'Range);
+   begin
+      for i in r'Range loop
+         r(i) := Left(i) - Right;
+      end loop;
+      return r;
+   end "-";
+
+   function Rotate_Array_Left(A : T_Array; Amount : Natural) return T_Array is
+      r : T_Array(A'Range);
+      x : Integer;
+   begin
+      x := Amount mod r'Length;
+      if A'Length < 1 then
+         raise Constraint_Error;
+      end if;
+      r(r'First .. r'Last - x) := A(A'First + x .. A'Last);
+      r(r'Last - x + 1 .. r'Last) := A(A'First .. A'First + x - 1);
+      return r;
+   end Rotate_Array_Left;
+
+   function Rotate_Array_Right(A : T_Array; Amount : Natural) return T_Array is
+      r : T_Array(A'Range);
+      x : Integer;
+   begin
+      x := Amount mod r'Length;
+      if A'Length < 1 then
+         raise Constraint_Error;
+      end if;
+      r(r'First + x .. r'Last) := A(A'First .. A'Last - x);
+      r(r'First .. r'First + x - 1) := A(A'Last - x + 1 .. A'Last);
+      return r;
+   end Rotate_Array_Right;
+
+   function Shift_Array_Left(A : T_Array; Amount : Natural) return T_Array is
+      r : T_Array(A'Range);
+      x : Integer;
+   begin
+      x := Amount mod r'Length;
+      if A'Length < 1 then
+         raise Constraint_Error;
+      end if;
+      r(r'First .. r'Last - x) := A(A'First + x .. A'Last);
+      for i in (r'Last - x + 1) .. r'Last loop
+         r(i) := 0;
+      end loop;
+      return r;
+   end Shift_Array_Left;
+
+   function Shift_Array_Right(A : T_Array; Amount : Natural) return T_Array is
+      r : T_Array(A'Range);
+      x : Integer;
+   begin
+      x := Amount mod r'Length;
+      if A'Length < 1 then
+         raise Constraint_Error;
+      end if;
+      r(r'First + x .. r'Last) := A(A'First .. A'Last - x);
+      for i in r'First .. (r'First + x - 1) loop
+         r(i) := 0;
+      end loop;
+      return r;
+   end Shift_Array_Right;
+
+   -- rotate the whole Array as continues big-endian integer; positive Amount rotates left (towards lower address)
+   function Rotate_be(A : T_Array;  Amount : Integer) return T_Array is
+      r : T_Array(A'Range);
+      c1, c2, tmp : T;
+      x : Integer;
+      word_rot : Integer;
+      bit_rot : Integer;
+      reverse_bit_rot : Integer;
+   begin
+      x := Amount mod (A'Length * T'Size);
+      word_rot := x / T'Size;
+      bit_rot := x mod T'Size;
+      if word_rot > 0 then
+         r := Rotate_Array_Left(A => A, Amount => Natural(abs word_rot));
+      else
+         r := Rotate_Array_Right(A => A, Amount => Natural(word_rot));
+      end if;
+      -- if bit rotation goes to the left
+      if bit_rot > 0 then
+         reverse_bit_rot := T'Size - bit_rot;
+         c1 := Shift_Right(r(r'First), reverse_bit_rot);
+         for i in reverse r'Range loop
+            c2 := Shift_Right(r(i), reverse_bit_rot);
+            tmp := Shift_Left(r(i), bit_rot);
+            r(i) := tmp or c1;
+            c1 := c2;
+         end loop;
+      end if;
+      -- if bit rotation goes to the right
+      if bit_rot < 0 then
+         bit_rot := -bit_rot;
+         reverse_bit_rot := T'Size - bit_rot;
+         c1 := Shift_Left(r(r'Last), reverse_bit_rot);
+         for i in r'Range loop
+            c2 := Shift_Left(r(i), reverse_bit_rot);
+            tmp := Shift_Right(r(i), bit_rot);
+            r(i) := tmp or c1;
+            c1 := c2;
+         end loop;
+      end if;
+      return r;
+   end Rotate_be;
+
+   -- rotate the whole Array as continues little-endian integer; positive Amount rotates left (towards higher address)
+   function Rotate_le(A : T_Array;  Amount : Integer) return T_Array is
+      r : T_Array(A'Range);
+      c1, c2, tmp : T;
+      x : Integer;
+      word_rot : Integer;
+      bit_rot : Integer;
+      reverse_bit_rot : Integer;
+   begin
+      x := Amount mod (A'Length * T'Size);
+      word_rot := x / T'Size;
+      bit_rot := x mod T'Size;
+      if word_rot < 0 then
+         r := Rotate_Array_Left(A => A, Amount => Natural(abs word_rot));
+      else
+         r := Rotate_Array_Right(A => A, Amount => Natural(word_rot));
+      end if;
+      -- if bit rotation goes to the left
+      if bit_rot > 0 then
+         reverse_bit_rot := T'Size - bit_rot;
+         c1 := Shift_Right(r(r'Last), reverse_bit_rot);
+         for i in r'Range loop
+            c2 := Shift_Right(r(i), reverse_bit_rot);
+            tmp := Shift_Left(r(i), bit_rot);
+            r(i) := tmp or c1;
+            c1 := c2;
+         end loop;
+      end if;
+      -- if bit rotation goes to the right
+      if bit_rot < 0 then
+         bit_rot := -bit_rot;
+         reverse_bit_rot := T'Size - bit_rot;
+         c1 := Shift_Left(r(r'First), reverse_bit_rot);
+         for i in reverse r'Range loop
+            c2 := Shift_Left(r(i), reverse_bit_rot);
+            tmp := Shift_Right(r(i), bit_rot);
+            r(i) := tmp or c1;
+            c1 := c2;
+         end loop;
+      end if;
+      return r;
+   end Rotate_le;
+
+   -- rotate each element by Amount to the left; negative values for Amount rotate to the right
+   function Rotate_each(A : T_Array;  Amount : Integer) return T_Array is
+      r : T_Array(A'Range);
+   begin
+      if Amount > 0 then
+         for i in r'Range loop
+            r(i) := Rotate_Left(A(i), Natural(Amount));
+         end loop;
+      end if;
+      if Amount < 0 then
+         for i in r'Range loop
+            r(i) := Rotate_Right(A(i), Natural(-Amount));
+         end loop;
+      end if;
+      if Amount = 0 then
+         r := A;
+      end if;
+      return r;
+   end Rotate_each;
+
+
+   -- shift the whole Array as continues big-endian integer; positive Amount shifts left (towards lower address)
+   function Shift_be(A : T_Array;  Amount : Integer) return T_Array is
+      r : T_Array(A'Range);
+      word_shift : Integer;
+      bit_shift : Integer;
+      reverse_bit_shift : Integer;
+      c1, c2 : T := 0;
+   begin
+      -- left shift
+      if Amount > 0 then
+         word_shift := Amount / T'Size;
+         bit_shift := Amount mod T'Size;
+         reverse_bit_shift := T'Size - bit_shift;
+         r := Shift_Array_Left(A => A, Amount => word_shift);
+         for i in reverse r'Range loop
+            c2 := Shift_Right(Value => r(i), Amount => reverse_bit_shift);
+            r(i) := Shift_Left(Value => r(i), Amount => bit_shift) or c1;
+            c1 := c2;
+         end loop;
+      end if;
+      -- right shift
+      if Amount < 0 then
+         word_shift := (-Amount) / T'Size;
+         bit_shift := (-Amount) mod T'Size;
+         reverse_bit_shift := T'Size - bit_shift;
+         r := Shift_Array_Right(A => A, Amount => word_shift);
+         for i in r'Range loop
+            c2 := Shift_Left(Value => r(i), Amount => reverse_bit_shift);
+            r(i) := Shift_Right(Value => r(i), Amount => bit_shift) or c1;
+            c1 := c2;
+         end loop;
+      end if;
+      if Amount = 0 then
+         r := A;
+      end if;
+      return r;
+   end Shift_be;
+
+
+   -- Shift the whole Array as continues little-endian integer; positive Amount shifts left (towards higher address)
+   function Shift_le(A : T_Array;  Amount : Integer) return T_Array is
+      r : T_Array(A'Range);
+      word_shift : Integer;
+      bit_shift : Integer;
+      reverse_bit_shift : Integer;
+      c1, c2 : T := 0;
+   begin
+      -- left shift
+      if Amount > 0 then
+         word_shift := Amount / T'Size;
+         bit_shift := Amount mod T'Size;
+         reverse_bit_shift := T'Size - bit_shift;
+         r := Shift_Array_Right(A => A, Amount => word_shift);
+         for i in r'Range loop
+            c2 := Shift_Right(Value => r(i), Amount => reverse_bit_shift);
+            r(i) := Shift_Left(Value => r(i), Amount => bit_shift) or c1;
+            c1 := c2;
+         end loop;
+      end if;
+      -- right shift
+      if Amount < 0 then
+         word_shift := (-Amount) / T'Size;
+         bit_shift := (-Amount) mod T'Size;
+         reverse_bit_shift := T'Size - bit_shift;
+         r := Shift_Array_Left(A => A, Amount => word_shift);
+         for i in reverse r'Range loop
+            c2 := Shift_Left(Value => r(i), Amount => reverse_bit_shift);
+            r(i) := Shift_Right(Value => r(i), Amount => bit_shift) or c1;
+            c1 := c2;
+         end loop;
+      end if;
+      if Amount = 0 then
+         r := A;
+      end if;
+      return r;
+   end Shift_le;
+
+   -- shift each element by Amount to the left; negative values for Amount shift to the right
+   function Shift_each(A : T_Array;  Amount : Integer) return T_Array is
+      r : T_Array(A'Range);
+   begin
+      if Amount > 0 then
+         for i in r'Range loop
+            r(i) := Shift_Left(A(i), Natural(Amount));
+         end loop;
+      end if;
+      if Amount < 0 then
+         for i in r'Range loop
+            r(i) := Shift_Right(A(i), Natural(-Amount));
+         end loop;
+      end if;
+      if Amount = 0 then
+         r := A;
+      end if;
+      return r;
+   end Shift_each;
+
+   -- load a value which is stored big-endian in byte Array
+   function Load_be(A : u8_Array) return T is
+      r : T := 0;
+   begin
+      for i in 0 .. (T'Size / 8 - 1) loop
+         r := Shift_left(r, 8) or T(A(A'First + i));
+      end loop;
+      return r;
+   end Load_be;
+
+   -- load a value which is stored little-endian in byte Array
+   function Load_le (A : u8_Array) return T is
+      r : T := 0;
+   begin
+      for i in reverse 0 .. (T'Size / 8 - 1) loop
+         r := Shift_left(r, 8) or T(A(A'First + i));
+      end loop;
+      return r;
+   end Load_le;
+
+   -- store a value in big-endian format in a byte Array
+   procedure Store_be(A : out u8_Array; value : in T) is
+      x : T := value;
+      b : u8;
+   begin
+      for i in reverse 0 .. (T'Size / 8 - 1) loop
+         b := u8(x and 16#FF#);
+         A(A'FIrst + i) := b;
+         x := Shift_Right(x, 8);
+      end loop;
+   end Store_be;
+
+   -- store a value in little-endian format in a byte Array
+   procedure Store_le(A : out u8_Array; value : in T) is
+      x : T := value;
+      b : u8;
+   begin
+      for i in 0 .. (T'Size / 8 - 1) loop
+         b := u8(x and 16#FF#);
+         A(A'FIrst + i) := b;
+         x := Shift_Right(x, 8);
+      end loop;
+   end Store_le;
+
+end Crypto_Generic_Types;
+

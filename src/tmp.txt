@@ -1,0 +1,351 @@
+   function "xor"(Left, Right : u16_Array) return u16_Array;
+   function "xor"(Left, Right : u32_Array) return u32_Array;
+   function "xor"(Left, Right : u64_Array) return u64_Array;
+
+   -- xor the left element with each element on the right
+   function "xor"(Left : u8;  Right : u8_Array ) return u8;
+   function "xor"(Left : u16; Right : u16_Array) return u16;
+   function "xor"(Left : u32; Right : u32_Array) return u32;
+   function "xor"(Left : u64; Right : u64_Array) return u64;
+
+   -- xor each element on the left with the element on the right
+   function "xor"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "xor"(Left : u16_Array; Right : u16) return u16_Array;
+   function "xor"(Left : u32_Array; Right : u32) return u32_Array;
+   function "xor"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- and each element on the left with the corresponding element on the right
+   function "and"(Left, Right : u8_Array ) return u8_Array;
+   function "and"(Left, Right : u16_Array) return u16_Array;
+   function "and"(Left, Right : u32_Array) return u32_Array;
+   function "and"(Left, Right : u64_Array) return u64_Array;
+
+   -- and the left element with each element on the right
+   function "and"(Left : u8;  Right : u8_Array ) return u8;
+   function "and"(Left : u16; Right : u16_Array) return u16;
+   function "and"(Left : u32; Right : u32_Array) return u32;
+   function "and"(Left : u64; Right : u64_Array) return u64;
+
+   -- and each element on the left with the element on the right
+   function "and"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "and"(Left : u16_Array; Right : u16) return u16_Array;
+   function "and"(Left : u32_Array; Right : u32) return u32_Array;
+   function "and"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- or each element on the left with the corresponding element on the right
+   function "or"(Left, Right : u8_Array ) return u8_Array;
+   function "or"(Left, Right : u16_Array) return u16_Array;
+   function "or"(Left, Right : u32_Array) return u32_Array;
+   function "or"(Left, Right : u64_Array) return u64_Array;
+
+   -- or the left element with each element on the right
+   function "or"(Left : u8;  Right : u8_Array ) return u8;
+   function "or"(Left : u16; Right : u16_Array) return u16;
+   function "or"(Left : u32; Right : u32_Array) return u32;
+   function "or"(Left : u64; Right : u64_Array) return u64;
+
+   -- or each element on the left with the element on the right
+   function "or"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "or"(Left : u16_Array; Right : u16) return u16_Array;
+   function "or"(Left : u32_Array; Right : u32) return u32_Array;
+   function "or"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- add each element on the left with the corresponding element on the right
+   function "+"(Left, Right : u8_Array ) return u8_Array;
+   function "+"(Left, Right : u16_Array) return u16_Array;
+   function "+"(Left, Right : u32_Array) return u32_Array;
+   function "+"(Left, Right : u64_Array) return u64_Array;
+
+   -- add the left element with each element on the right
+   function "+"(Left : u8;  Right : u8_Array ) return u8;
+   function "+"(Left : u16; Right : u16_Array) return u16;
+   function "+"(Left : u32; Right : u32_Array) return u32;
+   function "+"(Left : u64; Right : u64_Array) return u64;
+
+   -- add each element on the left with the element on the right
+   function "+"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "+"(Left : u16_Array; Right : u16) return u16_Array;
+   function "+"(Left : u32_Array; Right : u32) return u32_Array;
+   function "+"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- subtract from each element on the left the corresponding element on the right
+   function "-"(Left, Right : u8_Array ) return u8_Array;
+   function "-"(Left, Right : u16_Array) return u16_Array;
+   function "-"(Left, Right : u32_Array) return u32_Array;
+   function "-"(Left, Right : u64_Array) return u64_Array;
+
+   -- subtract from the left element each element on the right
+   function "-"(Left : u8;  Right : u8_Array ) return u8;
+   function "-"(Left : u16; Right : u16_Array) return u16;
+   function "-"(Left : u32; Right : u32_Array) return u32;
+   function "-"(Left : u64; Right : u64_Array) return u64;
+
+   -- subtract from each element on the left the element on the right
+   function "-"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "-"(Left : u16_Array; Right : u16) return u16_Array;
+   function "-"(Left : u32_Array; Right : u32) return u32_Array;
+   function "-"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- rotate the whole Array as continues big-endian integer; positive Amount rotates left (towards lower address)
+   function Rotate_be is new Rotate_be(u8, u8_Array, u8_Array_Access);
+
+
+   --function Rotate_be(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Rotate_be(A : u16_Array; Amount : Integer) return u16_Array;
+   function Rotate_be(A : u32_Array; Amount : Integer) return u32_Array;
+   function Rotate_be(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- rotate the whole Array as continues little-endian integer; positive Amount rotates left (towards higher address)
+   function Rotate_le(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Rotate_le(A : u16_Array; Amount : Integer) return u16_Array;
+   function Rotate_le(A : u32_Array; Amount : Integer) return u32_Array;
+   function Rotate_le(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- rotate each element by Amount to the left; negative values for Amount rotate to the right
+   function Rotate_each(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Rotate_each(A : u16_Array; Amount : Integer) return u16_Array;
+   function Rotate_each(A : u32_Array; Amount : Integer) return u32_Array;
+   function Rotate_each(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- -----
+
+   -- shift the whole Array as continues big-endian integer; positive Amount shifts left (towards lower address)
+   function Shift_be(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Shift_be(A : u16_Array; Amount : Integer) return u16_Array;
+   function Shift_be(A : u32_Array; Amount : Integer) return u32_Array;
+   function Shift_be(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- -----
+
+   -- Shift the whole Array as continues little-endian integer; positive Amount shifts left (towards higher address)
+   function Shift_le(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Shift_le(A : u16_Array; Amount : Integer) return u16_Array;
+   function Shift_le(A : u32_Array; Amount : Integer) return u32_Array;
+   function Shift_le(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- -----
+
+   -- shift each element by Amount to the left; negative values for Amount shift to the right
+   function Shift_each(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Shift_each(A : u16_Array; Amount : Integer) return u16_Array;
+   function Shift_each(A : u32_Array; Amount : Integer) return u32_Array;
+   function Shift_each(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- -----
+
+   -- load a value which is stored big-endian in byte Array
+   function Load_be(a : u8_Array) return u8;
+   function Load_be(a : u8_Array) return u16;
+   function Load_be(a : u8_Array) return u32;
+   function Load_be(a : u8_Array) return u64;
+
+   -- load a value which is stored little-endian in byte Array
+   function Load_le(a : u8_Array) return u8;
+   function Load_le(a : u8_Array) return u16;
+   function Load_le(a : u8_Array) return u32;
+   function Load_le(a : u8_Array) return u64;
+
+   -- -----
+
+   -- store a value in big-endian format in a byte Array
+   procedure Store_be(a : in out u8_Array; value : in u8);
+   procedure Store_be(a : in out u8_Array; value : in u16);
+   procedure Store_be(a : in out u8_Array; value : in u32);
+   procedure Store_be(a : in out u8_Array; value : in u64);
+
+   -- store a value in little-endian format in a byte Array
+   procedure Store_le(a : in out u8_Array; value : in u8);
+   procedure Store_le(a : in out u8_Array; value : in u16);
+   procedure Store_le(a : in out u8_Array; value : in u32);
+   procedure Store_le(a : in out u8_Array; value : in u64);
+   
+   #################################################################################################################################
+   #################################################################################################################################
+   #################################################################################################################################
+   #################################################################################################################################
+   #################################################################################################################################
+   
+      -- --------------------------
+   -- - Functions / Procedures -
+   -- --------------------------
+
+   -- xor each element on the left with the corresponding element on the right
+   function "xor"(Left, Right : u8_Array ) return u8_Array;
+   function "xor"(Left, Right : u16_Array) return u16_Array;
+   function "xor"(Left, Right : u32_Array) return u32_Array;
+   function "xor"(Left, Right : u64_Array) return u64_Array;
+
+   -- xor the left element with each element on the right
+   function "xor"(Left : u8;  Right : u8_Array ) return u8;
+   function "xor"(Left : u16; Right : u16_Array) return u16;
+   function "xor"(Left : u32; Right : u32_Array) return u32;
+   function "xor"(Left : u64; Right : u64_Array) return u64;
+
+   -- xor each element on the left with the element on the right
+   function "xor"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "xor"(Left : u16_Array; Right : u16) return u16_Array;
+   function "xor"(Left : u32_Array; Right : u32) return u32_Array;
+   function "xor"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- and each element on the left with the corresponding element on the right
+   function "and"(Left, Right : u8_Array ) return u8_Array;
+   function "and"(Left, Right : u16_Array) return u16_Array;
+   function "and"(Left, Right : u32_Array) return u32_Array;
+   function "and"(Left, Right : u64_Array) return u64_Array;
+
+   -- and the left element with each element on the right
+   function "and"(Left : u8;  Right : u8_Array ) return u8;
+   function "and"(Left : u16; Right : u16_Array) return u16;
+   function "and"(Left : u32; Right : u32_Array) return u32;
+   function "and"(Left : u64; Right : u64_Array) return u64;
+
+   -- and each element on the left with the element on the right
+   function "and"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "and"(Left : u16_Array; Right : u16) return u16_Array;
+   function "and"(Left : u32_Array; Right : u32) return u32_Array;
+   function "and"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- or each element on the left with the corresponding element on the right
+   function "or"(Left, Right : u8_Array ) return u8_Array;
+   function "or"(Left, Right : u16_Array) return u16_Array;
+   function "or"(Left, Right : u32_Array) return u32_Array;
+   function "or"(Left, Right : u64_Array) return u64_Array;
+
+   -- or the left element with each element on the right
+   function "or"(Left : u8;  Right : u8_Array ) return u8;
+   function "or"(Left : u16; Right : u16_Array) return u16;
+   function "or"(Left : u32; Right : u32_Array) return u32;
+   function "or"(Left : u64; Right : u64_Array) return u64;
+
+   -- or each element on the left with the element on the right
+   function "or"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "or"(Left : u16_Array; Right : u16) return u16_Array;
+   function "or"(Left : u32_Array; Right : u32) return u32_Array;
+   function "or"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- add each element on the left with the corresponding element on the right
+   function "+"(Left, Right : u8_Array ) return u8_Array;
+   function "+"(Left, Right : u16_Array) return u16_Array;
+   function "+"(Left, Right : u32_Array) return u32_Array;
+   function "+"(Left, Right : u64_Array) return u64_Array;
+
+   -- add the left element with each element on the right
+   function "+"(Left : u8;  Right : u8_Array ) return u8;
+   function "+"(Left : u16; Right : u16_Array) return u16;
+   function "+"(Left : u32; Right : u32_Array) return u32;
+   function "+"(Left : u64; Right : u64_Array) return u64;
+
+   -- add each element on the left with the element on the right
+   function "+"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "+"(Left : u16_Array; Right : u16) return u16_Array;
+   function "+"(Left : u32_Array; Right : u32) return u32_Array;
+   function "+"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- subtract from each element on the left the corresponding element on the right
+   function "-"(Left, Right : u8_Array ) return u8_Array;
+   function "-"(Left, Right : u16_Array) return u16_Array;
+   function "-"(Left, Right : u32_Array) return u32_Array;
+   function "-"(Left, Right : u64_Array) return u64_Array;
+
+   -- subtract from the left element each element on the right
+   function "-"(Left : u8;  Right : u8_Array ) return u8;
+   function "-"(Left : u16; Right : u16_Array) return u16;
+   function "-"(Left : u32; Right : u32_Array) return u32;
+   function "-"(Left : u64; Right : u64_Array) return u64;
+
+   -- subtract from each element on the left the element on the right
+   function "-"(Left : u8_Array;  Right : u8 ) return u8_Array;
+   function "-"(Left : u16_Array; Right : u16) return u16_Array;
+   function "-"(Left : u32_Array; Right : u32) return u32_Array;
+   function "-"(Left : u64_Array; Right : u64) return u64_Array;
+
+   -- -----
+
+   -- rotate the whole Array as continues big-endian integer; positive Amount rotates left (towards lower address)
+   function Rotate_be(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Rotate_be(A : u16_Array; Amount : Integer) return u16_Array;
+   function Rotate_be(A : u32_Array; Amount : Integer) return u32_Array;
+   function Rotate_be(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- rotate the whole Array as continues little-endian integer; positive Amount rotates left (towards higher address)
+   function Rotate_le(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Rotate_le(A : u16_Array; Amount : Integer) return u16_Array;
+   function Rotate_le(A : u32_Array; Amount : Integer) return u32_Array;
+   function Rotate_le(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- rotate each element by Amount to the left; negative values for Amount rotate to the right
+   function Rotate_each(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Rotate_each(A : u16_Array; Amount : Integer) return u16_Array;
+   function Rotate_each(A : u32_Array; Amount : Integer) return u32_Array;
+   function Rotate_each(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- -----
+
+   -- shift the whole Array as continues big-endian integer; positive Amount shifts left (towards lower address)
+   function Shift_be(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Shift_be(A : u16_Array; Amount : Integer) return u16_Array;
+   function Shift_be(A : u32_Array; Amount : Integer) return u32_Array;
+   function Shift_be(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- -----
+
+   -- Shift the whole Array as continues little-endian integer; positive Amount shifts left (towards higher address)
+   function Shift_le(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Shift_le(A : u16_Array; Amount : Integer) return u16_Array;
+   function Shift_le(A : u32_Array; Amount : Integer) return u32_Array;
+   function Shift_le(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- -----
+
+   -- shift each element by Amount to the left; negative values for Amount shift to the right
+   function Shift_each(A : u8_Array;  Amount : Integer) return u8_Array;
+   function Shift_each(A : u16_Array; Amount : Integer) return u16_Array;
+   function Shift_each(A : u32_Array; Amount : Integer) return u32_Array;
+   function Shift_each(A : u64_Array; Amount : Integer) return u64_Array;
+
+   -- -----
+
+   -- load a value which is stored big-endian in byte Array
+   function Load_be(a : u8_Array) return u8;
+   function Load_be(a : u8_Array) return u16;
+   function Load_be(a : u8_Array) return u32;
+   function Load_be(a : u8_Array) return u64;
+
+   -- load a value which is stored little-endian in byte Array
+   function Load_le(a : u8_Array) return u8;
+   function Load_le(a : u8_Array) return u16;
+   function Load_le(a : u8_Array) return u32;
+   function Load_le(a : u8_Array) return u64;
+
+   -- -----
+
+   -- store a value in big-endian format in a byte Array
+   procedure Store_be(a : in out u8_Array; value : in u8);
+   procedure Store_be(a : in out u8_Array; value : in u16);
+   procedure Store_be(a : in out u8_Array; value : in u32);
+   procedure Store_be(a : in out u8_Array; value : in u64);
+
+   -- store a value in little-endian format in a byte Array
+   procedure Store_le(a : in out u8_Array; value : in u8);
+   procedure Store_le(a : in out u8_Array; value : in u16);
+   procedure Store_le(a : in out u8_Array; value : in u32);
+   procedure Store_le(a : in out u8_Array; value : in u64);
+   
