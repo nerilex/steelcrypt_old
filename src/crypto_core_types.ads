@@ -19,9 +19,9 @@ package Crypto_Core_Types is
    type u32_Array is Array (Integer range <>) of u32;
    type u64_Array is Array (Integer range <>) of u64;
 
-   type u8_Array_Access  is access u8_Array;
-   type u16_Array_Access is access u16_Array;
-   type u32_Array_Access is access u32_Array;
-   type u64_Array_Access is access u64_Array;
+   type u8_Array_Access  is access all u8_Array;
+   type u16_Array_Access is access all u16_Array;
+   type u32_Array_Access is access all u32_Array;
+   type u64_Array_Access is access all u64_Array;
 
 end Crypto_Core_Types;

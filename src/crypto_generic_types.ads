@@ -32,6 +32,9 @@ generic
    -- --------------------------
 package Crypto_Generic_Types is
 
+
+   -- compare two array with timing independent of content
+   -- function "="(Left, Right : T_Array ) return Boolean;
    -- xor each element on the left with the corresponding element on the right
    function "xor"(Left, Right : T_Array ) return T_Array;
    -- xor the left element with each element on the right
@@ -82,4 +85,7 @@ package Crypto_Generic_Types is
    procedure Store_be(A : out u8_Array; value : in T);
    -- store a value in little-endian format in a byte Array
    procedure Store_le(A : out u8_Array; value : in T);
+   -- swap two elements
+   procedure Swap(A, B : in out T);
+
 end Crypto_Generic_Types;

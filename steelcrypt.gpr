@@ -1,45 +1,46 @@
 project Steelcrypt is
 
-   type Build_Modes is
-      ("Release", "Debug");
-   Mode : Build_Modes := external ("BUILD", "Debug");
-   for Main use ("main.adb");
-   for Source_Dirs use ("src/**");
+  type Build_Modes is
+    ("Release", "Debug");
+  Mode : Build_Modes := external ("BUILD", "Debug");
+  for Main use ("main.adb");
 
-   case Mode is
+  case Mode is
 
-      when "Debug" =>
-         for Object_Dir use "obj_debug";
+    when "Release" =>
+      for Source_Dirs use ("src/**", "/home/bg/workspace_steelcrypt/steelcrypt/src/sponge/spritz");
+      for Object_Dir use "obj_release";
+
+    when "Debug" =>
+      for Source_Dirs use ("src/**", "/home/bg/workspace_steelcrypt/steelcrypt/src/sponge/spritz");
+      for Object_Dir use "obj_debug";
+  end case;
+
+  package Compiler is
+
+    case Mode is
 
       when "Release" =>
-         for Object_Dir use "obj_release";
-   end case;
+        for Default_Switches ("ada") use ("-gnatQ", "-gnatn", "-O2", "-gnat05");
 
-   package Compiler is
+      when "Debug" =>
+        for Default_Switches ("ada") use ("-g", "-gnato", "-gnatwa", "-gnatQ", "-gnat05");
+    end case;
+  end Compiler;
 
-      case Mode is
+  package Builder is
 
-         when "Debug" =>
-            for Default_Switches ("ada") use ("-g", "-gnato", "-gnatwa", "-gnatQ", "-gnat05");
+    case Mode is
 
-         when "Release" =>
-            for Default_Switches ("ada") use ("-gnatQ", "-gnatn", "-O2", "-gnat05");
-      end case;
-   end Compiler;
+      when "Release" =>
+        for Default_Switches ("ada") use ();
 
-   package Builder is
+      when "Debug" =>
+        for Default_Switches ("ada") use ("-g");
+    end case;
+  end Builder;
 
-      case Mode is
-
-         when "Debug" =>
-            for Default_Switches ("ada") use ("-g");
-
-         when "Release" =>
-            for Default_Switches ("ada") use ();
-      end case;
-   end Builder;
-
-   package Ide is
-   end Ide;
+  package Ide is
+  end Ide;
 
 end Steelcrypt;

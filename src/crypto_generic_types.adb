@@ -1,5 +1,3 @@
-with Crypto_Core_Types; use Crypto_Core_Types;
-
 -- --------------------------
 -- - Generic Functions / Procedures -
 -- --------------------------
@@ -8,6 +6,23 @@ with Crypto_Core_Types; use Crypto_Core_Types;
 -- - Functions / Procedures -
 -- --------------------------
 package body Crypto_Generic_Types is
+
+   -- compare two array with timing independent of content
+--   function "="(Left, Right : T_Array ) return Boolean is
+--      x : T := 0;
+--   begin
+--      if Left'Length /= Right'Length then
+--        return false;
+--      end if;
+--      for i in Left'Range loop
+--         x := x or (Left(i) xor Right(i));
+--      end loop;
+--      if x = 0 then
+--         return true;
+--      else
+--         return false;
+--      end if;
+--   end "=";
 
    -- xor each element on the left with the corresponding element on the right
    function "xor"(Left, Right : T_Array ) return T_Array is
@@ -173,6 +188,18 @@ package body Crypto_Generic_Types is
       end loop;
       return r;
    end "-";
+
+   procedure Rotate_Array_Left(A : T_Array_Access; Amount : Natural) is
+      b : T;
+   begin
+      for i in 1 .. Amount loop
+         b := A(A'First);
+         for j in A'First .. A'Last - 1 loop
+            A(j) := A(j + 1);
+         end loop;
+         A(A'Last) := b;
+      end loop;
+   end;
 
    function Rotate_Array_Left(A : T_Array; Amount : Natural) return T_Array is
       r : T_Array(A'Range);
@@ -477,6 +504,15 @@ package body Crypto_Generic_Types is
          x := Shift_Right(x, 8);
       end loop;
    end Store_le;
+
+   -- swap two elements
+   procedure Swap(A, B : in out T) is
+      temp : T;
+   begin
+      temp := A;
+      A := B;
+      b := temp;
+   end swap;
 
 end Crypto_Generic_Types;
 
