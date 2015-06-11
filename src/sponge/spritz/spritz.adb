@@ -1,3 +1,18 @@
+--  Copyright (C) 2015  Daniel Otte <bg@nerilex.org>
+--
+--  This program is free software: you can redistribute it and/or modify
+--  it under the terms of the GNU General Public License as published by
+--  the Free Software Foundation, either version 3 of the License, or
+--  (at your option) any later version.
+--
+--  This program is distributed in the hope that it will be useful,
+--  but WITHOUT ANY WARRANTY; without even the implied warranty of
+--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--  GNU General Public License for more details.
+--
+--  You should have received a copy of the GNU General Public License
+--  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 package body Spritz is
 
    procedure InitializeContext (ctx : out Context) is
@@ -95,14 +110,14 @@ package body Spritz is
       AbsorbNibble(ctx, Shift_Right(x, 4));
    end Absorb;
 
-   procedure Absorb (ctx : in out Context; x : in u8_Array) is
+   procedure Absorb (ctx : in out Context; x : access constant u8_Array) is
    begin
       for i in x'Range loop
          Absorb(ctx, x(i));
       end loop;
    end Absorb;
 
-   procedure Absorb (ctx : in out Context; x : in String) is
+   procedure Absorb (ctx : in out Context; x : access constant String) is
    begin
       for i in x'Range loop
          Absorb(ctx, u8(Character'Pos(x(i))));
