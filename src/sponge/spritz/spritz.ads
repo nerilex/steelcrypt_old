@@ -25,8 +25,8 @@ package Spritz is
    procedure InitializeContext (ctx : out Context);
    procedure AbsorbStop (ctx : in out Context);
    procedure Absorb (ctx : in out Context; x : in u8);
-   procedure Absorb (ctx : in out Context; x : access constant u8_Array);
-   procedure Absorb (ctx : in out Context; x : access constant String);
+   procedure Absorb (ctx : in out Context; x : in u8_Array);
+   procedure Absorb (ctx : in out Context; x : in String);
    procedure Drip (ctx : in out Context; z : out u8);
    procedure Squeeze (ctx : in out Context; P : out u8_Array);
 

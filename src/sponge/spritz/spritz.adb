@@ -110,14 +110,14 @@ package body Spritz is
       AbsorbNibble(ctx, Shift_Right(x, 4));
    end Absorb;
 
-   procedure Absorb (ctx : in out Context; x : access constant u8_Array) is
+   procedure Absorb (ctx : in out Context; x : in u8_Array) is
    begin
       for i in x'Range loop
          Absorb(ctx, x(i));
       end loop;
    end Absorb;
 
-   procedure Absorb (ctx : in out Context; x : access constant String) is
+   procedure Absorb (ctx : in out Context; x : in String) is
    begin
       for i in x'Range loop
          Absorb(ctx, u8(Character'Pos(x(i))));
