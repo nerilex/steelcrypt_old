@@ -20,9 +20,9 @@ with Crypto_Core_Types; use Crypto_Core_Types;
 -- --------------------------
 
 generic
-   type T  is mod <>;
+   type T is mod <>;
 
-   with    function Shift_Left
+   with function Shift_Left
      (Value  : T;
       Amount : Natural) return T is <>;
 
@@ -46,7 +46,6 @@ generic
    -- - Functions / Procedures -
    -- --------------------------
 package Crypto_Generic_Types is
-
 
    -- compare two array with timing independent of content
    -- function "="(Left, Right : T_Array ) return Boolean;

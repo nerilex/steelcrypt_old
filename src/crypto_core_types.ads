@@ -39,4 +39,18 @@ package Crypto_Core_Types is
    type u32_Array_Access is access all u32_Array;
    type u64_Array_Access is access all u64_Array;
 
+   subtype Block_64_Bit   is u8_Array(1 ..   64 / 8);
+   subtype Block_96_Bit   is u8_Array(1 ..   96 / 8);
+   subtype Block_128_Bit  is u8_Array(1 ..  128 / 8);
+   subtype Block_192_Bit  is u8_Array(1 ..  192 / 8);
+   subtype Block_256_Bit  is u8_Array(1 ..  256 / 8);
+   subtype Block_384_Bit  is u8_Array(1 ..  384 / 8);
+   subtype Block_512_Bit  is u8_Array(1 ..  512 / 8);
+   subtype Block_768_Bit  is u8_Array(1 ..  768 / 8);
+   subtype Block_1024_Bit is u8_Array(1 .. 1024 / 8);
+   subtype Block_1536_Bit is u8_Array(1 .. 1536 / 8);
+   subtype Block_2084_Bit is u8_Array(1 .. 2048 / 8);
+
+   Wrong_Opertaion_Order : exception;
+
 end Crypto_Core_Types;

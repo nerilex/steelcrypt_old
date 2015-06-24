@@ -204,17 +204,17 @@ package body Crypto_Generic_Types is
       return r;
    end "-";
 
-   procedure Rotate_Array_Left(A : T_Array_Access; Amount : Natural) is
-      b : T;
-   begin
-      for i in 1 .. Amount loop
-         b := A(A'First);
-         for j in A'First .. A'Last - 1 loop
-            A(j) := A(j + 1);
-         end loop;
-         A(A'Last) := b;
-      end loop;
-   end;
+--     procedure Rotate_Array_Left(A : T_Array_Access; Amount : Natural) is
+--        b : T;
+--     begin
+--        for i in 1 .. Amount loop
+--           b := A(A'First);
+--           for j in A'First .. A'Last - 1 loop
+--              A(j) := A(j + 1);
+--           end loop;
+--           A(A'Last) := b;
+--        end loop;
+--     end;
 
    function Rotate_Array_Left(A : T_Array; Amount : Natural) return T_Array is
       r : T_Array(A'Range);
