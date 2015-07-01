@@ -47,6 +47,7 @@ generic
    -- --------------------------
 package Crypto_Generic_Types is
 
+   Bytes : constant Positive := T'Size / 8;
    -- compare two array with timing independent of content
    -- function "="(Left, Right : T_Array ) return Boolean;
    -- xor each element on the left with the corresponding element on the right
@@ -93,12 +94,20 @@ package Crypto_Generic_Types is
    function Shift_each(A : T_Array;  Amount : Integer) return T_Array;
    -- load a value which is stored big-endian in byte Array
    function Load_be (A : u8_Array) return T;
+   -- XXX store a value in big-endian format in a byte Array
+   function Load_be (A : u8_Array) return T_Array;
    -- load a value which is stored little-endian in byte Array
    function Load_le(A : u8_Array) return T;
+   -- XXX load a value which is stored little-endian in byte Array
+   function Load_le(A : u8_Array) return T_Array;
    -- store a value in big-endian format in a byte Array
    procedure Store_be(A : out u8_Array; value : in T);
    -- store a value in little-endian format in a byte Array
    procedure Store_le(A : out u8_Array; value : in T);
+   -- store a value in big-endian format in a byte Array
+   procedure Store_be(A : out u8_Array; value : in T_Array);
+   -- store a value in little-endian format in a byte Array
+   procedure Store_le(A : out u8_Array; value : in T_Array);
    -- swap two elements
    procedure Swap(A, B : in out T);
 

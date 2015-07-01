@@ -8,11 +8,11 @@ project Steelcrypt is
   case Mode is
 
     when "Release" =>
-      for Source_Dirs use ("src/**", "/home/bg/workspace_steelcrypt/steelcrypt/src/sponge/spritz");
+      for Source_Dirs use ("src/**", "/home/bg/workspace_steelcrypt/steelcrypt/src/algorithms");
       for Object_Dir use "obj_release";
 
     when "Debug" =>
-      for Source_Dirs use ("src/**", "/home/bg/workspace_steelcrypt/steelcrypt/src/sponge/spritz");
+      for Source_Dirs use ("src/**", "/home/bg/workspace_steelcrypt/steelcrypt/src/algorithms");
       for Object_Dir use "obj_debug";
   end case;
 

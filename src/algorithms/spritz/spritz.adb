@@ -15,7 +15,7 @@
 
 package body Spritz is
 
-   procedure InitializeContext (ctx : out Context) is
+   procedure Initialize (ctx : out Context) is
    begin
       ctx.i := 0;
       ctx.j := 0;
@@ -26,7 +26,7 @@ package body Spritz is
       for i in ctx.S'Range loop
          ctx.S(i) := u8(i);
       end loop;
-   end;
+   end Initialize;
 
    procedure Output (ctx : in out Context; z : out u8) is
    begin
@@ -53,7 +53,7 @@ package body Spritz is
 
    procedure Whip (ctx : in out Context) is
    begin
-      for i in 0 .. (2 * N - 1) loop
+      for i in 1 .. 2 * N loop
          Update(ctx);
       end loop;
       ctx.w := ctx.w + 2;
@@ -122,6 +122,19 @@ package body Spritz is
       for i in x'Range loop
          Absorb(ctx, u8(Character'Pos(x(i))));
       end loop;
+   end Absorb;
+
+   procedure Absorb (ctx : in out Context; x : in Natural) is
+      buf : u8_Array (1 .. Integer'Size / 8);
+      c : Integer := 1 + Integer'Size / 8;
+      t : Natural := x;
+   begin
+      while t > 0 loop
+         c := c - 1;
+         buf(c) := u8(t rem 256);
+         t := t / 256;
+      end loop;
+      Absorb(ctx, buf(c .. buf'Last));
    end Absorb;
 
 end Spritz;

@@ -52,6 +52,16 @@ package body Crypto_Generic_Types is
       return r;
    end "xor";
 
+--     procedure eor (Left : in out T_Array; Right : in T_Array) is
+--     begin
+--        if Left'Length /= Right'Length then
+--           raise Constraint_Error;
+--        end if;
+--        for i in Left'Range loop
+--           Left(i) := Left(i) xor Right(i);
+--        end loop;
+--     end eor;
+
    -- xor the left element with each element on the right
    function "xor"(Left : T;  Right : T_Array ) return T is
       r : T := Left;
@@ -477,27 +487,47 @@ package body Crypto_Generic_Types is
    end Shift_each;
 
    -- load a value which is stored big-endian in byte Array
-   function Load_be(A : u8_Array) return T is
+   function Load_BE(A : u8_Array) return T is
       r : T := 0;
    begin
       for i in 0 .. (T'Size / 8 - 1) loop
          r := Shift_left(r, 8) or T(A(A'First + i));
       end loop;
       return r;
-   end Load_be;
+   end Load_BE;
+
+   -- XXX load a value which is stored big-endian in byte Array
+   function Load_BE(A : u8_Array) return T_Array is
+      r : T_Array(1 .. (A'Length * 8 + T'Size - 1) / T'Size);
+   begin
+      for i in r'Range loop
+         r(i) := Load_BE(A(((i - 1) * Bytes + A'First) .. ((i - 1) * Bytes + Bytes + A'First - 1))) ;
+      end loop;
+      return r;
+   end Load_BE;
 
    -- load a value which is stored little-endian in byte Array
-   function Load_le (A : u8_Array) return T is
+   function Load_LE (A : u8_Array) return T is
       r : T := 0;
    begin
       for i in reverse 0 .. (T'Size / 8 - 1) loop
          r := Shift_left(r, 8) or T(A(A'First + i));
       end loop;
       return r;
-   end Load_le;
+   end Load_LE;
+
+   -- XXX load a value which is stored big-endian in byte Array
+   function Load_LE(A : u8_Array) return T_Array is
+      r : T_Array(1 .. (A'Length * 8 + T'Size - 1) / T'Size);
+   begin
+      for i in r'Range loop
+         r(i) := Load_LE(A(((i - 1) * Bytes + A'First) .. ((i - 1) * Bytes + Bytes + A'First - 1))) ;
+      end loop;
+      return r;
+   end Load_LE;
 
    -- store a value in big-endian format in a byte Array
-   procedure Store_be(A : out u8_Array; value : in T) is
+   procedure Store_BE(A : out u8_Array; value : in T) is
       x : T := value;
       b : u8;
    begin
@@ -506,10 +536,18 @@ package body Crypto_Generic_Types is
          A(A'FIrst + i) := b;
          x := Shift_Right(x, 8);
       end loop;
-   end Store_be;
+   end Store_BE;
+
+   -- XXX store a value in big-endian format in a byte Array
+   procedure Store_BE(A : out u8_Array; value : in T_Array) is
+   begin
+      for i in value'Range loop
+         Store_BE(A(((i - value'First) * Bytes + A'First) .. ((i - value'First) * Bytes + A'First) + Bytes - 1), value(i));
+      end loop;
+   end Store_BE;
 
    -- store a value in little-endian format in a byte Array
-   procedure Store_le(A : out u8_Array; value : in T) is
+   procedure Store_LE(A : out u8_Array; value : in T) is
       x : T := value;
       b : u8;
    begin
@@ -518,7 +556,15 @@ package body Crypto_Generic_Types is
          A(A'FIrst + i) := b;
          x := Shift_Right(x, 8);
       end loop;
-   end Store_le;
+   end Store_LE;
+
+   -- XXX store a value in big-endian format in a byte Array
+   procedure Store_LE(A : out u8_Array; value : in T_Array) is
+   begin
+      for i in value'Range loop
+         Store_LE(A(((i - value'First) * Bytes + A'First) .. ((i - value'First) * Bytes + A'First) + Bytes - 1), value(i));
+      end loop;
+   end Store_LE;
 
    -- swap two elements
    procedure Swap(A, B : in out T) is
