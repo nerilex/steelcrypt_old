@@ -205,12 +205,17 @@ begin
    test_spritz_hash("arcfour");
    New_Line;
 
+   Put_Line("AES.Context_128'Size: " & Integer'Image(AES.Context_128'Size / 8));
+   Put_Line("AES.Context_192'Size: " & Integer'Image(AES.Context_192'Size / 8));
+   Put_Line("AES.Context_256'Size: " & Integer'Image(AES.Context_256'Size / 8));
    test_aes;
    New_Line;
 
+   Put_Line("ARIA.Context_T'Size: " & Integer'Image(ARIA.Context_T'Size / 8));
    test_aria;
    New_Line;
 
+   Put_Line("SHA2_256.Context_T'Size: " & Integer'Image(SHA2_256.Context_T'Size / 8));
    test_sha256("abc");
    test_sha256("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq");
    New_Line;

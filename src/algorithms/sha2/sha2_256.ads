@@ -29,7 +29,7 @@ package SHA2_256 is
    procedure Last_Block(Context : in out Context_T; Block : in u8_Array; Bits : in Integer := -1);
    procedure Get_Digest(Context : in out Context_T; Digest : out Block_256_Bit);
 
-   procedure Hash(Data : in u8_array; Digest : out Block_256_Bit);
+   procedure Hash(Data : in u8_array; Digest : out Block_256_Bit; Bits : in Integer := -1);
 
 private
 

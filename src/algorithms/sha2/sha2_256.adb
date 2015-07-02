@@ -43,11 +43,11 @@ package body SHA2_256 is
    end;
 
 
-   procedure Hash(Data : in u8_Array; Digest : out Block_256_Bit) is
+   procedure Hash(Data : in u8_Array; Digest : out Block_256_Bit; Bits : in Integer := -1) is
       Context : Context_T;
    begin
       Initialize(Context);
-      Last_Block(Context, Data);
+      Last_Block(Context, Data, Bits);
       Get_Digest(Context, Digest);
    end;
 
