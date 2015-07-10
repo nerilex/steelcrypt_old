@@ -24,12 +24,21 @@ package SHA2_256 is
 
    type Context_T is private;
 
-   procedure Initialize(Context : out Context_T);
-   procedure Next_Block(Context : in out Context_T; Block : in Block_512_Bit);
-   procedure Last_Block(Context : in out Context_T; Block : in u8_Array; Bits : in Integer := -1);
-   procedure Get_Digest(Context : in out Context_T; Digest : out Block_256_Bit);
+   BlockSize_Bits : constant := 512;
+   DigestSize_Bits : constant := 256;
 
-   procedure Hash(Data : in u8_array; Digest : out Block_256_Bit; Bits : in Integer := -1);
+   BlockSize_Bytes : constant := (BlockSize_Bits) / 8;
+   DigestSize_Bytes : constant := (DigestSize_Bits) / 8;
+
+   subtype Block_T is u8_Array(1 .. BlockSize_Bytes);
+   subtype Digest_T is u8_Array(1 .. DigestSize_Bytes);
+
+   procedure Initialize(Context : out Context_T);
+   procedure Next_Block(Context : in out Context_T; Block : in Block_T);
+   procedure Last_Block(Context : in out Context_T; Block : in u8_Array; Bits : in Integer := -1);
+   procedure Get_Digest(Context : in out Context_T; Digest : out Digest_T);
+
+   procedure Hash(Data : in u8_array; Digest : out Digest_T; Bits : in Integer := -1);
 
 private
 

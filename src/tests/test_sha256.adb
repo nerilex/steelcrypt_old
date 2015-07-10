@@ -14,10 +14,11 @@
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 with Ada.Text_IO; use Ada.Text_IO;
---  with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Crypto_Core_Types; use Crypto_Core_Types;
 with Crypto_Types; use Crypto_Types;
 
+with Sha_Test_IO;
 with SHA2_256;
 
 use Crypto_Types.Crypto_Types_u8;
@@ -25,23 +26,10 @@ use Crypto_Types.Crypto_Types_u8;
 procedure main is
    --   package u8_IO is new Crypto_Types.u8_Sequential_IO;
 
-   procedure Print_Hex(value : in u8) is
-      hex_table : constant array (0 .. 15) of Character :=
-        ( '0', '1', '2', '3',
-          '4', '5', '6', '7',
-          '8', '9', 'a', 'b',
-          'c', 'd', 'e', 'f');
-   begin
-      Put(hex_table(Integer(Shift_Right(value, 4))));
-      Put(hex_table(Integer(value and 16#F#)));
-   end;
-
    procedure Print_Hex(value : in u8_Array) is
    begin
-      for i in value'Range loop
-         print_hex(value(i));
-         Put(" ");
-      end loop;
+      Put(To_Hex(value));
+      Put(" ");
    end;
 
 
@@ -70,13 +58,20 @@ procedure main is
       New_Line;
    end test_sha256;
 
-   a : u8_Array(1 .. 12);
+   procedure test_sha256_with_File is new Sha_Test_IO.Test_With_File(DigestSize_Bits => SHA2_256.DigestSize_Bits, Hash => SHA2_256.Hash);
+
 begin
    Put_Line("SHA2_256.Context_T'Size: " & Integer'Image(SHA2_256.Context_T'Size / 8));
-   test_sha256("");
-   a(1) := 16#80#;
-   test_sha256(a(1..1), 2);
-   test_sha256("abc");
-   test_sha256("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq");
+--     test_sha256("");
+--     a(1) := 16#80#;
+--     test_sha256(a(1..1), 2);
+--     test_sha256("abc");
+--     test_sha256("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq");
    New_Line;
+   test_sha256_with_File("testvectors/sha2/bit/SHA256ShortMsg.rsp");
+   test_sha256_with_File("testvectors/sha2/bit/SHA256LongMsg.rsp");
+   test_sha256_with_File("testvectors/sha2/bit/SHA256Monte.rsp");
+   test_sha256_with_File("testvectors/sha2/byte/SHA256ShortMsg.rsp");
+   test_sha256_with_File("testvectors/sha2/byte/SHA256LongMsg.rsp");
+   test_sha256_with_File("testvectors/sha2/byte/SHA256Monte.rsp");
 end main;

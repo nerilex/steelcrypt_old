@@ -55,5 +55,10 @@ package Crypto_Core_Types is
    subtype Block_2084_Bit is u8_Array(1 .. 2048 / 8);
 
    Wrong_Opertaion_Order : exception;
+   Format_Violation : exception;
+
+   function To_Hex(A : u8_Array) return String;
+   function From_Hex(S : String) return u8_Array;
+   function From_Ascii(S : String) return u8_Array;
 
 end Crypto_Core_Types;

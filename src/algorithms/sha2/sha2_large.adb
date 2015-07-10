@@ -111,8 +111,8 @@ package body SHA2_Large is
       r := (s + 7) / 8;
       b(1 .. r) := Block(i .. i + r - 1);
       b(1 + s / 8) := b(1 + s / 8) or Shift_Right(u8(16#80#), s mod 8);
-      r := r + 1;
-      if r > 128 - 16 then
+      s := s + 1;
+      if s > 1024 - 128 then
          Next_Block(Context, b);
          b := (others => 0);
       end if;
