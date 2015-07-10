@@ -1,0 +1,2 @@
+*.adb linguist-language=Ada
+*.ads linguist-language=Ada
