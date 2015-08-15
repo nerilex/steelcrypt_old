@@ -33,16 +33,16 @@ package AES is
 
 
 
-   procedure Initialize(Key : in Key_128; Context : out Context_128);
+   procedure Initialize(Context : out Context_128; Key : in Key_128);
    procedure Encrypt(Context : in Context_128; Block: in out Block_128_Bit);
    procedure Decrypt(Context : in Context_128; Block: in out Block_128_Bit);
 
 
-   procedure Initialize(Key : in Key_192; Context : out Context_192);
+   procedure Initialize(Context : out Context_192; Key : in Key_192);
    procedure Encrypt(Context : in Context_192; Block: in out Block_128_Bit);
    procedure Decrypt(Context : in Context_192; Block: in out Block_128_Bit);
 
-   procedure Initialize(Key : in Key_256; Context : out Context_256);
+   procedure Initialize(Context : out Context_256; Key : in Key_256);
    procedure Encrypt(Context : in Context_256; Block: in out Block_128_Bit);
    procedure Decrypt(Context : in Context_256; Block: in out Block_128_Bit);
 

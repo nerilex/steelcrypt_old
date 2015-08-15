@@ -96,19 +96,19 @@ procedure main is
       for i in block'First + 1 .. block'Last loop
          block(i) := u8(block(i - 1) + 16#11#);
       end loop;
-      AES.Initialize(AES.Key_128(key(1 .. 16)), ctx128);
+      AES.Initialize(ctx128, AES.Key_128(key(1 .. 16)));
       AES.Encrypt(ctx128, block);
       print_hex(block); New_Line;
       AES.Decrypt(ctx128, block);
       print_hex(block); New_Line;
 
-      AES.Initialize(AES.Key_192(key(1 .. 24)), ctx192);
+      AES.Initialize(ctx192, AES.Key_192(key(1 .. 24)));
       AES.Encrypt(ctx192, block);
       print_hex(block); New_Line;
       AES.Decrypt(ctx192, block);
       print_hex(block); New_Line;
 
-      AES.Initialize(key, ctx256);
+      AES.Initialize(ctx256, key);
       AES.Encrypt(ctx256, block);
       print_hex(block); New_Line;
       AES.Decrypt(ctx256, block);

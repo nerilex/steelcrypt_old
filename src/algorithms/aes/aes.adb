@@ -128,17 +128,17 @@ package body AES is
    procedure Initialize_priv is new Initialize_Generic(T_In => Key_192, T_Out => Context_192);
    procedure Initialize_priv is new Initialize_Generic(T_In => Key_256, T_Out => Context_256);
 
-   procedure Initialize(Key : in Key_128; Context : out Context_128) is
+   procedure Initialize(Context : out Context_128; Key : in Key_128) is
    begin
       Initialize_priv(Key, Context);
    end Initialize;
 
-   procedure Initialize(Key : in Key_192; Context : out Context_192) is
+   procedure Initialize(Context : out Context_192; Key : in Key_192) is
    begin
       Initialize_priv(Key, Context);
    end Initialize;
 
-   procedure Initialize(Key : in Key_256; Context : out Context_256) is
+   procedure Initialize(Context : out Context_256; Key : in Key_256) is
    begin
       Initialize_priv(Key, Context);
    end Initialize;

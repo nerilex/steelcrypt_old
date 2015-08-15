@@ -189,17 +189,17 @@ package body ARIA is
       Context.W(4) := PreKey_T(u8_Array(Context.W(4)) xor u8_Array(Context.W(2)));
    end Initialize;
 
-   procedure Initialize(Key : in Key_128; Context : out Context_T) is
+   procedure Initialize(Context : out Context_T; Key : in Key_128) is
    begin
       Initialize(u8_Array(Key), Context);
    end Initialize;
 
-   procedure Initialize(Key : in Key_192; Context : out Context_T) is
+   procedure Initialize(Context : out Context_T; Key : in Key_192) is
    begin
       Initialize(u8_Array(Key), Context);
    end Initialize;
 
-   procedure Initialize(Key : in Key_256; Context : out Context_T) is
+   procedure Initialize(Context : out Context_T; Key : in Key_256) is
    begin
       Initialize(u8_Array(Key), Context);
    end Initialize;

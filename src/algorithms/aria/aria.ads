@@ -31,9 +31,9 @@ package ARIA is
 
 
 
-   procedure Initialize(Key : in Key_128; Context : out Context_T);
-   procedure Initialize(Key : in Key_192; Context : out Context_T);
-   procedure Initialize(Key : in Key_256; Context : out Context_T);
+   procedure Initialize(Context : out Context_T; Key : in Key_128);
+   procedure Initialize(Context : out Context_T; Key : in Key_192);
+   procedure Initialize(Context : out Context_T; Key : in Key_256);
    procedure Encrypt(Context : in Context_T; Block: in out Block_128_Bit);
    procedure Decrypt(Context : in Context_T; Block: in out Block_128_Bit);
 

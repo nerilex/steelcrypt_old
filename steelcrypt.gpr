@@ -3,7 +3,7 @@ project Steelcrypt is
   type Build_Modes is
     ("Release", "Debug");
   Mode : Build_Modes := external ("BUILD", "Debug");
-  for Main use ("main.adb", "test_sha2.adb", "test_sha224.adb", "test_sha256.adb", "test_sha384.adb", "test_sha512.adb");
+  for Main use ("main.adb", "test_sha2.adb", "test_sha3.adb", "test_sha224.adb", "test_sha256.adb", "test_sha384.adb", "test_sha512.adb", "test_keccak.adb");
 
   case Mode is
 
