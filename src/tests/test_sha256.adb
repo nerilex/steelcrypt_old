@@ -14,7 +14,6 @@
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Crypto_Core_Types; use Crypto_Core_Types;
 with Crypto_Types; use Crypto_Types;
 
@@ -23,40 +22,33 @@ with SHA2_256;
 
 use Crypto_Types.Crypto_Types_u8;
 
-procedure main is
-   --   package u8_IO is new Crypto_Types.u8_Sequential_IO;
-
-   procedure Print_Hex(value : in u8_Array) is
-   begin
-      Put(To_Hex(value));
-      Put(" ");
-   end;
+procedure Test_SHA256 is
 
 
-   procedure test_sha256(Data : in u8_Array; Bits : in Integer := -1) is
-      Digest : Block_256_Bit;
-      q : Integer := Bits;
-   begin
-      if q < 0 then
-         q := Data'Length * 8;
-      end if;
-      Print_Hex(Data);
-      Put(" (" & Integer'Image(q) & "): ");
-      Sha2_256.Hash(Data, Digest, Bits);
-      Print_Hex(Digest);
-      New_Line;
-   end test_sha256;
+--     procedure test_sha256(Data : in u8_Array; Bits : in Integer := -1) is
+--        Digest : Block_256_Bit;
+--        q : Integer := Bits;
+--     begin
+--        if q < 0 then
+--           q := Data'Length * 8;
+--        end if;
+--        Print_Hex(Data);
+--        Put(" (" & Integer'Image(q) & "): ");
+--        Sha2_256.Hash(Data, Digest, Bits);
+--        Print_Hex(Digest);
+--        New_Line;
+--     end test_sha256;
 
-   procedure test_sha256(Msg : in String) is
-      Data : u8_Array(1 .. Msg'Length);
-   begin
-      Put("""" & Msg & """: ");
-      for i in data'Range loop
-         Data(i) := u8(Character'Pos(Msg(Msg'First + i - Data'First)));
-      end loop;
-      test_sha256(Data);
-      New_Line;
-   end test_sha256;
+--     procedure test_sha256(Msg : in String) is
+--        Data : u8_Array(1 .. Msg'Length);
+--     begin
+--        Put("""" & Msg & """: ");
+--        for i in data'Range loop
+--           Data(i) := u8(Character'Pos(Msg(Msg'First + i - Data'First)));
+--        end loop;
+--        test_sha256(Data);
+--        New_Line;
+--     end test_sha256;
 
    procedure test_sha256_with_File is new Sha_Test_IO.Test_With_File(DigestSize_Bits => SHA2_256.DigestSize_Bits, Hash => SHA2_256.Hash);
 
@@ -74,4 +66,4 @@ begin
    test_sha256_with_File("testvectors/sha2/byte/SHA256ShortMsg.rsp");
    test_sha256_with_File("testvectors/sha2/byte/SHA256LongMsg.rsp");
    test_sha256_with_File("testvectors/sha2/byte/SHA256Monte.rsp");
-end main;
+end Test_SHA256;

@@ -73,7 +73,7 @@ package body Crypto_Core_Types is
 
 
    function From_Hex(S : String) return u8_Array is
-      A : u8_Array(1 .. (S'Length + 1) / 2);
+      A : u8_Array(1 .. (S'Length + 1) / 2) := (others => 0);
       C : Character;
       V : Integer range -1 .. 15;
       Index : Positive := 1;
@@ -110,6 +110,36 @@ package body Crypto_Core_Types is
       end loop;
       return A;
    end From_Ascii;
+
+   procedure Bit_Clear(Buffer : in out u8_Array; Index : in Positive) is
+   begin
+      Buffer(Buffer'First + Integer(Index / 8)) := Buffer(Buffer'First + Integer(Index / 8)) and (not Shift_Left(1, 7 - (Index - 1) mod 8));
+   end Bit_Clear;
+
+   procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive) is
+   begin
+      Buffer(Integer(Buffer'First + Index / 8)) := Buffer(Buffer'First + Integer(Index / 8)) or Shift_Left(1, 7 - (Index - 1) mod 8);
+   end Bit_Set;
+
+   procedure Bit_Toggle(Buffer : in out u8_Array; Index : in Positive) is
+   begin
+      Buffer(Integer(Buffer'First + Index / 8)) := Buffer(Buffer'First + Integer(Index / 8)) xor Shift_Left(1, 7 - (Index - 1) mod 8);
+   end Bit_Toggle;
+
+
+   procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive; Value : in Bit) is
+   begin
+      if Value = 1 then
+         Bit_Set(Buffer, Index);
+      else
+         Bit_Clear(Buffer, Index);
+      end if;
+   end Bit_Set;
+
+   function Bit_Get(Buffer : in u8_Array; Index : in Positive) return Bit is
+   begin
+      return Bit(Shift_Right(Buffer(Buffer'First + Index / 8), 7 - (Index - 1) mod 8) and 1);
+   end Bit_Get;
 
 
 end Crypto_Core_types;

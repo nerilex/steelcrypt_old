@@ -22,7 +22,7 @@ with SHA2_384;
 
 use Crypto_Types.Crypto_Types_u8;
 
-procedure main is
+procedure Test_SHA384 is
    --   package u8_IO is new Crypto_Types.u8_Sequential_IO;
 
    procedure Print_Hex(value : in u8) is
@@ -79,4 +79,4 @@ begin
    test_sha384("abc");
    test_sha384("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq");
    New_Line;
-end main;
+end Test_SHA384;

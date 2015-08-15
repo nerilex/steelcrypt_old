@@ -17,6 +17,9 @@ with Interfaces; use Interfaces;
 
 package Crypto_Core_Types is
 
+   type Bit is mod 2;
+   for Bit'Size use 1;
+
    type u8  is new Unsigned_8;
    for u8'Size use 8;
 
@@ -39,6 +42,9 @@ package Crypto_Core_Types is
    type u32_Array_Access is access all u32_Array;
    type u64_Array_Access is access all u64_Array;
 
+   subtype Block_32_Bit   is u8_Array(1 ..   32 / 8);
+   subtype Block_48_Bit   is u8_Array(1 ..   48 / 8);
+   subtype Block_56_Bit   is u8_Array(1 ..   56 / 8);
    subtype Block_64_Bit   is u8_Array(1 ..   64 / 8);
    subtype Block_96_Bit   is u8_Array(1 ..   96 / 8);
    subtype Block_128_Bit  is u8_Array(1 ..  128 / 8);
@@ -52,13 +58,22 @@ package Crypto_Core_Types is
    subtype Block_768_Bit  is u8_Array(1 ..  768 / 8);
    subtype Block_1024_Bit is u8_Array(1 .. 1024 / 8);
    subtype Block_1536_Bit is u8_Array(1 .. 1536 / 8);
-   subtype Block_2084_Bit is u8_Array(1 .. 2048 / 8);
+   subtype Block_2048_Bit is u8_Array(1 .. 2048 / 8);
+   subtype Block_4096_Bit is u8_Array(1 .. 4096 / 8);
+   subtype Block_8192_Bit is u8_Array(1 .. 8192 / 8);
 
    Wrong_Opertaion_Order : exception;
    Format_Violation : exception;
 
+   function To_Hex(A : u8) return String;
    function To_Hex(A : u8_Array) return String;
    function From_Hex(S : String) return u8_Array;
    function From_Ascii(S : String) return u8_Array;
+
+   procedure Bit_Clear(Buffer : in out u8_Array; Index : in Positive);
+   procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive);
+   procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive; Value : in Bit);
+   procedure Bit_Toggle(Buffer : in out u8_Array; Index : in Positive);
+   function Bit_Get(Buffer : in u8_Array; Index : in Positive) return Bit;
 
 end Crypto_Core_Types;

@@ -89,7 +89,9 @@ package body Sha_Test_IO is
             when others => null;
          end case;
       end loop;
-      Goto_Data(Context.File);
+      if not End_Of_File(Context.File) then
+         Goto_Data(Context.File);
+      end if;
       if End_Of_File(Context.File) then
          Close(Context.File);
          Next := Finish;
@@ -137,7 +139,7 @@ package body Sha_Test_IO is
       f : Context_T;
       nt : Next_Type;
       count_val : Integer;
-      dlen : Integer;
+      dlen : Integer := DigestSize_Bits / 8;
       len, lenb : Integer;
       DigestSize_Bytes : constant Natural := (DigestSize_Bits + 7 ) / 8;
       digest, ref_Digest : u8_Array(1 .. DigestSize_Bytes) := (others => 0);
@@ -196,6 +198,8 @@ package body Sha_Test_IO is
             else
                fail_test := fail_test + 1;
                Put('!');
+               Put_Line("  DBG: is:     " & To_Hex(digest));
+               Put_Line("  DBG: should: " & To_Hex(ref_digest));
             end if;
          when Message_Block =>
             declare
@@ -209,6 +213,7 @@ package body Sha_Test_IO is
                end if;
                num := num + 1;
                Get_Data(f, buf);
+--                 Put_Line("  DBG: dlen = " & Integer'Image(dlen) & ";  len = " & Integer'Image(len));
                Hash(buf, digest(1 .. dlen), len);
             end;
          end case;
