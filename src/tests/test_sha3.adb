@@ -25,10 +25,10 @@ use Crypto_Types.Crypto_Types_u8;
 
 procedure Test_SHA3 is
 
-   procedure test_sha3_224_with_File is new Sha_Test_IO.Test_With_File(DigestSize_Bits => SHA3_224.DigestSize_Bits, Hash => SHA3_224.Hash);
-   procedure test_sha3_256_with_File is new Sha_Test_IO.Test_With_File(DigestSize_Bits => SHA3_256.DigestSize_Bits, Hash => SHA3_256.Hash);
-   procedure test_sha3_384_with_File is new Sha_Test_IO.Test_With_File(DigestSize_Bits => SHA3_384.DigestSize_Bits, Hash => SHA3_384.Hash);
-   procedure test_sha3_512_with_File is new Sha_Test_IO.Test_With_File(DigestSize_Bits => SHA3_512.DigestSize_Bits, Hash => SHA3_512.Hash);
+   procedure test_sha3_224_with_File is new Sha_Test_IO.Test_With_File(Digest_Size_Bits => SHA3_224.Digest_Size_Bits, Hash => SHA3_224.Hash);
+   procedure test_sha3_256_with_File is new Sha_Test_IO.Test_With_File(Digest_Size_Bits => SHA3_256.Digest_Size_Bits, Hash => SHA3_256.Hash);
+   procedure test_sha3_384_with_File is new Sha_Test_IO.Test_With_File(Digest_Size_Bits => SHA3_384.Digest_Size_Bits, Hash => SHA3_384.Hash);
+   procedure test_sha3_512_with_File is new Sha_Test_IO.Test_With_File(Digest_Size_Bits => SHA3_512.Digest_Size_Bits, Hash => SHA3_512.Hash);
 
 begin
    New_Line;

@@ -124,21 +124,21 @@ package body AES is
       end loop;
    end Initialize_Generic;
 
-   procedure Initialize_priv is new Initialize_Generic(T_In => Key_128, T_Out => Context_128);
-   procedure Initialize_priv is new Initialize_Generic(T_In => Key_192, T_Out => Context_192);
-   procedure Initialize_priv is new Initialize_Generic(T_In => Key_256, T_Out => Context_256);
+   procedure Initialize_priv is new Initialize_Generic(T_In => Key_128_T, T_Out => Context_128_T);
+   procedure Initialize_priv is new Initialize_Generic(T_In => Key_192_T, T_Out => Context_192_T);
+   procedure Initialize_priv is new Initialize_Generic(T_In => Key_256_T, T_Out => Context_256_T);
 
-   procedure Initialize(Context : out Context_128; Key : in Key_128) is
+   procedure Initialize(Context : out Context_128_T; Key : in Key_128_T) is
    begin
       Initialize_priv(Key, Context);
    end Initialize;
 
-   procedure Initialize(Context : out Context_192; Key : in Key_192) is
+   procedure Initialize(Context : out Context_192_T; Key : in Key_192_T) is
    begin
       Initialize_priv(Key, Context);
    end Initialize;
 
-   procedure Initialize(Context : out Context_256; Key : in Key_256) is
+   procedure Initialize(Context : out Context_256_T; Key : in Key_256_T) is
    begin
       Initialize_priv(Key, Context);
    end Initialize;
@@ -206,7 +206,7 @@ package body AES is
    end InvMixRows;
 
 
-   procedure Encrypt_Generic(Context : in Context_T; Block : in out Block_128_Bit) is
+   procedure Encrypt_Generic(Context : in Context_T; Block : in out Block_T) is
    begin
 --        Put("( 1) pre-add:   "); print_hex(Block); New_Line;
       Block := u8_Array(Block) xor u8_Array(Context.RoundKeys(Context.RoundKeys'First));
@@ -225,23 +225,23 @@ package body AES is
       Block := u8_Array(Block) xor u8_Array(Context.RoundKeys(Context.RoundKeys'Last));
    end Encrypt_Generic;
 
-   procedure Encrypt(Context : in Context_128; Block: in out Block_128_Bit) is
+   procedure Encrypt(Context : in Context_128_T; Block: in out Block_T) is
    begin
       Encrypt_Generic(Context_T(Context), Block);
    end Encrypt;
 
-   procedure Encrypt(Context : in Context_192; Block: in out Block_128_Bit) is
+   procedure Encrypt(Context : in Context_192_T; Block: in out Block_T) is
    begin
       Encrypt_Generic(Context_T(Context), Block);
    end Encrypt;
 
-   procedure Encrypt(Context : in Context_256; Block: in out Block_128_Bit) is
+   procedure Encrypt(Context : in Context_256_T; Block: in out Block_T) is
    begin
       Encrypt_Generic(Context_T(Context), Block);
    end Encrypt;
 
 
-   procedure Decrypt_Generic(Context : in Context_T; Block : in out Block_128_Bit) is
+   procedure Decrypt_Generic(Context : in Context_T; Block : in out Block_T) is
    begin
       --        Put("( 1) pre-add:   "); print_hex(Block); New_Line;
       Block := u8_Array(Block) xor u8_Array(Context.RoundKeys(Context.RoundKeys'Last));
@@ -260,27 +260,19 @@ package body AES is
       Block := u8_Array(Block) xor u8_Array(Context.RoundKeys(Context.RoundKeys'First));
    end Decrypt_Generic;
 
-   procedure Decrypt(Context : in Context_128; Block: in out Block_128_Bit) is
+   procedure Decrypt(Context : in Context_128_T; Block: in out Block_T) is
    begin
       Decrypt_Generic(Context_T(Context), Block);
    end Decrypt;
 
-   procedure Decrypt(Context : in Context_192; Block: in out Block_128_Bit) is
+   procedure Decrypt(Context : in Context_192_T; Block: in out Block_T) is
    begin
       Decrypt_Generic(Context_T(Context), Block);
    end Decrypt;
 
-   procedure Decrypt(Context : in Context_256; Block: in out Block_128_Bit) is
+   procedure Decrypt(Context : in Context_256_T; Block: in out Block_T) is
    begin
       Decrypt_Generic(Context_T(Context), Block);
    end Decrypt;
---     function Encrypt(Ctx : Context_128; Source : Plaintext) return Ciphertext;
---     function Decrypt(Ctx : Context_128; Source : Ciphertext) return Plaintext;
---
---     function Encrypt(Ctx : Context_192; Source : Plaintext) return Ciphertext;
---     function Decrypt(Ctx : Context_192; Source : Ciphertext) return Plaintext;
---
---     function Encrypt(Ctx : Context_256; Source : Plaintext) return Ciphertext;
---     function Decrypt(Ctx : Context_256; Source : Ciphertext) return Plaintext;
 
 end AES;

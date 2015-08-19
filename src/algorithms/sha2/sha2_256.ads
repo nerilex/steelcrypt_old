@@ -24,14 +24,14 @@ package SHA2_256 is
 
    type Context_T is private;
 
-   BlockSize_Bits : constant := 512;
-   DigestSize_Bits : constant := 256;
+   Block_Size_Bits : constant := 512;
+   Digest_Size_Bits : constant := 256;
 
-   BlockSize_Bytes : constant := (BlockSize_Bits) / 8;
-   DigestSize_Bytes : constant := (DigestSize_Bits) / 8;
+   Block_Size_Bytes : constant := (Block_Size_Bits) / 8;
+   Digest_Size_Bytes : constant := (Digest_Size_Bits) / 8;
 
-   subtype Block_T is u8_Array(1 .. BlockSize_Bytes);
-   subtype Digest_T is u8_Array(1 .. DigestSize_Bytes);
+   subtype Block_T is u8_Array(1 .. Block_Size_Bytes);
+   subtype Digest_T is u8_Array(1 .. Digest_Size_Bytes);
 
    procedure Initialize(Context : out Context_T);
    procedure Next_Block(Context : in out Context_T; Block : in Block_T);

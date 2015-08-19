@@ -64,16 +64,11 @@ package Crypto_Core_Types is
 
    Wrong_Opertaion_Order : exception;
    Format_Violation : exception;
+   Invalid_Key_Size : exception;
 
-   function To_Hex(A : u8) return String;
-   function To_Hex(A : u8_Array) return String;
+   function To_Hex(A : u8; Upper_Case : Boolean := false) return String;
+   function To_Hex(A : u8_Array; Upper_Case : Boolean := false; Spacing : Natural := 0) return String;
    function From_Hex(S : String) return u8_Array;
    function From_Ascii(S : String) return u8_Array;
-
-   procedure Bit_Clear(Buffer : in out u8_Array; Index : in Positive);
-   procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive);
-   procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive; Value : in Bit);
-   procedure Bit_Toggle(Buffer : in out u8_Array; Index : in Positive);
-   function Bit_Get(Buffer : in u8_Array; Index : in Positive) return Bit;
 
 end Crypto_Core_Types;

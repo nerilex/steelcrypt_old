@@ -566,6 +566,80 @@ package body Crypto_Generic_Types is
       end loop;
    end Store_LE;
 
+   --
+   function Bit_Get(A : in T; Bit_Address : Bit_Address_T; Order : in System.Bit_order := System.Default_Bit_Order) return Bit is
+   use System;
+      Temp : T;
+   begin
+      if Order = High_Order_First then
+         Temp := Shift_Right(A, T'Size - Bit_Address - 1);
+      else
+         Temp := Shift_Right(A, Bit_Address);
+      end if;
+      return Bit(Temp and 1);
+   end Bit_Get;
+
+   --
+   procedure Bit_Clear(A : in out T; Bit_Address : Bit_Address_T; Order : in System.Bit_order := System.Default_Bit_Order) is
+      use System;
+   begin
+      if Order = High_Order_First then
+         A := A and not Shift_Left(1, T'Size - Bit_Address - 1);
+      else
+         A := A and not Shift_Left(1, Bit_Address);
+      end if;
+   end Bit_Clear;
+
+   --
+   procedure Bit_Set(A : in out T; Bit_Address : Bit_Address_T; Value : Bit := 1; Order : in System.Bit_order := System.Default_Bit_Order) is
+      use System;
+   begin
+      if Value = 0 then
+         Bit_Clear(A => A, Bit_Address => Bit_Address, Order => Order);
+      else
+         if Order = High_Order_First then
+            A := A or Shift_Left(1, T'Size - Bit_Address - 1);
+         else
+            A := A or Shift_Left(1, Bit_Address);
+         end if;
+      end if;
+   end Bit_Set;
+
+   --
+   procedure Bit_Toggle(A : in out T; Bit_Address : Bit_Address_T; Order : in System.Bit_order := System.Default_Bit_Order) is
+      use System;
+   begin
+      if Order = High_Order_First then
+         A := A xor Shift_Left(1, T'Size - Bit_Address - 1);
+      else
+         A := A xor Shift_Left(1, Bit_Address);
+      end if;
+   end Bit_Toggle;
+
+   --
+   function Bit_Get(A : in T_Array; Bit_Address : Natural; Order : in System.Bit_order := System.Default_Bit_Order) return Bit is
+   begin
+      return Bit_Get(A => A(A'First + Bit_Address / T'Size), Bit_Address => Bit_Address mod T'Size, Order => Order);
+   end Bit_Get;
+
+   --
+   procedure Bit_Clear(A : in out T_Array; Bit_Address : Natural; Order : in System.Bit_order := System.Default_Bit_Order) is
+   begin
+      Bit_Clear(A => A(A'First + Bit_Address / T'Size), Bit_Address => Bit_Address mod T'Size, Order => Order);
+   end Bit_Clear;
+
+   --
+   procedure Bit_Set(A : in out T_Array; Bit_Address : Natural; Value : Bit := 1; Order : in System.Bit_order := System.Default_Bit_Order) is
+   begin
+      Bit_Set(A => A(A'First + Bit_Address / T'Size), Bit_Address => Bit_Address mod T'Size, Value => Value, Order => Order);
+   end Bit_Set;
+
+   --
+   procedure Bit_Toggle(A : in out T_Array; Bit_Address : Natural; Order : in System.Bit_order := System.Default_Bit_Order) is
+   begin
+      Bit_Set(A => A(A'First + Bit_Address / T'Size), Bit_Address => Bit_Address mod T'Size, Order => Order);
+   end Bit_Toggle;
+
    -- swap two elements
    procedure Swap(A, B : in out T) is
       temp : T;
@@ -574,6 +648,18 @@ package body Crypto_Generic_Types is
       A := B;
       b := temp;
    end swap;
+
+   -- swap two Arrays
+   procedure Swap(A, B : in out T_Array) is
+   begin
+      if A'Length /= B'Length then
+         raise Constraint_Error;
+      end if;
+      A := A xor B;
+      B := B xor A;
+      A := A xor B;
+   end;
+
 
 end Crypto_Generic_Types;
 

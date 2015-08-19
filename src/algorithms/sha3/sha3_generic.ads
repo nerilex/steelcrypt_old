@@ -30,13 +30,13 @@ package Sha3_Generic is
 
    type Context_T is private;
 
-   BlockSize_Bits   : constant Natural := b - Capacity_Bits;
-   DigestSize_Bits  : constant Natural := Capacity_Bits / 2;
-   BlockSize_Bytes  : constant Natural := BlockSize_Bits / 8;
-   DigestSize_Bytes : constant Natural := DigestSize_Bits / 8;
+   Block_Size_Bits   : constant Natural := b - Capacity_Bits;
+   Digest_Size_Bits  : constant Natural := Capacity_Bits / 2;
+   Block_Size_Bytes  : constant Natural := Block_Size_Bits / 8;
+   Digest_Size_Bytes : constant Natural := Digest_Size_Bits / 8;
 
-   subtype Block_T is u8_Array(1 .. BlockSize_Bytes);
-   subtype Digest_T is u8_Array(1 .. DigestSize_Bytes);
+   subtype Block_T is u8_Array(1 .. Block_Size_Bytes);
+   subtype Digest_T is u8_Array(1 .. Digest_Size_Bytes);
 
    procedure Initialize(Context : out Context_T);
    procedure Next_Block(Context : in out Context_T; Block : in Block_T);

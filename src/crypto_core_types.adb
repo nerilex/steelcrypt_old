@@ -13,29 +13,42 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+with Ada.Strings.Fixed; use Ada.Strings.Fixed;
+
 package body Crypto_Core_Types is
 
-   function To_Hex(A : u8) return String is
+   function To_Hex(A : u8; Upper_Case : Boolean := false) return String is
       S : String(1 .. 2);
-      Hex_Table : constant array (0 .. 15) of Character :=
+      Hex_Table_L : constant array (0 .. 15) of Character :=
         ( '0', '1', '2', '3',
           '4', '5', '6', '7',
           '8', '9', 'a', 'b',
           'c', 'd', 'e', 'f');
+      Hex_Table_U : constant array (0 .. 15) of Character :=
+        ( '0', '1', '2', '3',
+          '4', '5', '6', '7',
+          '8', '9', 'A', 'B',
+          'C', 'D', 'E', 'F');
    begin
-      S(1) := Hex_Table(Integer(Shift_Right(A, 4)));
-      S(2) := Hex_Table(Integer(A and 16#0f#));
+      if Upper_Case then
+         S(1) := Hex_Table_U(Integer(Shift_Right(A, 4)));
+         S(2) := Hex_Table_U(Integer(A and 16#0f#));
+      else
+         S(1) := Hex_Table_L(Integer(Shift_Right(A, 4)));
+         S(2) := Hex_Table_L(Integer(A and 16#0f#));
+      end if;
       return S;
    end To_Hex;
 
 
-   function To_Hex(A : u8_Array) return String is
-      S : String(1 .. A'Length * 2);
+   function To_Hex(A : u8_Array; Upper_Case : Boolean := false; Spacing : Natural := 0) return String is
+      S : String(1 .. A'Length * (2 + Spacing));
       k : Positive := 1;
    begin
       for i in A'Range loop
-         S(k .. k + 1) := To_Hex(A(i));
-         k := k + 2;
+         S(k .. k + 1) := To_Hex(A(i), Upper_Case);
+         S(k + 2 .. k + 1 + Spacing) := Spacing * ' ';
+         k := k + 2 + Spacing;
       end loop;
       return S;
    end To_Hex;
@@ -111,35 +124,35 @@ package body Crypto_Core_Types is
       return A;
    end From_Ascii;
 
-   procedure Bit_Clear(Buffer : in out u8_Array; Index : in Positive) is
-   begin
-      Buffer(Buffer'First + Integer(Index / 8)) := Buffer(Buffer'First + Integer(Index / 8)) and (not Shift_Left(1, 7 - (Index - 1) mod 8));
-   end Bit_Clear;
-
-   procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive) is
-   begin
-      Buffer(Integer(Buffer'First + Index / 8)) := Buffer(Buffer'First + Integer(Index / 8)) or Shift_Left(1, 7 - (Index - 1) mod 8);
-   end Bit_Set;
-
-   procedure Bit_Toggle(Buffer : in out u8_Array; Index : in Positive) is
-   begin
-      Buffer(Integer(Buffer'First + Index / 8)) := Buffer(Buffer'First + Integer(Index / 8)) xor Shift_Left(1, 7 - (Index - 1) mod 8);
-   end Bit_Toggle;
-
-
-   procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive; Value : in Bit) is
-   begin
-      if Value = 1 then
-         Bit_Set(Buffer, Index);
-      else
-         Bit_Clear(Buffer, Index);
-      end if;
-   end Bit_Set;
-
-   function Bit_Get(Buffer : in u8_Array; Index : in Positive) return Bit is
-   begin
-      return Bit(Shift_Right(Buffer(Buffer'First + Index / 8), 7 - (Index - 1) mod 8) and 1);
-   end Bit_Get;
+--     procedure Bit_Clear(Buffer : in out u8_Array; Index : in Positive) is
+--     begin
+--        Buffer(Buffer'First + Integer(Index / 8)) := Buffer(Buffer'First + Integer(Index / 8)) and (not Shift_Left(1, 7 - (Index - 1) mod 8));
+--     end Bit_Clear;
+--
+--     procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive) is
+--     begin
+--        Buffer(Integer(Buffer'First + Index / 8)) := Buffer(Buffer'First + Integer(Index / 8)) or Shift_Left(1, 7 - (Index - 1) mod 8);
+--     end Bit_Set;
+--
+--     procedure Bit_Toggle(Buffer : in out u8_Array; Index : in Positive) is
+--     begin
+--        Buffer(Integer(Buffer'First + Index / 8)) := Buffer(Buffer'First + Integer(Index / 8)) xor Shift_Left(1, 7 - (Index - 1) mod 8);
+--     end Bit_Toggle;
+--
+--
+--     procedure Bit_Set(Buffer : in out u8_Array; Index : in Positive; Value : in Bit) is
+--     begin
+--        if Value = 1 then
+--           Bit_Set(Buffer, Index);
+--        else
+--           Bit_Clear(Buffer, Index);
+--        end if;
+--     end Bit_Set;
+--
+--     function Bit_Get(Buffer : in u8_Array; Index : in Positive) return Bit is
+--     begin
+--        return Bit(Shift_Right(Buffer(Buffer'First + Index / 8), 7 - (Index - 1) mod 8) and 1);
+--     end Bit_Get;
 
 
 end Crypto_Core_types;

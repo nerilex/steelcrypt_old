@@ -83,11 +83,11 @@ procedure main is
    end test_spritz_hash;
 
    procedure test_aes is
-      key : AES.Key_256;
-      block : Block_128_bit;
-      ctx128 : AES.Context_128;
-      ctx192 : AES.Context_192;
-      ctx256 : AES.Context_256;
+      key : AES.Key_256_T;
+      block : AES.Block_T;
+      ctx128 : AES.Context_128_T;
+      ctx192 : AES.Context_192_T;
+      ctx256 : AES.Context_256_T;
    begin
       for i in key'Range loop
          key(i) := u8(i - 1);
@@ -96,13 +96,13 @@ procedure main is
       for i in block'First + 1 .. block'Last loop
          block(i) := u8(block(i - 1) + 16#11#);
       end loop;
-      AES.Initialize(ctx128, AES.Key_128(key(1 .. 16)));
+      AES.Initialize(ctx128, key(1 .. 16));
       AES.Encrypt(ctx128, block);
       print_hex(block); New_Line;
       AES.Decrypt(ctx128, block);
       print_hex(block); New_Line;
 
-      AES.Initialize(ctx192, AES.Key_192(key(1 .. 24)));
+      AES.Initialize(ctx192, key(1 .. 24));
       AES.Encrypt(ctx192, block);
       print_hex(block); New_Line;
       AES.Decrypt(ctx192, block);
@@ -205,9 +205,9 @@ begin
    test_spritz_hash("arcfour");
    New_Line;
 
-   Put_Line("AES.Context_128'Size: " & Integer'Image(AES.Context_128'Size / 8));
-   Put_Line("AES.Context_192'Size: " & Integer'Image(AES.Context_192'Size / 8));
-   Put_Line("AES.Context_256'Size: " & Integer'Image(AES.Context_256'Size / 8));
+   Put_Line("AES.Context_128'Size: " & Integer'Image(AES.Context_128_T'Size / 8));
+   Put_Line("AES.Context_192'Size: " & Integer'Image(AES.Context_192_T'Size / 8));
+   Put_Line("AES.Context_256'Size: " & Integer'Image(AES.Context_256_T'Size / 8));
    test_aes;
    New_Line;
 

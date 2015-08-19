@@ -24,11 +24,11 @@ package SHA2_384 is
 
    type Context_T is private;
 
-   BlockSize_Bits : constant := 1024;
-   DigestSize_Bits : constant := 384;
+   Block_Size_Bits : constant := 1024;
+   Digest_Size_Bits : constant := 384;
 
-   BlockSize_Bytes : constant := (BlockSize_Bits) / 8;
-   DigestSize_Bytes : constant := (DigestSize_Bits) / 8;
+   Block_Size_Bytes : constant := (Block_Size_Bits) / 8;
+   Digest_Size_Bytes : constant := (Digest_Size_Bits) / 8;
 
    procedure Initialize(Context : out Context_T);
    procedure Next_Block(Context : in out Context_T; Block : in Block_1024_Bit);

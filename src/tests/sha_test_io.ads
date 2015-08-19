@@ -53,7 +53,7 @@ package Sha_Test_IO is
 
 
    generic
-      DigestSize_Bits : Natural;
+      Digest_Size_Bits : Natural;
       with procedure Hash(Data : in u8_Array; Digest : out u8_Array; Bits : in Integer := -1);
    procedure Test_With_File(FileName : in String);
 

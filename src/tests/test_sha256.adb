@@ -50,7 +50,7 @@ procedure Test_SHA256 is
 --        New_Line;
 --     end test_sha256;
 
-   procedure test_sha256_with_File is new Sha_Test_IO.Test_With_File(DigestSize_Bits => SHA2_256.DigestSize_Bits, Hash => SHA2_256.Hash);
+   procedure test_sha256_with_File is new Sha_Test_IO.Test_With_File(Digest_Size_Bits => SHA2_256.Digest_Size_Bits, Hash => SHA2_256.Hash);
 
 begin
    Put_Line("SHA2_256.Context_T'Size: " & Integer'Image(SHA2_256.Context_T'Size / 8));

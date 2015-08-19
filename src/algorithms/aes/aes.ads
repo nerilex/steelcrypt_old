@@ -20,35 +20,32 @@ use Crypto_Types.Crypto_Types_u8;
 
 package AES is
 
-   type Key_128 is new Block_128_Bit;
-   type Key_192 is new Block_192_Bit;
-   type Key_256 is new Block_256_Bit;
+   subtype Key_128_T is Block_128_Bit;
+   subtype Key_192_T is Block_192_Bit;
+   subtype Key_256_T is Block_256_Bit;
 
-   type Context_128 is private;
-   type Context_192 is private;
-   type Context_256 is private;
+   type Context_128_T is private;
+   type Context_192_T is private;
+   type Context_256_T is private;
 
-   type Plaintext is new Block_128_Bit;
-   type Ciphertext is new Block_128_Bit;
+   subtype Block_T is Block_128_Bit;
 
-
-
-   procedure Initialize(Context : out Context_128; Key : in Key_128);
-   procedure Encrypt(Context : in Context_128; Block: in out Block_128_Bit);
-   procedure Decrypt(Context : in Context_128; Block: in out Block_128_Bit);
+   procedure Initialize(Context : out Context_128_T; Key : in Key_128_T);
+   procedure Encrypt(Context : in Context_128_T; Block: in out Block_T);
+   procedure Decrypt(Context : in Context_128_T; Block: in out Block_T);
 
 
-   procedure Initialize(Context : out Context_192; Key : in Key_192);
-   procedure Encrypt(Context : in Context_192; Block: in out Block_128_Bit);
-   procedure Decrypt(Context : in Context_192; Block: in out Block_128_Bit);
+   procedure Initialize(Context : out Context_192_T; Key : in Key_192_T);
+   procedure Encrypt(Context : in Context_192_T; Block: in out Block_T);
+   procedure Decrypt(Context : in Context_192_T; Block: in out Block_T);
 
-   procedure Initialize(Context : out Context_256; Key : in Key_256);
-   procedure Encrypt(Context : in Context_256; Block: in out Block_128_Bit);
-   procedure Decrypt(Context : in Context_256; Block: in out Block_128_Bit);
+   procedure Initialize(Context : out Context_256_T; Key : in Key_256_T);
+   procedure Encrypt(Context : in Context_256_T; Block: in out Block_T);
+   procedure Decrypt(Context : in Context_256_T; Block: in out Block_T);
 
 private
 
-   type RoundKey_T is new Block_128_Bit;
+   subtype RoundKey_T is Block_128_Bit;
    type RoundKeys_T is Array (Integer range <>) of RoundKey_T;
 
    subtype Num_RoundKeys_T is Integer range 11 .. 15;
@@ -57,9 +54,9 @@ private
       RoundKeys : RoundKeys_T(1 .. Num_RoundKeys);
    end record;
 
-   type Context_128 is new Context_T(11);
-   type Context_192 is new Context_T(13);
-   type Context_256 is new Context_T(15);
+   type Context_128_T is new Context_T(11);
+   type Context_192_T is new Context_T(13);
+   type Context_256_T is new Context_T(15);
 
    Nb : constant Integer := 4;
    polynom : constant u8 := 16#1B#;

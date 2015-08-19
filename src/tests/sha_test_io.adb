@@ -139,12 +139,12 @@ package body Sha_Test_IO is
       f : Context_T;
       nt : Next_Type;
       count_val : Integer;
-      dlen : Integer := DigestSize_Bits / 8;
+      dlen : Integer := Digest_Size_Bits / 8;
       len, lenb : Integer;
-      DigestSize_Bytes : constant Natural := (DigestSize_Bits + 7 ) / 8;
-      digest, ref_Digest : u8_Array(1 .. DigestSize_Bytes) := (others => 0);
+      Digest_Size_Bytes : constant Natural := (Digest_Size_Bits + 7 ) / 8;
+      digest, ref_Digest : u8_Array(1 .. Digest_Size_Bytes) := (others => 0);
       ok_test, fail_test, num : Natural := 0;
-      seed_val : u8_Array(1 .. DigestSize_Bytes) := (others => 0);
+      seed_val : u8_Array(1 .. Digest_Size_Bytes) := (others => 0);
    begin
       New_Line;
       Put("== " & FileName &" ==");
@@ -171,15 +171,15 @@ package body Sha_Test_IO is
             end if;
             num := num + 1;
             declare
-               blob : u8_Array(1 .. 3 * DigestSize_Bytes);
+               blob : u8_Array(1 .. 3 * Digest_Size_Bytes);
             begin
-               blob(1 + 0 * DigestSize_Bytes .. 1 * DigestSize_Bytes) := Seed_Val;
-               blob(1 + 1 * DigestSize_Bytes .. 2 * DigestSize_Bytes) := Seed_Val;
-               blob(1 + 2 * DigestSize_Bytes .. 3 * DigestSize_Bytes) := Seed_Val;
+               blob(1 + 0 * Digest_Size_Bytes .. 1 * Digest_Size_Bytes) := Seed_Val;
+               blob(1 + 1 * Digest_Size_Bytes .. 2 * Digest_Size_Bytes) := Seed_Val;
+               blob(1 + 2 * Digest_Size_Bytes .. 3 * Digest_Size_Bytes) := Seed_Val;
                for i in 1 .. 1000 loop
                   Hash(blob, Digest);
-                  blob(1 .. 2 * DigestSize_Bytes) := blob(1 + 1 * DigestSize_Bytes .. 3 * DigestSize_Bytes);
-                  blob(1 + 2 * DigestSize_Bytes .. 3 * DigestSize_Bytes) := Digest;
+                  blob(1 .. 2 * Digest_Size_Bytes) := blob(1 + 1 * Digest_Size_Bytes .. 3 * Digest_Size_Bytes);
+                  blob(1 + 2 * Digest_Size_Bytes .. 3 * Digest_Size_Bytes) := Digest;
                end loop;
                Seed_Val := Digest;
             end;
