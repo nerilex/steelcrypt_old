@@ -20,7 +20,7 @@ with Crypto_Types; use Crypto_Types;
 
 with SHA2_512;
 
-use Crypto_Types.Crypto_Types_u8;
+use Crypto_Types.Crypto_Utils_u8;
 
 procedure Test_SHA512 is
    --   package u8_IO is new Crypto_Types.u8_Sequential_IO;

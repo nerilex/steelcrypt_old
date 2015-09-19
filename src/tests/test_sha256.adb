@@ -20,7 +20,7 @@ with Crypto_Types; use Crypto_Types;
 with Sha_Test_IO;
 with SHA2_256;
 
-use Crypto_Types.Crypto_Types_u8;
+use Crypto_Types.Crypto_Utils_u8;
 
 procedure Test_SHA256 is
 

@@ -121,7 +121,7 @@ package body Keccak is
          16#8000000080008081#, -- round 21
          16#8000000000008080#, -- round 22
          16#0000000080000001#, -- round 23
-         16#8000000080008008# -- round 24
+         16#8000000080008008#  -- round 24
          );
    begin
       A(0, 0) := A(0, 0) xor Round_Constants(round);

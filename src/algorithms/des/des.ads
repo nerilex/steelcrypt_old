@@ -13,27 +13,18 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+with Block_Cipher_Generic;
 with Crypto_Core_Types; use Crypto_Core_Types;
 with Crypto_Types; use Crypto_Types;
+with DES_Spec;
 
-use Crypto_Types.Crypto_Types_u8;
-use Crypto_Types.Crypto_Types_u32;
+use Crypto_Types.Crypto_Utils_u8;
 
-package DES is
+   package DES is new Block_Cipher_Generic( Name_Intern            => "DES",
+                                            Context_T_Intern       => DES_Spec.Context_T,
+                                            Block_Size_Bits_Intern => 64,
+                                            Key_Size_Bits_Intern   => 64,
+                                            Initialize_Intern      => DES_Spec.Initialize,
+                                            Encrypt_Intern         => DES_Spec.Encrypt,
+                                            Decrypt_Intern         => DES_Spec.Decrypt );
 
-   type Context_T is private;
-
-   subtype Key_T is Block_64_Bit;
-   subtype Block_T is Block_64_Bit;
-
-   procedure Initialize(Context : out Context_T; Key : in Key_T);
-   procedure Encrypt(Context : in Context_T; Block: in out Block_64_Bit);
-   procedure Decrypt(Context : in Context_T; Block: in out Block_64_Bit);
-
-private
-   type Context_T is record
-      Key : Block_56_Bit;
-   end record;
-
-
-end DES;

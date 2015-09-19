@@ -13,40 +13,37 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+with Block_Cipher_Generic;
 with Crypto_Core_Types; use Crypto_Core_Types;
 with Crypto_Types; use Crypto_Types;
+with ARIA_Spec;
 
-use Crypto_Types.Crypto_Types_u8;
+use Crypto_Types.Crypto_Utils_u8;
 
 package ARIA is
 
-   type Key_128 is new Block_128_Bit;
-   type Key_192 is new Block_192_Bit;
-   type Key_256 is new Block_256_Bit;
+   package ARIA_128 is new Block_Cipher_Generic( Name_Intern => "ARIA-128",
+                                                Context_T_Intern => ARIA_Spec.Context_T,
+                                                Block_Size_Bits_Intern => 128,
+                                                Key_Size_Bits_Intern => 128,
+                                                Initialize_Intern => ARIA_Spec.Initialize,
+                                                Encrypt_Intern => ARIA_Spec.Encrypt,
+                                                Decrypt_Intern => ARIA_Spec.Decrypt );
 
-   type Context_T is private;
+   package ARIA_192 is new Block_Cipher_Generic( Name_Intern => "ARIA-192",
+                                                Context_T_Intern => ARIA_Spec.Context_T,
+                                                Block_Size_Bits_Intern => 128,
+                                                Key_Size_Bits_Intern => 192,
+                                                Initialize_Intern => ARIA_Spec.Initialize,
+                                                Encrypt_Intern => ARIA_Spec.Encrypt,
+                                                Decrypt_Intern => ARIA_Spec.Decrypt );
 
-   type Plaintext is new Block_128_Bit;
-   type Ciphertext is new Block_128_Bit;
-
-
-
-   procedure Initialize(Context : out Context_T; Key : in Key_128);
-   procedure Initialize(Context : out Context_T; Key : in Key_192);
-   procedure Initialize(Context : out Context_T; Key : in Key_256);
-   procedure Encrypt(Context : in Context_T; Block: in out Block_128_Bit);
-   procedure Decrypt(Context : in Context_T; Block: in out Block_128_Bit);
-
-
-private
-
-   type PreKey_T is new Block_128_Bit;
-   type PreKeys_T is Array (1 .. 4) of PreKey_T;
-   type Num_Rounds is range 1 .. 16;
-
-   type Context_T is record
-      W : PreKeys_T;
-      Rounds : Num_Rounds;
-   end record;
+   package ARIA_256 is new Block_Cipher_Generic( Name_Intern => "ARIA-256",
+                                                Context_T_Intern => ARIA_Spec.Context_T,
+                                                Block_Size_Bits_Intern => 128,
+                                                Key_Size_Bits_Intern => 256,
+                                                Initialize_Intern => ARIA_Spec.Initialize,
+                                                Encrypt_Intern => ARIA_Spec.Encrypt,
+                                                Decrypt_Intern => ARIA_Spec.Decrypt );
 
 end ARIA;

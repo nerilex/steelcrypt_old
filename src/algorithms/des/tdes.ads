@@ -13,31 +13,29 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+with Block_Cipher_Generic;
 with Crypto_Core_Types; use Crypto_Core_Types;
 with Crypto_Types; use Crypto_Types;
+with TDES_Spec;
 
-with DES;
-
-use Crypto_Types.Crypto_Types_u8;
-use Crypto_Types.Crypto_Types_u32;
+use Crypto_Types.Crypto_Utils_u8;
 
 package TDES is
 
-   type Context_T is private;
+   package TDES_Two_Key is new Block_Cipher_Generic( Name_Intern            => "Triple-DES (two keys)",
+                                                     Context_T_Intern       => TDES_Spec.Context_T,
+                                                     Block_Size_Bits_Intern => 64,
+                                                     Key_Size_Bits_Intern   => 128,
+                                                     Initialize_Intern      => TDES_Spec.Initialize,
+                                                     Encrypt_Intern         => TDES_Spec.Encrypt,
+                                                     Decrypt_Intern         => TDES_Spec.Decrypt );
 
-   subtype Key_128_T is Block_128_Bit;
-   subtype Key_192_T is Block_192_Bit;
-   subtype Block_T is Block_64_Bit;
-
-   procedure Initialize(Context : out Context_T; Key : in u8_Array);
-   procedure Encrypt(Context : in Context_T; Block: in out Block_64_Bit);
-   procedure Decrypt(Context : in Context_T; Block: in out Block_64_Bit);
-
-private
-   type Context_T is record
-      Ctx1 : DES.Context_T;
-      Ctx2 : DES.Context_T;
-      Ctx3 : DES.Context_T;
-   end record;
+   package TDES_Three_Key is new Block_Cipher_Generic( Name_Intern            => "Triple-DES (three keys)",
+                                                       Context_T_Intern       => TDES_Spec.Context_T,
+                                                       Block_Size_Bits_Intern => 64,
+                                                       Key_Size_Bits_Intern   => 192,
+                                                       Initialize_Intern      => TDES_Spec.Initialize,
+                                                       Encrypt_Intern         => TDES_Spec.Encrypt,
+                                                       Decrypt_Intern         => TDES_Spec.Decrypt );
 
 end TDES;

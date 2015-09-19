@@ -17,7 +17,7 @@ with Crypto_Core_Types; use Crypto_Core_Types;
 with Crypto_Types; use Crypto_Types;
 with Spritz;
 
-use Crypto_Types.Crypto_Types_u8;
+use Crypto_Types.Crypto_Utils_u8;
 
 package Spritz_Hash is
 
@@ -35,6 +35,5 @@ private
    type Context is record
       ctx : Spritz.Context;
    end record;
-
 
 end Spritz_Hash;

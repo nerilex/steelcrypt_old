@@ -18,8 +18,8 @@ with Crypto_Types; use Crypto_Types;
 with Keccak_Parameters; use Keccak_Parameters;
 with Keccak; use Keccak;
 
-use Crypto_Types.Crypto_Types_u8;
-use Crypto_Types.Crypto_Types_u64;
+use Crypto_Types.Crypto_Utils_u8;
+use Crypto_Types.Crypto_Utils_u64;
 
 generic
    Capacity_Bits : Capacity_T;
@@ -44,7 +44,7 @@ package Sha3_Generic is
    procedure Squeeze(Context : in out Context_T; Data : out u8_Array);
    procedure Get_Digest(Context : in out Context_T; Digest : out Digest_T);
 
-   procedure Hash(Data : in u8_array; Digest : out Digest_T; Bits : in Integer := -1);
+   procedure Hash(Data : in u8_Array; Digest : out Digest_T; Bits : in Integer := -1);
 
 private
 

@@ -1,57 +1,64 @@
 project Steelcrypt is
 
-  type Build_Modes is
-    ("Release", "Debug");
-  Mode : Build_Modes := external ("BUILD", "Debug");
-  for Main use (
-     "main.adb",
-     "test_aes.adb",
-     "test_des.adb",
-     "test_tdes.adb",
-     "test_sha2.adb",
-     "test_sha3.adb",
-     "test_sha224.adb",
-     "test_sha256.adb",
-     "test_sha384.adb",
-     "test_sha512.adb",
-     "test_keccak.adb");
+   type Build_Modes is
+      ("Release", "Debug");
+   Mode : Build_Modes := external ("BUILD", "Debug");
+   for Main use (
+   "main.adb",
+   "test_pi16cipher.adb",
+   "test_pi32cipher.adb",
+   "test_pi64cipher.adb",
+   "test_aes_nessie.adb",
+   "test_des_nessie.adb",
+   "test_tdes_nessie.adb",
+   "test_sha2_nessie.adb",
+   "test_sha3_nessie.adb",
+   "test_sha2_nist.adb",
+   "test_sha3_nist.adb",
+   "test_sha224.adb",
+   "test_sha256.adb",
+   "test_sha384.adb",
+   "test_sha512.adb",
+   "test_keccak.adb" );
 
-  case Mode is
-
-    when "Release" =>
-      for Source_Dirs use ("src/**");
-      for Object_Dir use "obj_release";
-
-    when "Debug" =>
-      for Source_Dirs use ("src/**");
-      for Object_Dir use "obj_debug";
-  end case;
-
-  package Compiler is
-
-    case Mode is
+   case Mode is
 
       when "Release" =>
-        for Default_Switches ("ada") use ("-gnatQ", "-gnatn", "-O2", "-gnat05");
+         for Source_Dirs use ("src/**");
+         for Object_Dir use "obj_release";
 
       when "Debug" =>
-        for Default_Switches ("ada") use ("-g", "-gnato", "-gnatwa", "-gnatQ", "-gnat05");
-    end case;
-  end Compiler;
+         for Source_Dirs use ("src/**");
+         for Object_Dir use "obj_debug";
+   end case;
 
-  package Builder is
+   package Compiler is
 
-    case Mode is
+      case Mode is
 
-      when "Release" =>
-        for Default_Switches ("ada") use ();
+         when "Release" =>
+            for Default_Switches ("ada") use ("-gnatQ", "-gnatn", "-O2", "-gnat05");
 
-      when "Debug" =>
-        for Default_Switches ("ada") use ("-g");
-    end case;
-  end Builder;
+         when "Debug" =>
+            for Default_Switches ("ada") use ("-g", "-O2", "-gnato", "-gnatwa", "-gnatQ", "-gnat05");
+      end case;
+   end Compiler;
 
-  package Ide is
-  end Ide;
+   package Builder is
+
+      case Mode is
+
+         when "Release" =>
+            for Default_Switches ("ada") use ();
+
+         when "Debug" =>
+            for Default_Switches ("ada") use ("-g");
+      end case;
+   end Builder;
+
+   package Ide is
+      for Compiler_Command ("ada") use "gnatmake";
+      for Compiler_Command ("c") use "gcc";
+   end Ide;
 
 end Steelcrypt;

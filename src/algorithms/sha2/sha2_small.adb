@@ -13,6 +13,10 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+with Crypto_Types; use Crypto_Types;
+use Crypto_Types.Crypto_Utils_u32;
+use Crypto_Types.Crypto_Utils_u64;
+
 package body SHA2_Small is
 
    K : constant u32_Array(1 .. 64) :=

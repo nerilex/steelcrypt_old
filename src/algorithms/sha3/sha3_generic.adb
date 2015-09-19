@@ -124,7 +124,7 @@ package body Sha3_Generic is
       Squeeze(Context, Digest);
    end Get_Digest;
 
-   procedure Hash(Data : in u8_array; Digest : out Digest_T; Bits : in Integer := -1) is
+   procedure Hash(Data : in u8_Array; Digest : out Digest_T; Bits : in Integer := -1) is
       Ctx : Context_T;
    begin
       Initialize(Ctx);

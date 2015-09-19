@@ -16,8 +16,8 @@
 with Crypto_Core_Types; use Crypto_Core_Types;
 with Crypto_Types; use Crypto_Types;
 
-use Crypto_Types.Crypto_Types_u8;
-use Crypto_Types.Crypto_Types_u64;
+use Crypto_Types.Crypto_Utils_u8;
+use Crypto_Types.Crypto_Utils_u64;
 
 package Keccak_Parameters is
 

@@ -20,8 +20,8 @@ with Crypto_Types; use Crypto_Types;
 
 with Sha3_Generic;
 
-use Crypto_Types.Crypto_Types_u8;
-use Crypto_Types.Crypto_Types_u64;
+use Crypto_Types.Crypto_Utils_u8;
+use Crypto_Types.Crypto_Utils_u64;
 
   procedure Test_Keccak is
 --     procedure Print_State(A : State_T) is

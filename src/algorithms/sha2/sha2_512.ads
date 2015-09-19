@@ -13,32 +13,15 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Core_Types; use Crypto_Core_Types;
-with Crypto_Types; use Crypto_Types;
-with Sha2_Large;
+with SHA2_512_Spec; use SHA2_512_Spec;
+with Hash_Generic;
 
-use Crypto_Types.Crypto_Types_u8;
-use Crypto_Types.Crypto_Types_u64;
+package SHA2_512 is new Hash_Generic( Name_Intern             => Name,
+                                      Context_T_Intern        => Context_T,
+                                      Digest_Size_Bits_Intern => Digest_Size_Bits,
+                                      Block_Size_Bits_Intern  => Block_Size_Bits,
+                                      Initialize_Intern       => Initialize,
+                                      Next_Block_Intern       => Next_Block,
+                                      Last_Block_Intern       => Last_Block,
+                                      Get_Digest_Intern       => Get_Digest );
 
-package SHA2_512 is
-
-   type Context_T is private;
-
-   Block_Size_Bits : constant := 1024;
-   Digest_Size_Bits : constant := 512;
-
-   Block_Size_Bytes : constant := (Block_Size_Bits) / 8;
-   Digest_Size_Bytes : constant := (Digest_Size_Bits) / 8;
-
-   procedure Initialize(Context : out Context_T);
-   procedure Next_Block(Context : in out Context_T; Block : in Block_1024_Bit);
-   procedure Last_Block(Context : in out Context_T; Block : in u8_Array; Bits : in Integer := -1);
-   procedure Get_Digest(Context : in out Context_T; Digest : out Block_512_Bit);
-
-   procedure Hash(Data : in u8_array; Digest : out Block_512_Bit; Bits : in Integer := -1);
-
-private
-
-   type Context_T is new Sha2_Large.Context_T;
-
-end SHA2_512;
