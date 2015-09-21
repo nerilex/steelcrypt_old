@@ -16,7 +16,6 @@
 with Crypto_Types; use Crypto_Types;
 use Crypto_Types.Crypto_Utils_u16;
 use Crypto_Types.Crypto_Utils_u64;
-with System; use System;
 
 with Ada.Text_IO; use Ada.Text_IO;
 
@@ -331,6 +330,16 @@ package body Pi16Cipher_Spec is
       return +Context.Tag;
    end Get_Tag;
 
+   function Is_Valid(Is_Tag : in Tag_T; Should_Tag : in Tag_T) return Boolean is
+   begin
+      return Is_Tag = Should_Tag;
+   end Is_Valid;
+
+   function Is_Valid(Context : in Context_T; Should_Tag : in Tag_T) return Boolean is
+   begin
+      return Get_Tag(Context) = Should_Tag;
+   end Is_Valid;
+
    function Encrypt(Msg : u8_Array; AD : u8_Array; Public_Nonce : u8_Array; Secret_Nonce : Block_T; Key : u8_Array) return u8_Array is
       Crypt : u8_Array(1 .. Secret_Nonce'Length + Msg'Length + Tag_Bytes);
       Ctx : Context_T;
@@ -346,7 +355,6 @@ package body Pi16Cipher_Spec is
    end Encrypt;
 
    procedure Decrypt(Is_Valid : out Boolean; Msg : out u8_Array; Secret_Nonce : out Block_T; Cipher : in u8_Array; AD : in u8_Array; Public_Nonce : in u8_Array; Key : in u8_Array) is
-      Tag : Tag_T;
       Ctx : Context_T;
    begin
       Initialize(Context => Ctx, Key => Key, Public_Nonce => Public_Nonce);
@@ -355,8 +363,7 @@ package body Pi16Cipher_Spec is
       Msg := Cipher(Cipher'First + Secret_Message_Number_Bytes .. Cipher'Last - Tag_Bytes);
       Decrypt_Secret_Message_Number(Context => Ctx, Block => Secret_Nonce);
       Decrypt_Last_Block(Context => Ctx, Block => Msg, Block_Number => 1);
-      Tag := Get_Tag(Ctx);
-      Is_Valid := Tag = Cipher(Cipher'Last - Tag_Bytes + 1 .. Cipher'Last);
+      Is_Valid := Pi16Cipher_Spec.Is_Valid(Ctx, Cipher(Cipher'Last - Tag_Bytes + 1 .. Cipher'Last));
    end Decrypt;
 
 end Pi16Cipher_Spec;

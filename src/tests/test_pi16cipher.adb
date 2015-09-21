@@ -189,8 +189,12 @@ procedure Test_Pi16Cipher is
 begin
 --   Test_Pi16("0123456789ABCDEF", "ABCD", "FEDCBA9876543210", "Header", "PlaintextPlaintext");
    for i in Key_Sizes'Range loop
-      Create(File => File, Name => "testvectors/pi-cipher/" & PiCipher.Cipher_Name & Trim(Integer'Image(Key_Sizes(i)), Both)
+      declare
+         Key_Size_Str : constant String := Trim(Integer'Image(Key_Sizes(i)), Both);
+      begin
+         Create(File => File, Name => "testvectors/pi-cipher/" & PiCipher.Cipher_Name & (3 - Key_Size_Str'Length) * '0' & Key_Size_Str
              & "_" & Trim(Integer'Image(Public_Nonce_Length), Both) & ".test-vectors", Mode => Out_File);
+      end;
       Set_Output(File);
       Put_Line("# Testvectors for " & PiCipher.Cipher_Name);
       Put_Line("#   key size: " & Trim(Integer'Image(Key_Sizes(i)), Both) & " bits");
