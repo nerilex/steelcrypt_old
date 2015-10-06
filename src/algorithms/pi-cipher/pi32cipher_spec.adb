@@ -251,23 +251,37 @@ package body Pi32Cipher_Spec is
       Context.Counter := Context.Counter + u64(Num);
    end Process_Header_Last_Block;
 
-   procedure Encrypt_Secret_Message_Number(Context : in out Context_T; Block : in out Block_T) is
-      State : constant State_T := Pi(Context + Block_Number_T'(1)) xor Block;
+   procedure Encrypt_Secret_Message_Number(Context : in out Context_T; Block : in out u8_Array) is
+      State : State_T;
    begin
-      Block := Extract(State);
-      Context.State := Pi(State);
-      Context.Tag := Context.Tag + Extract(Context.State);
-      Context.Counter := Context.Counter + 1;
+      if Block'Length = Block_T'Length then
+         State := Pi(Context + Block_Number_T'(1)) xor Block;
+         Block := Extract(State);
+         Context.State := Pi(State);
+         Context.Tag := Context.Tag + Extract(Context.State);
+         Context.Counter := Context.Counter + 1;
+      elsif Block'Length = 0 then
+         null;
+      else
+         raise Format_Violation;
+      end if;
    end Encrypt_Secret_Message_Number;
 
-   procedure Decrypt_Secret_Message_Number(Context : in out Context_T; Block : in out Block_T) is
-      State : constant State_T := Pi(Context + Block_Number_T'(1)) xor Block;
-      Block_In : constant Block_T := Block;
+   procedure Decrypt_Secret_Message_Number(Context : in out Context_T; Block : in out u8_Array) is
+      State : State_T;
+      Block_In : constant u8_Array(Block'Range) := Block;
    begin
-      Block := Extract(State);
-      Context.State := Pi(set(State, Block_In));
-      Context.Tag := Context.Tag + Extract(Context.State);
-      Context.Counter := Context.Counter + 1;
+      if Block'Length = Block_T'Length then
+         State := Pi(Context + Block_Number_T'(1)) xor Block;
+         Block := Extract(State);
+         Context.State := Pi(set(State, Block_In));
+         Context.Tag := Context.Tag + Extract(Context.State);
+         Context.Counter := Context.Counter + 1;
+      elsif Block'Length = 0 then
+         null;
+      else
+         raise Format_Violation;
+      end if;
    end Decrypt_Secret_Message_Number;
 
    procedure Encrypt_Block(Context : in out Context_T; Block : in out Block_T; Block_Number : Block_Number_T) is
@@ -340,27 +354,27 @@ package body Pi32Cipher_Spec is
       return Get_Tag(Context) = Should_Tag;
    end Is_Valid;
 
-   function Encrypt(Msg : u8_Array; AD : u8_Array; Public_Nonce : u8_Array; Secret_Nonce : Block_T; Key : u8_Array) return u8_Array is
+   function Encrypt(Msg : u8_Array; AD : u8_Array; Public_Nonce : u8_Array; Secret_Nonce : u8_Array; Key : u8_Array) return u8_Array is
       Crypt : u8_Array(1 .. Secret_Nonce'Length + Msg'Length + Tag_Bytes);
       Ctx : Context_T;
    begin
       Initialize(Context => Ctx, Key => Key, Public_Nonce => Public_Nonce);
       Process_Header_Last_Block(Context => Ctx, Block => AD, Block_Number => 1);
-      Crypt(Crypt'First .. Crypt'First + Secret_Message_Number_Bytes - 1) := Secret_Nonce;
-      Crypt(Crypt'First + Secret_Message_Number_Bytes .. Crypt'Last - Tag_Bytes) := Msg;
-      Encrypt_Secret_Message_Number(Context => Ctx, Block => Crypt(Crypt'First .. Crypt'First + Secret_Message_Number_Bytes - 1));
-      Encrypt_Last_Block(Context => Ctx, Block => Crypt(Crypt'First + Secret_Message_Number_Bytes .. Crypt'Last - Tag_Bytes), Block_Number => 1);
+      Crypt(Crypt'First .. Crypt'First + Secret_Nonce'Length - 1) := Secret_Nonce;
+      Crypt(Crypt'First + Secret_Nonce'Length .. Crypt'Last - Tag_Bytes) := Msg;
+      Encrypt_Secret_Message_Number(Context => Ctx, Block => Crypt(Crypt'First .. Crypt'First + Secret_Nonce'Length - 1));
+      Encrypt_Last_Block(Context => Ctx, Block => Crypt(Crypt'First + Secret_Nonce'Length .. Crypt'Last - Tag_Bytes), Block_Number => 1);
       Crypt(Crypt'Last - Tag_Bytes + 1 .. Crypt'Last) := Get_Tag(Ctx);
       return Crypt;
    end Encrypt;
 
-   procedure Decrypt(Is_Valid : out Boolean; Msg : out u8_Array; Secret_Nonce : out Block_T; Cipher : in u8_Array; AD : in u8_Array; Public_Nonce : in u8_Array; Key : in u8_Array) is
+   procedure Decrypt(Is_Valid : out Boolean; Msg : out u8_Array; Secret_Nonce : out u8_Array; Cipher : in u8_Array; AD : in u8_Array; Public_Nonce : in u8_Array; Key : in u8_Array) is
       Ctx : Context_T;
    begin
       Initialize(Context => Ctx, Key => Key, Public_Nonce => Public_Nonce);
       Process_Header_Last_Block(Context => Ctx, Block => AD, Block_Number => 1);
-      Secret_Nonce := Cipher(Cipher'First .. Cipher'First + Secret_Message_Number_Bytes - 1);
-      Msg := Cipher(Cipher'First + Secret_Message_Number_Bytes .. Cipher'Last - Tag_Bytes);
+      Secret_Nonce := Cipher(Cipher'First .. Cipher'First + Secret_Nonce'Length - 1);
+      Msg := Cipher(Cipher'First + Secret_Nonce'Length .. Cipher'Last - Tag_Bytes);
       Decrypt_Secret_Message_Number(Context => Ctx, Block => Secret_Nonce);
       Decrypt_Last_Block(Context => Ctx, Block => Msg, Block_Number => 1);
       Is_Valid := Pi32Cipher_Spec.Is_Valid(Ctx, Cipher(Cipher'Last - Tag_Bytes + 1 .. Cipher'Last));

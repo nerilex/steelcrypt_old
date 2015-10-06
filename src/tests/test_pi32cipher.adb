@@ -73,7 +73,7 @@ procedure Test_Pi32Cipher is
 
    procedure Single_Testvector(Msg : in u8_Array; AD : in u8_Array; Secret_Nonce : in u8_Array; Public_Nonce : in u8_Array; Key : in u8_Array) is
       Msg_Check : u8_Array(Msg'Range);
-      Smn_Check : PiCipher.Block_T;
+      Smn_Check : u8_Array(Secret_Nonce'Range);
       Is_Valid : Boolean;
       Crypt : constant u8_Array := PiCipher.Encrypt(Msg => Msg, AD => AD, Public_Nonce => Public_Nonce, Secret_Nonce => Secret_Nonce, Key => Key);
    begin
@@ -110,15 +110,21 @@ procedure Test_Pi32Cipher is
             Put_Line("[msg_len = " & Trim(Integer'Image(Msg_Len), Both) & "]");
             Put_Line("[ad_len = " & Trim(Integer'Image(AD_Len), Both) & "]");
             New_Line;
-            for i in 1 .. 8 loop
+            for i in 1 .. 9 loop
                Put_Line("[vector #" & Trim(Integer'Image(Counter), Both) & " (" & Trim(Integer'Image(i), Both) & ")]");
                Counter := Counter + 1;
                Random_Fill(Key);
                Random_Fill(Public_Nonce);
-               Random_Fill(Secret_Nonce);
+               if i < 9 then
+                  Random_Fill(Secret_Nonce);
+               end if;
                Random_Fill(AD(1 .. AD_Len));
                Random_Fill(Msg(1 .. Msg_Len));
-               Single_Testvector(Msg => Msg(1 .. Msg_Len), AD => AD(1 .. AD_Len), Secret_Nonce => Secret_Nonce, Public_Nonce => Public_Nonce, Key => Key);
+               if i < 9 then
+                  Single_Testvector(Msg => Msg(1 .. Msg_Len), AD => AD(1 .. AD_Len), Secret_Nonce => Secret_Nonce, Public_Nonce => Public_Nonce, Key => Key);
+               else
+                  Single_Testvector(Msg => Msg(1 .. Msg_Len), AD => AD(1 .. AD_Len), Secret_Nonce => Secret_nonce(1 .. 0), Public_Nonce => Public_Nonce, Key => Key);
+               end if;
             end loop;
          end loop;
       end loop;

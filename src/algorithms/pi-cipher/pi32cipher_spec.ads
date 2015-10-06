@@ -45,8 +45,8 @@ package Pi32Cipher_Spec is
    procedure Initialize(Context : out Context_T; Key : in u8_Array; Public_Nonce : in u8_Array);
    procedure Process_Header_Block (Context : in out Context_T; Block : Block_T; Block_Number : Block_Number_T);
    procedure Process_Header_Last_Block (Context : in out Context_T; Block : u8_Array; Block_Number : Block_Number_T);
-   procedure Encrypt_Secret_Message_Number(Context : in out Context_T; Block : in out Block_T);
-   procedure Decrypt_Secret_Message_Number(Context : in out Context_T; Block : in out Block_T);
+   procedure Encrypt_Secret_Message_Number(Context : in out Context_T; Block : in out u8_Array);
+   procedure Decrypt_Secret_Message_Number(Context : in out Context_T; Block : in out u8_Array);
    procedure Encrypt_Block(Context : in out Context_T; Block : in out Block_T; Block_Number : Block_Number_T);
    procedure Decrypt_Block(Context : in out Context_T; Block : in out Block_T; Block_Number : Block_Number_T);
    procedure Encrypt_Last_Block(Context : in out Context_T; Block : in out u8_Array; Block_Number : Block_Number_T);
@@ -55,8 +55,8 @@ package Pi32Cipher_Spec is
    function Is_Valid(Is_Tag : in Tag_T; Should_Tag : in Tag_T) return Boolean;
    function Is_Valid(Context : in Context_T; Should_Tag : in Tag_T) return Boolean;
 
-   function Encrypt(Msg : u8_Array; AD : u8_Array; Public_Nonce : u8_Array; Secret_Nonce : Block_T; Key : u8_Array) return u8_Array;
-   procedure Decrypt(Is_Valid : out Boolean; Msg : out u8_Array; Secret_Nonce : out Block_T; Cipher : in u8_Array; AD : in u8_Array; Public_Nonce : in u8_Array; Key : in u8_Array);
+   function Encrypt(Msg : u8_Array; AD : u8_Array; Public_Nonce : u8_Array; Secret_Nonce : u8_Array; Key : u8_Array) return u8_Array;
+   procedure Decrypt(Is_Valid : out Boolean; Msg : out u8_Array; Secret_Nonce : out u8_Array; Cipher : in u8_Array; AD : in u8_Array; Public_Nonce : in u8_Array; Key : in u8_Array);
 
 
 private
