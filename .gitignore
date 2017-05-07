@@ -1,0 +1,7 @@
+*.exe
+*.npp
+*.adt
+*.ali
+*.o
+./obj/*
+./exec/*
