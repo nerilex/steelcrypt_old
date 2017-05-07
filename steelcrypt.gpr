@@ -1,0 +1,74 @@
+project Steelcrypt is
+
+   type Build_Modes is
+     ("Release", "Debug");
+   Mode : Build_Modes := external ("BUILD", "Debug");
+   for Main use (
+                 "main.adb",
+                 "test_pi16cipher.adb",
+                 "test_pi32cipher.adb",
+                 "test_pi64cipher.adb",
+                 "test_aes_nessie.adb",
+                 "test_des_nessie.adb",
+                 "test_tdes_nessie.adb",
+                 "test_sha2_nessie.adb",
+                 "test_sha3_nessie.adb",
+                 "test_sha2_nist.adb",
+                 "test_sha3_nist.adb",
+                 "test_sha224.adb",
+                 "test_sha256.adb",
+                 "test_sha384.adb",
+                 "test_sha512.adb",
+                 "test_keccak.adb",
+                 "test_skinny.adb");
+
+   case Mode is
+      when "Release" =>
+         for Source_Dirs use (
+                              "./src/**",
+                              "./test_modules",
+                              "./host_tools",
+                              "./tests");
+         for Object_Dir use "./obj";
+         for Exec_Dir use "./exec";
+
+      when "Debug" =>
+         for Source_Dirs use (
+                              "./src/**",
+                              "./test_modules",
+                              "./host_tools",
+                              "./tests");
+         for Object_Dir use "./obj";
+         for Exec_Dir use "./exec";
+   end case;
+
+  package Compiler is
+
+    case Mode is
+
+      when "Release" =>
+        for Default_Switches ("ada") use ("-gnatQ", "-gnatn", "-O2", "-gnat05");
+
+      when "Debug" =>
+        for Default_Switches ("ada") use ("-g", "-O2", "-gnato", "-gnatwa", "-gnatQ", "-gnat05");
+    end case;
+  end Compiler;
+
+  package Builder is
+
+    case Mode is
+
+      when "Release" =>
+        for Default_Switches ("ada") use ();
+
+      when "Debug" =>
+        for Default_Switches ("ada") use ("-g");
+    end case;
+  end Builder;
+
+  package Ide is
+    for Compiler_Command ("ada") use "gnatmake";
+    for Compiler_Command ("c") use "gcc";
+  end Ide;
+
+end Steelcrypt;

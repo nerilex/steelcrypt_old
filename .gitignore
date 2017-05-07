@@ -3,5 +3,5 @@
 *.adt
 *.ali
 *.o
-./obj/*
-./exec/*
+/obj/*
+/exec/*
