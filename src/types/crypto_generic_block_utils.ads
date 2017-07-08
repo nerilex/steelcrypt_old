@@ -43,7 +43,7 @@ package Crypto_Generic_Block_Utils is
    subtype Bit_Address_T is Natural range 0 .. (T'Size - 1);
    subtype Bit_Address_Array_T is Natural range 0 .. (T_Array'Length * T'Size - 1);
 
-   Bytes : constant Positive := T'Size / 8;
+   Bytes : constant Positive := (T'Size + 7) / 8;
    -- compare two array with timing independent of content
    -- function "="(Left, Right : T_Array ) return Boolean;
 
@@ -116,60 +116,6 @@ package Crypto_Generic_Block_Utils is
    -- shift each element by Amount to the left; negative values for Amount shift to the right
    function Shift_each (A : T_Array; Amount : Integer) return T_Array;
    --
-   function Bit_Get
-     (A           : in T;
-      Bit_Address :    Bit_Address_T;
-      Order : in System.Bit_Order := System.Default_Bit_Order) return Bit;
-
-   --
-   procedure Bit_Clear
-     (A           : in out T;
-      Bit_Address :        Bit_Address_T;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order);
-
-   --
-   procedure Bit_Set
-     (A           : in out T;
-      Bit_Address :        Bit_Address_T;
-      Value       :        Bit              := 1;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order);
-
-   --
-   procedure Bit_Toggle
-     (A           : in out T;
-      Bit_Address :        Bit_Address_T;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order);
-
-   --
-   function Bit_Get
-     (A           : in T_Array;
-      Bit_Address : in Bit_Address_Array_T;
-      Order : in System.Bit_Order := System.Default_Bit_Order) return Bit;
-
-   --
-   procedure Bit_Clear
-     (A           : in out T_Array;
-      Bit_Address : in Bit_Address_Array_T;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order);
-
-   --
-   procedure Bit_Set
-     (A           : in out T_Array;
-      Bit_Address : in Bit_Address_Array_T;
-      Value       :        Bit              := 1;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order);
-
-   --
-   procedure Bit_Toggle
-     (A           : in out T_Array;
-      Bit_Address : in Bit_Address_Array_T;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order);
-
-   -- swap two elements
-   procedure Swap (A, B : in out T);
-
-   -- swap two Arrays
-   procedure Swap (A, B : in out T_Array);
 
    pragma Inline ("xor");
    pragma Inline ("and");
@@ -184,10 +130,5 @@ package Crypto_Generic_Block_Utils is
    pragma Inline (Shift_be);
    pragma Inline (Shift_le);
    pragma Inline (Shift_each);
-   pragma Inline (Bit_Get);
-   pragma Inline (Bit_Clear);
-   pragma Inline (Bit_Set);
-   pragma Inline (Bit_Toggle);
-   pragma Inline (Swap);
 
 end Crypto_Generic_Block_Utils;

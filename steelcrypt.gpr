@@ -1,3 +1,6 @@
+with "xmlada_sax";
+with "xmlada_schema";
+
 project Steelcrypt is
 
    type Build_Modes is
@@ -9,6 +12,8 @@ project Steelcrypt is
                  "test_pi32cipher.adb",
                  "test_pi64cipher.adb",
                  "test_aes_nessie.adb",
+                 "test_aes_xml.adb",
+                 "test_aes_cfb_xml.adb",
                  "test_des_nessie.adb",
                  "test_tdes_nessie.adb",
                  "test_sha2_nessie.adb",
@@ -50,7 +55,7 @@ project Steelcrypt is
         for Default_Switches ("ada") use ("-gnatQ", "-gnatn", "-O2", "-gnat05");
 
       when "Debug" =>
-        for Default_Switches ("ada") use ("-g", "-O2", "-gnato", "-gnatwa", "-gnatQ", "-gnat05");
+        for Default_Switches ("ada") use ("-g", "-O0", "-gnato", "-gnatwa", "-gnatQ", "-gnat05");
     end case;
   end Compiler;
 

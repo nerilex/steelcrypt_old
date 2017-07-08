@@ -23,8 +23,12 @@ with Ada.Sequential_IO;
 
 package Crypto_Types is
 
-   subtype Bit_Order is System.Bit_Order;
-
+   package Crypto_Utils_u1 is new Crypto_Generic_Utils
+     (T       => u1,
+      T_Array => u1_Array);
+   package Crypto_Utils_u4 is new Crypto_Generic_Utils
+     (T       => u4,
+      T_Array => u4_Array);
    package Crypto_Utils_u8 is new Crypto_Generic_Utils
      (T       => u8,
       T_Array => u8_Array);
@@ -126,7 +130,6 @@ package Crypto_Types is
    package u32_Sequential_IO is new Ada.Sequential_IO (u32);
    package u64_Sequential_IO is new Ada.Sequential_IO (u64);
 
-   use Crypto_Core_Types;
    use Crypto_Utils_u8;
    use Crypto_Utils_u16;
    use Crypto_Utils_u32;

@@ -40,7 +40,7 @@ package Crypto_Generic_Utils is
 
    subtype Bit_Address_T is Natural range 0 .. T'Size - 1;
 
-   Bytes : constant Positive := T'Size / 8;
+   Bytes : constant Positive := (T'Size + 7) / 8;
    -- compare two array with timing independent of content
    -- function "="(Left, Right : T_Array ) return Boolean;
 

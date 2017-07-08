@@ -173,4 +173,58 @@ package body Crypto_Core_Types is
       return A;
    end From_Ascii;
 
+   pragma Warnings (Off, "formal parameter ""Amount"" is not referenced");
+   pragma Warnings (Off, "formal parameter ""Value"" is not referenced");
+   function Shift_Left  (Value : Bit; Amount : Natural) return Bit is
+   begin
+      return 0;
+   end Shift_Left;
+
+   function Shift_Right (Value : Bit; Amount : Natural) return Bit  is
+   begin
+      return 0;
+   end Shift_Right;
+   pragma Warnings (On, "formal parameter ""Value"" is not referenced");
+
+   function Shift_Right_Arithmetic (Value : Bit; Amount : Natural) return Bit is
+   begin
+      return Value;
+   end Shift_Right_Arithmetic;
+
+   function Rotate_Left  (Value : Bit; Amount : Natural) return Bit is
+   begin
+      return Value;
+   end Rotate_Left;
+
+   function Rotate_Right (Value : Bit; Amount : Natural) return Bit is
+   begin
+      return Value;
+   end Rotate_Right;
+   pragma Warnings (On, "formal parameter ""Amount"" is not referenced");
+
+   function Shift_Left  (Value : Nibble; Amount : Natural) return Nibble is
+      Tmp : constant u8 := u8(Value);
+   begin
+      return u4(Shift_Left(Tmp, Amount) and 16#f#);
+   end Shift_Left;
+
+   function Shift_Right (Value : Nibble; Amount : Natural) return Nibble is
+      Tmp : constant u8 := u8(Value);
+   begin
+      return u4(Shift_Right(Tmp, Amount));
+   end Shift_Right;
+
+   function Rotate_Left  (Value : Nibble; Amount : Natural) return Nibble is
+      Tmp : constant u8 := u8(Value);
+   begin
+      return u4((Shift_Left(Tmp, Amount) or Shift_Right(Tmp, 4 - Amount)) and 16#f#);
+   end Rotate_Left;
+
+   function Rotate_Right (Value : Nibble; Amount : Natural) return Nibble is
+      Tmp : constant u8 := u8(Value);
+   begin
+      return u4((Shift_Right(Tmp, Amount) or Shift_Left(Tmp, 4 - Amount)) and 16#f#);
+   end Rotate_Right;
+
+
 end Crypto_Core_Types;

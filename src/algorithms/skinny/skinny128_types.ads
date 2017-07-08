@@ -26,10 +26,8 @@ package Skinny128_Types is
 --                                                          T_Array_Index => State_Index_T,
 --                                                T_Array      => State_T);
    type Round_Tweakey_T is array (1 .. 8) of Cell_T;
-   subtype Key_T is Block_128_Bit;
-   subtype Tweak_T is u8_Array (1 .. (-1) * 16);
-   type Row_Index_T is new Integer range 1 .. 4;
-   type Column_Index_T is new Integer range 1 .. 4;
+--   type Row_Index_T is new Integer range 1 .. 4;
+--   type Column_Index_T is new Integer range 1 .. 4;
    type Row_T is Array (Column_Index_T) of Cell_T;
    type State_T is Array (Row_Index_T) of Row_T;
    package Row_Utils is new Crypto_Generic_Block_Utils(T => Cell_T,

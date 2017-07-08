@@ -21,6 +21,9 @@ with Crypto_Types;      use Crypto_Types;
 with Skinny128_128;
 with Skinny128_256;
 with Skinny128_384;
+with Skinny64_64;
+with Skinny64_128;
+with Skinny64_192;
 
 use Crypto_Types.Crypto_Utils_u8;
 
@@ -128,6 +131,76 @@ procedure Test_Skinny is
    end test_Skinny128_384;
 
 
+   procedure test_Skinny64_64 (Data : in u8_Array; Key : in u8_Array) is
+      use Skinny64_64;
+      Context : Context_T;
+      Enc : Block_T;
+      Dec : Block_T;
+   begin
+      Put("Data (" & Integer'Image(Data'Length * 8) &"): ");
+      Print_Hex(Data);
+      New_Line;
+      Put("Key  (" & Integer'Image(Key'Length * 8) &"): ");
+      Print_Hex(Key);
+      New_Line;
+      Context := Initialize(Key);
+      Enc := Encrypt(Context, Data);
+      Dec := Decrypt(Context, Enc);
+      Put("Enc  (" & Integer'Image(Enc'Length * 8) &"): ");
+      Print_Hex(Enc);
+      New_Line;
+      Put("Dec  (" & Integer'Image(Dec'Length * 8) &"): ");
+      Print_Hex(Dec);
+      New_Line;
+   end test_Skinny64_64;
+
+   procedure test_Skinny64_128 (Data : in u8_Array; Key : in u8_Array) is
+      use Skinny64_128;
+      Context : Context_T;
+      Enc : Block_T;
+      Dec : Block_T;
+   begin
+      Put("Data (" & Integer'Image(Data'Length * 8) &"): ");
+      Print_Hex(Data);
+      New_Line;
+      Put("Key  (" & Integer'Image(Key'Length * 8) &"): ");
+      Print_Hex(Key);
+      New_Line;
+      Context := Initialize(Key);
+      Enc := Encrypt(Context, Data);
+      Dec := Decrypt(Context, Enc);
+      Put("Enc  (" & Integer'Image(Enc'Length * 8) &"): ");
+      Print_Hex(Enc);
+      New_Line;
+      Put("Dec  (" & Integer'Image(Dec'Length * 8) &"): ");
+      Print_Hex(Dec);
+      New_Line;
+   end test_Skinny64_128;
+
+   procedure test_Skinny64_192 (Data : in u8_Array; Key : in u8_Array) is
+      use Skinny64_192;
+      Context : Context_T;
+      Enc : Block_T;
+      Dec : Block_T;
+   begin
+      Put("Data (" & Integer'Image(Data'Length * 8) &"): ");
+      Print_Hex(Data);
+      New_Line;
+      Put("Key  (" & Integer'Image(Key'Length * 8) &"): ");
+      Print_Hex(Key);
+      New_Line;
+      Context := Initialize(Key);
+      Enc := Encrypt(Context, Data);
+      Dec := Decrypt(Context, Enc);
+      Put("Enc  (" & Integer'Image(Enc'Length * 8) &"): ");
+      Print_Hex(Enc);
+      New_Line;
+      Put("Dec  (" & Integer'Image(Dec'Length * 8) &"): ");
+      Print_Hex(Dec);
+      New_Line;
+   end test_Skinny64_192;
+
+
    Key_128 : constant u8_Array :=
      (16#4f#, 16#55#, 16#cf#, 16#b0#, 16#52#, 16#0c#, 16#ac#, 16#52#,
       16#fd#, 16#92#, 16#c1#, 16#5f#, 16#37#, 16#07#, 16#3e#, 16#93# );
@@ -165,6 +238,28 @@ procedure Test_Skinny is
    --16#94#, 16#ec#, 16#f5#, 16#89#, 16#e2#, 16#01#, 16#7c#, 16#60#, 16#1b#, 16#38#, 16#c6#, 16#34#, 16#6a#, 16#10#, 16#dc#, 16#fa#
 
 
+   Key_64_64 : constant u8_Array :=
+     (16#f5#, 16#26#, 16#98#, 16#26#, 16#fc#, 16#68#, 16#12#, 16#38# );
+   Plain_64_64 : constant u8_Array :=
+     (16#06#, 16#03#, 16#4f#, 16#95#, 16#77#, 16#24#, 16#d1#, 16#9d# );
+   Cipher_64_64 : constant u8_Array :=
+     (16#bb#, 16#39#, 16#df#, 16#b2#, 16#42#, 16#9b#, 16#8a#, 16#c7# );
+   Key_64_128 : constant u8_Array :=
+     (16#9e#, 16#b9#, 16#36#, 16#40#, 16#d0#, 16#88#, 16#da#, 16#63#,
+      16#76#, 16#a3#, 16#9d#, 16#1c#, 16#8b#, 16#ea#, 16#71#, 16#e1# );
+   Plain_64_128 : constant u8_Array :=
+     (16#cf#, 16#16#, 16#cf#, 16#e8#, 16#fd#, 16#0f#, 16#98#, 16#aa# );
+   Cipher_64_128 : constant u8_Array :=
+     (16#6c#, 16#ed#, 16#a1#, 16#f4#, 16#3d#, 16#e9#, 16#2b#, 16#9e# );
+   Key_64_192 : constant u8_Array :=
+     (16#ed#, 16#00#, 16#c8#, 16#5b#, 16#12#, 16#0d#, 16#68#, 16#61#,
+      16#87#, 16#53#, 16#e2#, 16#4b#, 16#fd#, 16#90#, 16#8f#, 16#60#,
+      16#b2#, 16#db#, 16#b4#, 16#1b#, 16#42#, 16#2d#, 16#fc#, 16#d0# );
+   Plain_64_192 : constant u8_Array :=
+     (16#53#, 16#0c#, 16#61#, 16#d3#, 16#5e#, 16#86#, 16#63#, 16#c3# );
+   Cipher_64_192 : constant u8_Array :=
+     (16#dd#, 16#2c#, 16#f1#, 16#a8#, 16#f3#, 16#30#, 16#30#, 16#3c# );
+
 begin
    New_Line;
    test_Skinny128_128(Data => Plain_128, Key => Key_128);
@@ -172,5 +267,11 @@ begin
    test_Skinny128_256(Data => Plain_256, Key => Key_256);
    New_Line;
    test_Skinny128_384(Data => Plain_384, Key => Key_384);
+   New_Line;
+   test_Skinny64_64(Data => Plain_64_64, Key => Key_64_64);
+   New_Line;
+   test_Skinny64_128(Data => Plain_64_128, Key => Key_64_128);
+   New_Line;
+   test_Skinny64_192(Data => Plain_64_192, Key => Key_64_192);
    New_Line;
 end Test_Skinny;

@@ -14,11 +14,40 @@
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 with Interfaces; use Interfaces;
+with System;
 
 package Crypto_Core_Types is
 
+   type Storage_Order is (High_Order_First, Low_Order_First);
+   subtype Bit_Order is System.Bit_Order;
+
    type Bit is mod 2;
    for Bit'Size use 1;
+   subtype u1 is Bit;
+   function Shift_Left  (Value : Bit; Amount : Natural)
+                         return Bit;
+   function Shift_Right (Value : Bit; Amount : Natural)
+                         return Bit;
+   function Shift_Right_Arithmetic (Value : Bit; Amount : Natural)
+                                    return Bit;
+   function Rotate_Left  (Value : Bit; Amount : Natural)
+                          return Bit;
+   function Rotate_Right (Value : Bit; Amount : Natural)
+                          return Bit;
+
+   type Nibble is mod 16;
+   for Nibble'Size use 4;
+   subtype u4 is Nibble;function Shift_Left  (Value : Nibble; Amount : Natural)
+                                              return Nibble;
+   function Shift_Right (Value : Nibble; Amount : Natural)
+                         return Nibble;
+--     function Shift_Right_Arithmetic (Value : Nibble; Amount : Natural)
+--                                      return Nibble;
+   function Rotate_Left  (Value : Nibble; Amount : Natural)
+                          return Nibble;
+   function Rotate_Right (Value : Nibble; Amount : Natural)
+                          return Nibble;
+
 
    type u8 is new Unsigned_8;
    for u8'Size use 8;
@@ -32,10 +61,14 @@ package Crypto_Core_Types is
    type u64 is new Unsigned_64;
    for u64'Size use 64;
 
+   type u1_Array is array (Integer range <>) of u1;
+   type u4_Array is array (Integer range <>) of u4;
    type u8_Array is array (Integer range <>) of u8;
    type u16_Array is array (Integer range <>) of u16;
    type u32_Array is array (Integer range <>) of u32;
    type u64_Array is array (Integer range <>) of u64;
+   subtype Bit_Array is u1_Array;
+   subtype Nibble_Array is u4_Array;
 
    subtype Octet_Index_32_Bit is Integer'Base range 1 .. 32 / 8;
    subtype Octet_Index_48_Bit is Integer'Base range 1 .. 48 / 8;

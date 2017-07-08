@@ -22,5 +22,7 @@ package Skinny_Types is
 
    type State_Index_T is new Integer range 1 .. 16;
    type State_Index_Map_T is array (State_Index_T) of State_Index_T;
+   subtype Row_Index_T    is Integer range 1 .. 4;
+   subtype Column_Index_T is Integer range 1 .. 4;
 
 end Skinny_Types;
