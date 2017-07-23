@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="https://testvectors.cryptolib.org/xml-schema/v0.1/block-cipher_kat"
+xmlns:kat="https://testvectors.cryptolib.org/xml-schema/v0.1/block-cipher_kat"
+elementFormDefault="qualified">
+
+  <xs:complexType name="kat_vector_without_iv">
+    <xs:sequence>
+      <xs:element name="index" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="comment" type="xs:string" minOccurs="0"/>
+      <xs:element name="algorithm" type="xs:string" minOccurs="0"/>
+      <xs:element name="key" type="xs:hexBinary"/>
+      <xs:element name="plaintext" type="xs:hexBinary"/>
+      <xs:element name="ciphertext" type="xs:hexBinary"/>
+      <xs:element name="result" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="operation" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="kat_vector_with_iv">
+    <xs:sequence>
+      <xs:element name="index" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="comment" type="xs:string" minOccurs="0"/>
+      <xs:element name="algorithm" type="xs:string" minOccurs="0"/>
+      <xs:element name="key" type="xs:hexBinary"/>
+      <xs:element name="iv" type="xs:hexBinary"/>
+      <xs:element name="plaintext" type="xs:hexBinary"/>
+      <xs:element name="ciphertext" type="xs:hexBinary"/>
+      <xs:element name="result" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="operation" type="xs:string"/>
+  </xs:complexType>
+
+
+<xs:element name="testFile">
+<xs:complexType>
+    <xs:sequence>
+    
+    
+<xs:element name="header">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="convertDate" type="xs:dateTime" minOccurs="0" />
+      <xs:element name="originalFilename" type="xs:string" minOccurs="0" />
+      <xs:element name="originalSha256" type="xs:hexBinary" minOccurs="0" />
+      <xs:element name="originalSha512" type="xs:hexBinary" minOccurs="0" />
+      <xs:element name="algorithm" type="xs:string" minOccurs="0"/>
+      <xs:element name="comment" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="body">
+<xs:complexType>
+    <xs:choice>
+      <xs:element name="kat_vector_with_iv" type="kat:kat_vector_with_iv" maxOccurs="unbounded"/>
+      <xs:element name="kat_vector_without_iv" type="kat:kat_vector_without_iv" maxOccurs="unbounded"/>
+  </xs:choice>
+</xs:complexType>
+</xs:element>
+  </xs:sequence>
+</xs:complexType>
+  
+</xs:element>
+
+</xs:schema> 

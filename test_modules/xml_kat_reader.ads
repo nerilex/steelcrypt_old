@@ -23,6 +23,7 @@ with Unicode.CES;
 with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 
 generic
+   KAT_Type_Name : in String;
    type KAT_T is private;
    type KAT_Entrys_T is (<>);
    with procedure Set(KAT : in out KAT_T; KAT_Entry : KAT_Entrys_T; value : String);

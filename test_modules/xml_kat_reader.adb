@@ -12,6 +12,7 @@
 --
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 with Unicode.CES;    use Unicode.CES;
 with Schema.Readers; use Schema.Readers;
 with Ada.Text_IO;    use Ada.Text_IO;
@@ -55,23 +56,6 @@ package body Xml_Kat_Reader is
 
    Header_Elements : Strings_Set.Set;
    Kat_Elements : Strings_Set.Set;
-
---     function Test(Kat : in Kat_T) return Test_Result_T is
---        Ctx : Cipher.Context_T;
---        Block : u8_Array := Kat.Plaintext.all;
---     begin
---        Cipher.Initialize(Ctx, Kat.Key.all);
---        Cipher.Encrypt(Context => Ctx,
---                       Block   => Block);
---        if Block = Kat.Ciphertext.all then
---           Cipher.Decrypt(Context => Ctx,
---                          Block   => Block);
---           if Block = Kat.Plaintext.all then
---              return Ok;
---           end if;
---        end if;
---        return Fail;
---     end;
 
    Procedure Print_Result(Result : in Boolean; Test_Index : Positive) is
       Width : constant := 50;
@@ -191,25 +175,23 @@ package body Xml_Kat_Reader is
       if Is_Header_Element(Local_Name) then
          Element := (Xml_Header_Element'Value(Sax.Symbols.Get(Local_Name).all));
          case Element is
-         when kat_vector =>
-            Result := Test(Handler.Kat);
-            if Result then
-               Handler.Ok_Tests := Handler.Ok_Tests + 1;
-            else
-               Handler.Failed_Tests := Handler.Failed_Tests + 1;
-            end if;
-            Destroy(Handler.Kat);
-            Handler.Test_Index := Handler.Test_Index + 1;
-            Print_Result(Result, Handler.Test_Index);
          when others =>
             null;
          end case;
-      else
-         if Is_Kat_Element(Local_Name) then
+      elsif Is_Kat_Element(Local_Name) then
             Kat_Entry := KAT_Entrys_T'Value(Sax.Symbols.Get(Local_Name).all);
             Set(Handler.Kat, Kat_Entry, To_String(Handler.Tmp));
-         end if;
+      elsif KAT_Type_Name = Sax.Symbols.Get(Local_Name).all then
+        Result := Test(Handler.Kat);
+      if Result then
+         Handler.Ok_Tests := Handler.Ok_Tests + 1;
+      else
+         Handler.Failed_Tests := Handler.Failed_Tests + 1;
       end if;
+      Destroy(Handler.Kat);
+      Handler.Test_Index := Handler.Test_Index + 1;
+      Print_Result(Result, Handler.Test_Index);
+   end if;
       Handler.Tmp := To_Unbounded_String("");
    end End_Element;
 

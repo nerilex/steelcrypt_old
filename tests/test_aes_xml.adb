@@ -101,7 +101,8 @@ procedure Test_AES_XML is
       Free_u8_Array(Kat.key);
    end Destroy;
 
-   package Aes_Xml_Kat_Reader is new Xml_Kat_Reader(KAT_T        => AES_ECB_KAT_T,
+   package Aes_Xml_Kat_Reader is new Xml_Kat_Reader(KAT_Type_Name => "kat_vector_without_iv",
+                                                    KAT_T        => AES_ECB_KAT_T,
                                                     KAT_Entrys_T => AES_ECB_KAT_Entrys_T,
                                                     Set          => Set,
                                                     Test         => Test,

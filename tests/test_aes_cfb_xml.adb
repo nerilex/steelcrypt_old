@@ -29,8 +29,6 @@ with Ada.Text_IO;        use Ada.Text_IO;
 with Ada.Command_line;   use Ada.Command_Line;
 with Sax.Readers;        use Sax.Readers;
 
-
-
 procedure Test_AES_CFB_XML is
    type AES_CFB_KAT_Entrys_T is (key, ciphertext, plaintext, index, iv);
 
@@ -108,7 +106,8 @@ procedure Test_AES_CFB_XML is
       Free_u8_Array(Kat.iv);
    end Destroy;
 
-   package Aes_Xml_Kat_Reader is new Xml_Kat_Reader(KAT_T        => AES_CFB_KAT_T,
+   package Aes_Xml_Kat_Reader is new Xml_Kat_Reader(KAT_Type_Name => "kat_vector_with_iv",
+                                                    KAT_T        => AES_CFB_KAT_T,
                                                     KAT_Entrys_T => AES_CFB_KAT_Entrys_T,
                                                     Set          => Set,
                                                     Test         => Test,
