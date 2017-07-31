@@ -20,7 +20,7 @@
 -- --------------------------
 -- - Functions / Procedures -
 -- --------------------------
-package body Crypto_Unconstrained_Convert_Utils is
+package body Crypto.Types.Unconstrained_Convert_Utils is
 
    function To_Bytes (A : T) return u8_Array is
       Temp : u8_Array (1 .. Bytes) := (others => 0);
@@ -87,4 +87,4 @@ package body Crypto_Unconstrained_Convert_Utils is
       return To_Hex (To_Bytes(A), Upper_Case => Upper_Case);
    end To_Hex;
 
-end Crypto_Unconstrained_Convert_Utils;
+end Crypto.Types.Unconstrained_Convert_Utils;

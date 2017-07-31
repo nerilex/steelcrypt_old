@@ -13,13 +13,13 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Core_Types; use Crypto_Core_Types;
-with Crypto_Types;      use Crypto_Types;
+with Crypto.Types; use Crypto.Types;
+with Crypto.Types.X;
 with Keccak_Parameters; use Keccak_Parameters;
 with Keccak;            use Keccak;
 
-use Crypto_Types.Crypto_Utils_u8;
-use Crypto_Types.Crypto_Utils_u64;
+use Crypto.Types.X.Utils_u8;
+use Crypto.Types.X.Utils_u64;
 
 generic
    Capacity_Bits     : Capacity_T;

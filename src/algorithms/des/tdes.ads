@@ -14,11 +14,12 @@
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 with Block_Cipher_Generic;
-with Crypto_Core_Types; use Crypto_Core_Types;
-with Crypto_Types;      use Crypto_Types;
+with Crypto.Types; use Crypto.Types;
+with Crypto.Types;      use Crypto.Types;
 with TDES_Spec;
 
-use Crypto_Types.Crypto_Utils_u8;
+with Crypto.Types.X;
+use Crypto.Types.X.Utils_u8;
 
 package TDES is
 

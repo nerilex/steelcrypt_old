@@ -15,15 +15,15 @@
 
 with Ada.Text_IO; use Ada.Text_IO;
 --  with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-with Crypto_Core_Types; use Crypto_Core_Types;
-with Crypto_Types;      use Crypto_Types;
+with Crypto.Types;      use Crypto.Types;
 
 with SHA2_224;
 
-use Crypto_Types.Crypto_Utils_u8;
+with Crypto.Types.X;
+use Crypto.Types.X.Utils_u8;
 
 procedure Test_SHA224 is
-   --   package u8_IO is new Crypto_Types.u8_Sequential_IO;
+   --   package u8_IO is new Crypto.Types.u8_Sequential_IO;
 
    procedure Print_Hex (value : in u8) is
       hex_table : constant array (0 .. 15) of Character :=

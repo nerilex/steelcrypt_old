@@ -13,9 +13,9 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Types; use Crypto_Types;
-use Crypto_Types.Crypto_Utils_u16;
-use Crypto_Types.Crypto_Utils_u64;
+with Crypto.Types.X;
+use Crypto.Types.X.Utils_u16;
+use Crypto.Types.X.Utils_u64;
 
 with Ada.Text_IO; use Ada.Text_IO;
 

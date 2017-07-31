@@ -13,109 +13,109 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Generic_Utils;
-with Crypto_Generic_Block_Utils;
-with Crypto_Core_Types; use Crypto_Core_Types;
+with Crypto.Types.Generic_Utils;
+with Crypto.Types.Generic_Block_Utils;
+with Crypto.Types; use Crypto.Types;
 with System;
 
 with Ada.Direct_IO;
 with Ada.Sequential_IO;
 
-package Crypto_Types is
+package Crypto.Types is
 
-   package Crypto_Utils_u1 is new Crypto_Generic_Utils
+   package Crypto.Types.Utils_u1 is new Crypto.Types.Generic_Utils
      (T       => u1,
       T_Array => u1_Array);
-   package Crypto_Utils_u4 is new Crypto_Generic_Utils
+   package Crypto.Types.Utils_u4 is new Crypto.Types.Generic_Utils
      (T       => u4,
       T_Array => u4_Array);
-   package Crypto_Utils_u8 is new Crypto_Generic_Utils
+   package Crypto.Types.X.Utils_u8 is new Crypto.Types.Generic_Utils
      (T       => u8,
       T_Array => u8_Array);
-   package Crypto_Utils_u16 is new Crypto_Generic_Utils
+   package Crypto.Types.Utils_u16 is new Crypto.Types.Generic_Utils
      (T       => u16,
       T_Array => u16_Array);
-   package Crypto_Utils_u32 is new Crypto_Generic_Utils
+   package Crypto.Types.Utils_u32 is new Crypto.Types.Generic_Utils
      (T       => u32,
       T_Array => u32_Array);
-   package Crypto_Utils_u64 is new Crypto_Generic_Utils
+   package Crypto.Types.Utils_u64 is new Crypto.Types.Generic_Utils
      (T       => u64,
       T_Array => u64_Array);
 
-   package Crypto_Utils_32u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_32u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_32_Bit,
       T_Array_Index => Octet_Index_32_Bit);
 
-   package Crypto_Utils_48u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_48u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_48_Bit,
       T_Array_Index => Octet_Index_48_Bit);
-   package Crypto_Utils_56u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_56u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_56_Bit,
       T_Array_Index => Octet_Index_56_Bit);
-   package Crypto_Utils_64u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_64u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_64_Bit,
       T_Array_Index => Octet_Index_64_Bit);
-   package Crypto_Utils_96u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_96u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_96_Bit,
       T_Array_Index => Octet_Index_96_Bit);
-   package Crypto_Utils_128u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_128u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_128_Bit,
       T_Array_Index => Octet_Index_128_Bit);
-   package Crypto_Utils_160u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_160u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_160_Bit,
       T_Array_Index => Octet_Index_160_Bit);
-   package Crypto_Utils_168u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_168u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_168_Bit,
       T_Array_Index => Octet_Index_168_Bit);
-   package Crypto_Utils_192u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_192u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_192_Bit,
       T_Array_Index => Octet_Index_192_Bit);
-   package Crypto_Utils_224u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_224u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_224_Bit,
       T_Array_Index => Octet_Index_224_Bit);
-   package Crypto_Utils_256u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_256u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_256_Bit,
       T_Array_Index => Octet_Index_256_Bit);
-   package Crypto_Utils_384u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_384u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_384_Bit,
       T_Array_Index => Octet_Index_384_Bit);
-   package Crypto_Utils_512u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_512u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_512_Bit,
       T_Array_Index => Octet_Index_512_Bit);
-   package Crypto_Utils_768u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_768u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_768_Bit,
       T_Array_Index => Octet_Index_768_Bit);
-   package Crypto_Utils_1024u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_1024u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_1024_Bit,
       T_Array_Index => Octet_Index_1024_Bit);
-   package Crypto_Utils_1536u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_1536u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_1536_Bit,
       T_Array_Index => Octet_Index_1536_Bit);
-   package Crypto_Utils_2048u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_2048u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_2048_Bit,
       T_Array_Index => Octet_Index_2048_Bit);
-   package Crypto_Utils_4096u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_4096u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_4096_Bit,
       T_Array_Index => Octet_Index_4096_Bit);
-   package Crypto_Utils_8192u8 is new Crypto_Generic_Block_Utils
+   package Crypto.Types.Utils_8192u8 is new Crypto.Types.Generic_Block_Utils
      (T       => u8,
       T_Array => Block_8192_Bit,
       T_Array_Index => Octet_Index_8192_Bit);
@@ -130,29 +130,29 @@ package Crypto_Types is
    package u32_Sequential_IO is new Ada.Sequential_IO (u32);
    package u64_Sequential_IO is new Ada.Sequential_IO (u64);
 
-   use Crypto_Utils_u8;
-   use Crypto_Utils_u16;
-   use Crypto_Utils_u32;
-   use Crypto_Utils_u64;
-   use Crypto_Utils_32u8;
-   use Crypto_Utils_48u8;
-   use Crypto_Utils_56u8;
-   use Crypto_Utils_64u8;
-   use Crypto_Utils_96u8;
-   use Crypto_Utils_128u8;
-   use Crypto_Utils_160u8;
-   use Crypto_Utils_168u8;
-   use Crypto_Utils_192u8;
-   use Crypto_Utils_224u8;
-   use Crypto_Utils_256u8;
-   use Crypto_Utils_384u8;
-   use Crypto_Utils_512u8;
-   use Crypto_Utils_768u8;
-   use Crypto_Utils_1024u8;
-   use Crypto_Utils_1536u8;
-   use Crypto_Utils_2048u8;
-   use Crypto_Utils_4096u8;
-   use Crypto_Utils_8192u8;
+   use Crypto.Types.X.Utils_u8;
+   use Crypto.Types.Utils_u16;
+   use Crypto.Types.Utils_u32;
+   use Crypto.Types.Utils_u64;
+   use Crypto.Types.Utils_32u8;
+   use Crypto.Types.Utils_48u8;
+   use Crypto.Types.Utils_56u8;
+   use Crypto.Types.Utils_64u8;
+   use Crypto.Types.Utils_96u8;
+   use Crypto.Types.Utils_128u8;
+   use Crypto.Types.Utils_160u8;
+   use Crypto.Types.Utils_168u8;
+   use Crypto.Types.Utils_192u8;
+   use Crypto.Types.Utils_224u8;
+   use Crypto.Types.Utils_256u8;
+   use Crypto.Types.Utils_384u8;
+   use Crypto.Types.Utils_512u8;
+   use Crypto.Types.Utils_768u8;
+   use Crypto.Types.Utils_1024u8;
+   use Crypto.Types.Utils_1536u8;
+   use Crypto.Types.Utils_2048u8;
+   use Crypto.Types.Utils_4096u8;
+   use Crypto.Types.Utils_8192u8;
 
    use u8_Direct_IO;
    use u16_Direct_IO;
@@ -164,4 +164,4 @@ package Crypto_Types is
    use u32_Sequential_IO;
    use u64_Sequential_IO;
 
-end Crypto_Types;
+end Crypto.Types;

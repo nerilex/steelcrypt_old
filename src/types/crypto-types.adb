@@ -15,7 +15,7 @@
 
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
 
-package body Crypto_Core_Types is
+package body Crypto.Types is
 
    function To_Hex (A : u8; Upper_Case : Boolean := False) return String is
       S           : String (1 .. 2);
@@ -205,26 +205,26 @@ package body Crypto_Core_Types is
    function Shift_Left  (Value : Nibble; Amount : Natural) return Nibble is
       Tmp : constant u8 := u8(Value);
    begin
-      return u4(Shift_Left(Tmp, Amount) and 16#f#);
+      return Nibble(Shift_Left(Tmp, Amount) and 16#f#);
    end Shift_Left;
 
    function Shift_Right (Value : Nibble; Amount : Natural) return Nibble is
       Tmp : constant u8 := u8(Value);
    begin
-      return u4(Shift_Right(Tmp, Amount));
+      return Nibble(Shift_Right(Tmp, Amount));
    end Shift_Right;
 
    function Rotate_Left  (Value : Nibble; Amount : Natural) return Nibble is
       Tmp : constant u8 := u8(Value);
    begin
-      return u4((Shift_Left(Tmp, Amount) or Shift_Right(Tmp, 4 - Amount)) and 16#f#);
+      return Nibble((Shift_Left(Tmp, Amount) or Shift_Right(Tmp, 4 - Amount)) and 16#f#);
    end Rotate_Left;
 
    function Rotate_Right (Value : Nibble; Amount : Natural) return Nibble is
       Tmp : constant u8 := u8(Value);
    begin
-      return u4((Shift_Right(Tmp, Amount) or Shift_Left(Tmp, 4 - Amount)) and 16#f#);
+      return Nibble((Shift_Right(Tmp, Amount) or Shift_Left(Tmp, 4 - Amount)) and 16#f#);
    end Rotate_Right;
 
 
-end Crypto_Core_Types;
+end Crypto.Types;

@@ -14,14 +14,14 @@
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 with Ada.Text_IO;       use Ada.Text_IO;
-with Crypto_Core_Types; use Crypto_Core_Types;
-with Crypto_Types;      use Crypto_Types;
+with Crypto.Types;      use Crypto.Types;
 
 with Sha_Test_IO;
 
 with SHA3; use SHA3;
 
-use Crypto_Types.Crypto_Utils_u8;
+with Crypto.Types.X;
+use Crypto.Types.X.Utils_u8;
 
 procedure Test_SHA3_Nist is
 

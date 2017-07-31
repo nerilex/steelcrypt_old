@@ -52,9 +52,9 @@ elementFormDefault="qualified">
 
 <xs:element name="body">
 <xs:complexType>
-    <xs:choice>
-      <xs:element name="kat_vector_with_iv" type="kat:kat_vector_with_iv" maxOccurs="unbounded"/>
-      <xs:element name="kat_vector_without_iv" type="kat:kat_vector_without_iv" maxOccurs="unbounded"/>
+  <xs:choice>
+    <xs:element name="kat_vector_with_iv" type="kat:kat_vector_with_iv" maxOccurs="unbounded"/>
+    <xs:element name="kat_vector_without_iv" type="kat:kat_vector_without_iv" maxOccurs="unbounded"/>
   </xs:choice>
 </xs:complexType>
 </xs:element>

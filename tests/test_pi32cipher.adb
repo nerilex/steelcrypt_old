@@ -16,9 +16,9 @@
 with Ada.Text_IO;       use Ada.Text_IO;
 with Ada.Strings;       use Ada.Strings;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
-with Crypto_Core_Types; use Crypto_Core_Types;
-with Crypto_Types;
- use Crypto_Types.Crypto_Utils_u8;
+with Crypto.Types; use Crypto.Types;
+with Crypto.Types.X;
+ use Crypto.Types.X.Utils_u8;
 
 with Pi32Cipher_Spec;
 

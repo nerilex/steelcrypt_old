@@ -13,9 +13,12 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Core_Types; use Crypto_Core_Types;
-with Crypto_Bit_Utils;
-with Crypto_Block_Bit_Utils;
+with Crypto.Types; use Crypto.Types;
+
+with Crypto.Types.Bit_Utils;
+with Crypto.Types.Constrained_Block_Bit_Utils;
+with Crypto.Types.Block_Bit_Utils;
+
 -- --------------------------
 -- - Generic Functions / Procedures -
 -- --------------------------
@@ -27,22 +30,30 @@ generic
 
    with function Shift_Right (Value : T; Amount : Natural) return T is <>;
 
-   type T_Array is array (Integer range <>) of T;
+   type T_Array_Index is new Integer;
+
+   type T_Array is array (T_Array_Index) of T;
 
    -- --------------------------
    -- - Functions / Procedures -
    -- --------------------------
-package Crypto_Unconstrained_Convert_Utils is
+package Crypto.Types.Convert_Utils is
    Bytes : constant Positive := (T'Size + 7) / 8;
+   Array_Bytes : constant Positive := (T'Size * T_Array'Length + 7) / 8;
 
 --   type T_Byte_Array_Index is range 1 .. Array_Bytes;
 --   type T_Byte_Array is Array(T_Byte_Array_Index) of Byte;
 
-   package Bit_Utils is new Crypto_Bit_Utils  (T => T);
+   package Bit_Utils is new Crypto.Types.Bit_Utils  (T => T);
    use Bit_Utils;
-   package u8_Bit_Utils is new Crypto_Bit_Utils  (T => u8);
-   package T_Block_Utils is new Crypto_Block_Bit_Utils
+   package u8_Bit_Utils is new Crypto.Types.Bit_Utils
+     ( T => u8,
+       Shift_Left => Crypto.Types.Shift_Left,
+       Shift_Right => Crypto.Types.Shift_Right );
+
+   package T_Block_Utils is new Crypto.Types.Constrained_Block_Bit_Utils
      (T             => T,
+      T_Array_Index => T_Array_Index,
       T_Array       => T_Array,
       Bit_Address_T => Bit_Address_T,
       Bit_Get    => Bit_Get,
@@ -51,7 +62,7 @@ package Crypto_Unconstrained_Convert_Utils is
       Bit_Toggle => Bit_Toggle);
    use T_Block_Utils;
 
-   package u8_Block_Utils is new Crypto_Block_Bit_Utils
+   package u8_Block_Utils is new Crypto.Types.Block_Bit_Utils
      (T             => u8,
       T_Array       => u8_Array,
       Bit_Address_T => u8_Bit_Utils.Bit_Address_T,
@@ -78,4 +89,4 @@ package Crypto_Unconstrained_Convert_Utils is
    pragma Inline (To_Hex);
 
 
-end Crypto_Unconstrained_Convert_Utils;
+end Crypto.Types.Convert_Utils;

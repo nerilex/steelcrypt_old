@@ -15,8 +15,8 @@
 
 with Ada.Text_IO; use Ada.Text_IO;
 --  with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-with Crypto_Core_Types; use Crypto_Core_Types;
-with Crypto_Types;      use Crypto_Types;
+with Crypto.Types;      use Crypto.Types;
+with Crypto.Types.X;
 
 with Skinny128_128;
 with Skinny128_256;
@@ -25,10 +25,10 @@ with Skinny64_64;
 with Skinny64_128;
 with Skinny64_192;
 
-use Crypto_Types.Crypto_Utils_u8;
+use Crypto.Types.X.Utils_u8;
 
 procedure Test_Skinny is
-   --   package u8_IO is new Crypto_Types.u8_Sequential_IO;
+   --   package u8_IO is new Crypto.Types.u8_Sequential_IO;
 
    procedure Print_Hex (value : in u8) is
       hex_table : constant array (0 .. 15) of Character :=

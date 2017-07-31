@@ -13,7 +13,12 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package body Crypto_Block_Bit_Utils is
+package body Crypto.Types.Constrained_Block_Bit_Utils is
+
+   function Element_Address(Bit_Address : Bit_Block_Address_T) return T_Array_Index is
+   begin
+      return T_Array_Index(Integer(T_Array'First) + Bit_Address / T'Size);
+   end;
 
    --
    function Bit_Get
@@ -21,7 +26,7 @@ package body Crypto_Block_Bit_Utils is
       Bit_Address :    Bit_Block_Address_T;
       Order : in System.Bit_Order := System.Default_Bit_Order) return Bit is
    begin
-      return Bit_Get(A => A(A'First + Bit_Address / T'Size),
+      return Bit_Get(A => A(Element_Address(Bit_Address)),
                      Bit_Address => Bit_Address_T(Bit_Address mod T'Size),
                      Order => Order);
    end Bit_Get;
@@ -32,7 +37,7 @@ package body Crypto_Block_Bit_Utils is
       Bit_Address :        Bit_Block_Address_T;
       Order       : in     System.Bit_Order := System.Default_Bit_Order) is
    begin
-      Bit_Clear(A           => A(A'First + Bit_Address / T'Size),
+      Bit_Clear(A           => A(Element_Address(Bit_Address)),
                 Bit_Address => Bit_Address_T(Bit_Address mod T'Size),
                 Order       => Order);
    end Bit_Clear;
@@ -44,10 +49,10 @@ package body Crypto_Block_Bit_Utils is
       Value       :        Bit              := 1;
       Order       : in     System.Bit_Order := System.Default_Bit_Order) is
    begin
-      Bit_Set(A           => A(A'First + Bit_Address / T'Size),
+      Bit_Set(A           => A(Element_Address(Bit_Address)),
               Bit_Address => Bit_Address_T(Bit_Address mod T'Size),
               Value => Value,
-                Order       => Order);
+              Order       => Order);
    end Bit_Set;
 
    --
@@ -56,10 +61,10 @@ package body Crypto_Block_Bit_Utils is
       Bit_Address :        Bit_Block_Address_T;
       Order       : in     System.Bit_Order := System.Default_Bit_Order) is
    begin
-      Bit_Toggle(A           => A(A'First + Bit_Address / T'Size),
-                Bit_Address => Bit_Address_T(Bit_Address mod T'Size),
-                Order       => Order);
+      Bit_Toggle(A           => A(Element_Address(Bit_Address)),
+                 Bit_Address => Bit_Address_T(Bit_Address mod T'Size),
+                 Order       => Order);
 
    end Bit_Toggle;
 
-end Crypto_Block_Bit_Utils;
+end Crypto.Types.Constrained_Block_Bit_Utils;

@@ -13,7 +13,7 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Core_Types; use Crypto_Core_Types;
+with Crypto.Types; use Crypto.Types;
 with System;
 
 -- --------------------------
@@ -31,17 +31,14 @@ generic
 
    with function Rotate_Right (Value : T; Amount : Natural) return T is <>;
 
-   type T_Array_Index is new Integer;
-
-   type T_Array is array (T_Array_Index) of T;
+   type T_Array is array (Integer range <>) of T;
 
    -- --------------------------
    -- - Functions / Procedures -
    -- --------------------------
-package Crypto_Generic_Block_Utils is
+package Crypto.Types.Generic_Utils is
 
-   subtype Bit_Address_T is Natural range 0 .. (T'Size - 1);
-   subtype Bit_Address_Array_T is Natural range 0 .. (T_Array'Length * T'Size - 1);
+   subtype Bit_Address_T is Natural range 0 .. T'Size - 1;
 
    Bytes : constant Positive := (T'Size + 7) / 8;
    -- compare two array with timing independent of content
@@ -115,7 +112,89 @@ package Crypto_Generic_Block_Utils is
 
    -- shift each element by Amount to the left; negative values for Amount shift to the right
    function Shift_each (A : T_Array; Amount : Integer) return T_Array;
+
+   -- load a value which is stored big-endian in byte Array
+   function Load_be (A : u8_Array) return T;
+
+   -- XXX store a value in big-endian format in a byte Array
+   function Load_be (A : u8_Array) return T_Array;
+
+   -- load a value which is stored little-endian in byte Array
+   function Load_le (A : u8_Array) return T;
+
+   -- XXX load a value which is stored little-endian in byte Array
+   function Load_le (A : u8_Array) return T_Array;
+
+   -- store a value in big-endian format in a byte Array
+   procedure Store_be (A : out u8_Array; value : in T);
+
+   -- store a value in little-endian format in a byte Array
+   procedure Store_le (A : out u8_Array; value : in T);
+
+   -- store a value in big-endian format in a byte Array
+   procedure Store_be (A : out u8_Array; value : in T_Array);
+
+   -- store a value in little-endian format in a byte Array
+   procedure Store_le (A : out u8_Array; value : in T_Array);
+
    --
+   function Bit_Get
+     (A           : in T;
+      Bit_Address :    Bit_Address_T;
+      Order : in System.Bit_Order := System.Default_Bit_Order) return Bit;
+
+   --
+   procedure Bit_Clear
+     (A           : in out T;
+      Bit_Address :        Bit_Address_T;
+      Order       : in     System.Bit_Order := System.Default_Bit_Order);
+
+   --
+   procedure Bit_Set
+     (A           : in out T;
+      Bit_Address :        Bit_Address_T;
+      Value       :        Bit              := 1;
+      Order       : in     System.Bit_Order := System.Default_Bit_Order);
+
+   --
+   procedure Bit_Toggle
+     (A           : in out T;
+      Bit_Address :        Bit_Address_T;
+      Order       : in     System.Bit_Order := System.Default_Bit_Order);
+
+   --
+   function Bit_Get
+     (A           : in T_Array;
+      Bit_Address :    Natural;
+      Order : in System.Bit_Order := System.Default_Bit_Order) return Bit;
+
+   --
+   procedure Bit_Clear
+     (A           : in out T_Array;
+      Bit_Address :        Natural;
+      Order       : in     System.Bit_Order := System.Default_Bit_Order);
+
+   --
+   procedure Bit_Set
+     (A           : in out T_Array;
+      Bit_Address :        Natural;
+      Value       :        Bit              := 1;
+      Order       : in     System.Bit_Order := System.Default_Bit_Order);
+
+   --
+   procedure Bit_Toggle
+     (A           : in out T_Array;
+      Bit_Address :        Natural;
+      Order       : in     System.Bit_Order := System.Default_Bit_Order);
+
+   -- swap two elements
+   procedure Swap (A, B : in out T);
+
+   -- swap two Arrays
+   procedure Swap (A, B : in out T_Array);
+
+   -- FIXME
+   function To_Hex (A : T; Upper_Case : Boolean := False) return String;
 
    pragma Inline ("xor");
    pragma Inline ("and");
@@ -130,5 +209,15 @@ package Crypto_Generic_Block_Utils is
    pragma Inline (Shift_be);
    pragma Inline (Shift_le);
    pragma Inline (Shift_each);
+   pragma Inline (Load_Be);
+   pragma Inline (Load_Le);
+   pragma Inline (Store_Be);
+   pragma Inline (Store_Le);
+   pragma Inline (Bit_Get);
+   pragma Inline (Bit_Clear);
+   pragma Inline (Bit_Set);
+   pragma Inline (Bit_Toggle);
+   pragma Inline (Swap);
+   pragma Inline (To_Hex);
 
-end Crypto_Generic_Block_Utils;
+end Crypto.Types.Generic_Utils;

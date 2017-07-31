@@ -13,11 +13,11 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Types;
+with Crypto.Types.X;
 
 package body SHA2_256_Spec is
 
-   use Crypto_Types.Crypto_Utils_u32;
+   use Crypto.Types.X.Utils_u32;
 
    IV : constant u32_Array (1 .. 8) :=
      (16#6A09E667#,

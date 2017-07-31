@@ -13,7 +13,7 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Core_Types; use Crypto_Core_Types;
+with Crypto.Types; use Crypto.Types;
 with SHA2_Small;
 
 package SHA2_256_Spec is

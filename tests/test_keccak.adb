@@ -15,13 +15,13 @@
 
 with Ada.Text_IO; use Ada.Text_IO;
 --  with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-with Crypto_Core_Types; use Crypto_Core_Types;
-with Crypto_Types;      use Crypto_Types;
+with Crypto.Types;      use Crypto.Types;
+with Crypto.Types.X;
 
 with Sha3_Generic;
 
-use Crypto_Types.Crypto_Utils_u8;
-use Crypto_Types.Crypto_Utils_u64;
+use Crypto.Types.X.Utils_u8;
+use Crypto.Types.X.Utils_u64;
 
 procedure Test_Keccak is
 --     procedure Print_State(A : State_T) is

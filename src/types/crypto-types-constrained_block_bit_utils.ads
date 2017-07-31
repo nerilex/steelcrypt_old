@@ -13,7 +13,7 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Core_Types; use Crypto_Core_Types;
+with Crypto.Types; use Crypto.Types;
 with System;
 
 -- --------------------------
@@ -53,7 +53,7 @@ with procedure Bit_Toggle
    -- --------------------------
    -- - Functions / Procedures -
    -- --------------------------
-package Crypto_Constrained_Block_Bit_Utils is
+package Crypto.Types.Constrained_Block_Bit_Utils is
 
 
    subtype Bit_Block_Address_T is Natural;
@@ -90,4 +90,4 @@ package Crypto_Constrained_Block_Bit_Utils is
  pragma Inline (Bit_Set);
  pragma Inline (Bit_Toggle);
 
-end Crypto_Constrained_Block_Bit_Utils;
+end Crypto.Types.Constrained_Block_Bit_Utils;

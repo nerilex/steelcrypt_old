@@ -13,7 +13,7 @@
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-with Crypto_Core_Types; use Crypto_Core_Types;
+with Crypto.Types; use Crypto.Types;
 with System;
 
 -- --------------------------
@@ -31,7 +31,7 @@ generic
    -- --------------------------
    -- - Functions / Procedures -
    -- --------------------------
-package Crypto_Bit_Utils is
+package Crypto.Types.Bit_Utils is
 
    subtype Bit_Address_T is Natural range 0 .. T'Size - 1;
 
@@ -73,4 +73,4 @@ package Crypto_Bit_Utils is
    pragma Inline (Swap);
 
 
-end Crypto_Bit_Utils;
+end Crypto.Types.Bit_Utils;

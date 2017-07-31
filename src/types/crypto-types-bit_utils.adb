@@ -20,7 +20,7 @@
 -- --------------------------
 -- - Functions / Procedures -
 -- --------------------------
-   package body Crypto_Bit_Utils is
+   package body Crypto.Types.Bit_Utils is
 
    --
    function Bit_Get
@@ -134,4 +134,4 @@
       return Temp;
    end From_Bytes;
 
-end Crypto_Bit_Utils;
+end Crypto.Types.Bit_Utils;

@@ -17,9 +17,10 @@ with Ada.Text_IO;         use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Strings;         use Ada.Strings;
 with Ada.Strings.Fixed;   use Ada.Strings.Fixed;
-with Crypto_Types;        use Crypto_Types;
+with Crypto.Types;        use Crypto.Types;
 with System;              use System;
-use Crypto_Types.Crypto_Utils_u8;
+with Crypto.Types.X;
+use Crypto.Types.X.Utils_u8;
 
 package body Nessie_Hash_Test_Generator is
 

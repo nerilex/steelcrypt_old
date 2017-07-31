@@ -15,7 +15,7 @@
 
 with Ada.Text_IO; use Ada.Text_IO;
 --  with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
-with Crypto_Core_Types; use Crypto_Core_Types;
+with Crypto.Types; use Crypto.Types;
 
 with Spritz_Stream;
 with Spritz_Hash;
@@ -27,6 +27,8 @@ with ARIA; use ARIA;
 with SHA2_256;
 
 with GCM128_Spec;
+
+use type Crypto.Types.u8;
 
 procedure main is
 --   package u8_IO is new Crypto_Types.u8_Sequential_IO;

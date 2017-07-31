@@ -16,11 +16,17 @@
 -- ----------------------------------
 -- - Generic Functions / Procedures -
 -- ----------------------------------
-
+with Crypto.Types; use Crypto.Types;
+with Crypto.Types.Bit_Utils;
 -- --------------------------
 -- - Functions / Procedures -
 -- --------------------------
-   package body Crypto_Generic_Utils is
+package body Crypto.Types.Generic_Block_Utils is
+   package Bit_Utils_u8 is new Crypto.Types.Bit_Utils
+     ( T => u8,
+       Shift_Left => Crypto.Types.Shift_Left,
+       Shift_Right => Crypto.Types.Shift_Right );
+   use Bit_Utils_u8;
 
    -- compare two array with timing independent of content
 --   function "="(Left, Right : T_Array ) return Boolean is
@@ -39,9 +45,19 @@
 --      end if;
 --   end "=";
 
+   function "mod" (Left: T_Array_Index; Right : Natural) return T_Array_Index is
+   begin
+      return T_Array_Index(Natural(Left) mod Right);
+   end "mod";
+
+   function "mod" (Left: Natural; Right : T_Array_Index) return T_Array_Index is
+   begin
+      return T_Array_Index(Left mod Natural(Right));
+   end "mod";
+
    -- xor each element on the left with the corresponding element on the right
    function "xor" (Left, Right : T_Array) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       if Left'Length /= Right'Length then
          raise Constraint_Error;
@@ -74,7 +90,7 @@
 
    -- xor each element on the left with the element on the right
    function "xor" (Left : T_Array; Right : T) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       for i in r'Range loop
          r (i) := Left (i) xor Right;
@@ -84,7 +100,7 @@
 
    -- and each element on the left with the corresponding element on the right
    function "and" (Left, Right : T_Array) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       if Left'Length /= Right'Length then
          raise Constraint_Error;
@@ -107,7 +123,7 @@
 
    -- and each element on the left with the element on the right
    function "and" (Left : T_Array; Right : T) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       for i in r'Range loop
          r (i) := Left (i) and Right;
@@ -117,7 +133,7 @@
 
    -- or each element on the left with the corresponding element on the right
    function "or" (Left, Right : T_Array) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       if Left'Length /= Right'Length then
          raise Constraint_Error;
@@ -140,7 +156,7 @@
 
    -- or each element on the left with the element on the right
    function "or" (Left : T_Array; Right : T) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       for i in r'Range loop
          r (i) := Left (i) or Right;
@@ -150,7 +166,7 @@
 
    -- add each element on the left with the corresponding element on the right
    function "+" (Left, Right : T_Array) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       if Left'Length /= Right'Length then
          raise Constraint_Error;
@@ -173,7 +189,7 @@
 
    -- add each element on the left with the element on the right
    function "+" (Left : T_Array; Right : T) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       for i in r'Range loop
          r (i) := Left (i) + Right;
@@ -183,7 +199,7 @@
 
    -- subtract from each element on the left the corresponding element on the right
    function "-" (Left, Right : T_Array) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       if Left'Length /= Right'Length then
          raise Constraint_Error;
@@ -206,7 +222,7 @@
 
    -- subtract from each element on the left the element on the right
    function "-" (Left : T_Array; Right : T) return T_Array is
-      r : T_Array (Left'Range);
+      r : T_Array;
    begin
       for i in r'Range loop
          r (i) := Left (i) - Right;
@@ -218,24 +234,24 @@
 --        b : T;
 --     begin
 --        for i in 1 .. Amount loop
---           b := A(A'First);
---           for j in A'First .. A'Last - 1 loop
+--           b := A(T_Array_Index'First);
+--           for j in T_Array_Index'First .. T_Array_Index'Last - 1 loop
 --              A(j) := A(j + 1);
 --           end loop;
---           A(A'Last) := b;
+--           A(T_Array_Index'Last) := b;
 --        end loop;
 --     end;
 
    function Rotate_Array_Left (A : T_Array; Amount : Natural) return T_Array is
-      r : T_Array (A'Range);
-      x : Integer;
+      r : T_Array;
+      x : T_Array_Index;
    begin
       x := Amount mod r'Length;
       if A'Length < 1 then
          raise Constraint_Error;
       end if;
-      r (r'First .. r'Last - x)    := A (A'First + x .. A'Last);
-      r (r'Last - x + 1 .. r'Last) := A (A'First .. A'First + x - 1);
+      r (T_Array_Index'First .. T_Array_Index'Last - x)    := A (T_Array_Index'First + x .. T_Array_Index'Last);
+      r (T_Array_Index'Last - x + 1 .. T_Array_Index'Last) := A (T_Array_Index'First .. T_Array_Index'First + x - 1);
       return r;
    end Rotate_Array_Left;
 
@@ -243,43 +259,43 @@
      (A      : T_Array;
       Amount : Natural) return T_Array
    is
-      r : T_Array (A'Range);
-      x : Integer;
+      r : T_Array;
+      x : T_Array_Index;
    begin
       x := Amount mod r'Length;
       if A'Length < 1 then
          raise Constraint_Error;
       end if;
-      r (r'First + x .. r'Last)      := A (A'First .. A'Last - x);
-      r (r'First .. r'First + x - 1) := A (A'Last - x + 1 .. A'Last);
+      r (T_Array_Index'First + x .. T_Array_Index'Last)      := A (T_Array_Index'First .. T_Array_Index'Last - x);
+      r (T_Array_Index'First .. T_Array_Index'First + x - 1) := A (T_Array_Index'Last - x + 1 .. T_Array_Index'Last);
       return r;
    end Rotate_Array_Right;
 
    function Shift_Array_Left (A : T_Array; Amount : Natural) return T_Array is
-      r : T_Array (A'Range);
-      x : Integer;
+      r : T_Array;
+      x : T_Array_Index;
    begin
       x := Amount mod r'Length;
       if A'Length < 1 then
          raise Constraint_Error;
       end if;
-      r (r'First .. r'Last - x) := A (A'First + x .. A'Last);
-      for i in (r'Last - x + 1) .. r'Last loop
+      r (T_Array_Index'First .. T_Array_Index'Last - x) := A (T_Array_Index'First + x .. T_Array_Index'Last);
+      for i in (T_Array_Index'Last - x + 1) .. T_Array_Index'Last loop
          r (i) := 0;
       end loop;
       return r;
    end Shift_Array_Left;
 
    function Shift_Array_Right (A : T_Array; Amount : Natural) return T_Array is
-      r : T_Array (A'Range);
-      x : Integer;
+      r : T_Array;
+      x : T_Array_Index;
    begin
       x := Amount mod r'Length;
       if A'Length < 1 then
          raise Constraint_Error;
       end if;
-      r (r'First + x .. r'Last) := A (A'First .. A'Last - x);
-      for i in r'First .. (r'First + x - 1) loop
+      r (T_Array_Index'First + x .. T_Array_Index'Last) := A (T_Array_Index'First .. T_Array_Index'Last - x);
+      for i in T_Array_Index'First .. (T_Array_Index'First + x - 1) loop
          r (i) := 0;
       end loop;
       return r;
@@ -287,7 +303,7 @@
 
    -- rotate the whole Array as continues big-endian integer; positive Amount rotates left (towards lower address)
    function Rotate_be (A : T_Array; Amount : Integer) return T_Array is
-      r               : T_Array (A'Range);
+      r               : T_Array;
       c1, c2, tmp     : T;
       x               : Integer;
       word_rot        : Integer;
@@ -305,7 +321,7 @@
       -- if bit rotation goes to the left
       if bit_rot > 0 then
          reverse_bit_rot := T'Size - bit_rot;
-         c1              := Shift_Right (r (r'First), reverse_bit_rot);
+         c1              := Shift_Right (r (T_Array_Index'First), reverse_bit_rot);
          for i in reverse r'Range loop
             c2    := Shift_Right (r (i), reverse_bit_rot);
             tmp   := Shift_Left (r (i), bit_rot);
@@ -317,7 +333,7 @@
       if bit_rot < 0 then
          bit_rot         := -bit_rot;
          reverse_bit_rot := T'Size - bit_rot;
-         c1              := Shift_Left (r (r'Last), reverse_bit_rot);
+         c1              := Shift_Left (r (T_Array_Index'Last), reverse_bit_rot);
          for i in r'Range loop
             c2    := Shift_Left (r (i), reverse_bit_rot);
             tmp   := Shift_Right (r (i), bit_rot);
@@ -330,7 +346,7 @@
 
    -- rotate the whole Array as continues little-endian integer; positive Amount rotates left (towards higher address)
    function Rotate_le (A : T_Array; Amount : Integer) return T_Array is
-      r               : T_Array (A'Range);
+      r               : T_Array;
       c1, c2, tmp     : T;
       x               : Integer;
       word_rot        : Integer;
@@ -348,7 +364,7 @@
       -- if bit rotation goes to the left
       if bit_rot > 0 then
          reverse_bit_rot := T'Size - bit_rot;
-         c1              := Shift_Right (r (r'Last), reverse_bit_rot);
+         c1              := Shift_Right (r (T_Array_Index'Last), reverse_bit_rot);
          for i in r'Range loop
             c2    := Shift_Right (r (i), reverse_bit_rot);
             tmp   := Shift_Left (r (i), bit_rot);
@@ -360,7 +376,7 @@
       if bit_rot < 0 then
          bit_rot         := -bit_rot;
          reverse_bit_rot := T'Size - bit_rot;
-         c1              := Shift_Left (r (r'First), reverse_bit_rot);
+         c1              := Shift_Left (r (T_Array_Index'First), reverse_bit_rot);
          for i in reverse r'Range loop
             c2    := Shift_Left (r (i), reverse_bit_rot);
             tmp   := Shift_Right (r (i), bit_rot);
@@ -373,7 +389,7 @@
 
    -- rotate each element by Amount to the left; negative values for Amount rotate to the right
    function Rotate_each (A : T_Array; Amount : Integer) return T_Array is
-      r : T_Array (A'Range);
+      r : T_Array;
    begin
       if Amount > 0 then
          for i in r'Range loop
@@ -393,7 +409,7 @@
 
    -- shift the whole Array as continues big-endian integer; positive Amount shifts left (towards lower address)
    function Shift_be (A : T_Array; Amount : Integer) return T_Array is
-      r                 : T_Array (A'Range);
+      r                 : T_Array;
       word_shift        : Integer;
       bit_shift         : Integer;
       reverse_bit_shift : Integer;
@@ -431,7 +447,7 @@
 
    -- Shift the whole Array as continues little-endian integer; positive Amount shifts left (towards higher address)
    function Shift_le (A : T_Array; Amount : Integer) return T_Array is
-      r                 : T_Array (A'Range);
+      r                 : T_Array;
       word_shift        : Integer;
       bit_shift         : Integer;
       reverse_bit_shift : Integer;
@@ -469,7 +485,7 @@
 
    -- shift each element by Amount to the left; negative values for Amount shift to the right
    function Shift_each (A : T_Array; Amount : Integer) return T_Array is
-      r : T_Array (A'Range);
+      r : T_Array;
    begin
       if Amount > 0 then
          for i in r'Range loop
@@ -487,248 +503,4 @@
       return r;
    end Shift_each;
 
-   -- load a value which is stored big-endian in byte Array
-   function Load_be (A : u8_Array) return T is
-      r : T := 0;
-   begin
-      for i in 0 .. (T'Size / 8 - 1) loop
-         r := Shift_Left (r, 8) or T (A (A'First + i));
-      end loop;
-      return r;
-   end Load_be;
-
-   -- XXX load a value which is stored big-endian in byte Array
-   function Load_be (A : u8_Array) return T_Array is
-      r : T_Array (1 .. (A'Length * 8 + T'Size - 1) / T'Size);
-   begin
-      for i in r'Range loop
-         r (i) :=
-           Load_be
-             (A
-                (((i - 1) * Bytes + A'First) ..
-                     ((i - 1) * Bytes + Bytes + A'First - 1)));
-      end loop;
-      return r;
-   end Load_be;
-
-   -- load a value which is stored little-endian in byte Array
-   function Load_le (A : u8_Array) return T is
-      r : T := 0;
-   begin
-      for i in reverse 0 .. (T'Size / 8 - 1) loop
-         r := Shift_Left (r, 8) or T (A (A'First + i));
-      end loop;
-      return r;
-   end Load_le;
-
-   -- XXX load a value which is stored big-endian in byte Array
-   function Load_le (A : u8_Array) return T_Array is
-      r : T_Array (1 .. (A'Length * 8 + T'Size - 1) / T'Size);
-   begin
-      for i in r'Range loop
-         r (i) :=
-           Load_le
-             (A
-                (((i - 1) * Bytes + A'First) ..
-                     ((i - 1) * Bytes + Bytes + A'First - 1)));
-      end loop;
-      return r;
-   end Load_le;
-
-   -- store a value in big-endian format in a byte Array
-   procedure Store_be (A : out u8_Array; value : in T) is
-      x : T := value;
-      b : u8;
-   begin
-      for i in reverse 0 .. (T'Size / 8 - 1) loop
-         b               := u8 (x and 16#FF#);
-         A (A'First + i) := b;
-         x               := Shift_Right (x, 8);
-      end loop;
-   end Store_be;
-
-   -- XXX store a value in big-endian format in a byte Array
-   procedure Store_be (A : out u8_Array; value : in T_Array) is
-   begin
-      for i in value'Range loop
-         Store_be
-           (A
-              (((i - value'First) * Bytes + A'First) ..
-                   ((i - value'First) * Bytes + A'First) + Bytes - 1),
-            value (i));
-      end loop;
-   end Store_be;
-
-   -- store a value in little-endian format in a byte Array
-   procedure Store_le (A : out u8_Array; value : in T) is
-      x : T := value;
-      b : u8;
-   begin
-      for i in 0 .. (T'Size / 8 - 1) loop
-         b               := u8 (x and 16#FF#);
-         A (A'First + i) := b;
-         x               := Shift_Right (x, 8);
-      end loop;
-   end Store_le;
-
-   -- XXX store a value in big-endian format in a byte Array
-   procedure Store_le (A : out u8_Array; value : in T_Array) is
-   begin
-      for i in value'Range loop
-         Store_le
-           (A
-              (((i - value'First) * Bytes + A'First) ..
-                   ((i - value'First) * Bytes + A'First) + Bytes - 1),
-            value (i));
-      end loop;
-   end Store_le;
-
-   --
-   function Bit_Get
-     (A           : in T;
-      Bit_Address :    Bit_Address_T;
-      Order       : in System.Bit_Order := System.Default_Bit_Order) return Bit
-   is
-      use System;
-      Temp : T;
-   begin
-      if Order = High_Order_First then
-         Temp := Shift_Right (A, T'Size - Bit_Address - 1);
-      else
-         Temp := Shift_Right (A, Bit_Address);
-      end if;
-      return Bit (Temp and 1);
-   end Bit_Get;
-
-   --
-   procedure Bit_Clear
-     (A           : in out T;
-      Bit_Address :        Bit_Address_T;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order)
-   is
-      use System;
-   begin
-      if Order = High_Order_First then
-         A := A and not Shift_Left (1, T'Size - Bit_Address - 1);
-      else
-         A := A and not Shift_Left (1, Bit_Address);
-      end if;
-   end Bit_Clear;
-
-   --
-   procedure Bit_Set
-     (A           : in out T;
-      Bit_Address :        Bit_Address_T;
-      Value       :        Bit              := 1;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order)
-   is
-      use System;
-   begin
-      if Value = 0 then
-         Bit_Clear (A => A, Bit_Address => Bit_Address, Order => Order);
-      else
-         if Order = High_Order_First then
-            A := A or Shift_Left (1, T'Size - Bit_Address - 1);
-         else
-            A := A or Shift_Left (1, Bit_Address);
-         end if;
-      end if;
-   end Bit_Set;
-
-   --
-   procedure Bit_Toggle
-     (A           : in out T;
-      Bit_Address :        Bit_Address_T;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order)
-   is
-      use System;
-   begin
-      if Order = High_Order_First then
-         A := A xor Shift_Left (1, T'Size - Bit_Address - 1);
-      else
-         A := A xor Shift_Left (1, Bit_Address);
-      end if;
-   end Bit_Toggle;
-
-   --
-   function Bit_Get
-     (A           : in T_Array;
-      Bit_Address :    Natural;
-      Order       : in System.Bit_Order := System.Default_Bit_Order) return Bit
-   is
-   begin
-      return Bit_Get
-          (A           => A (A'First + Bit_Address / T'Size),
-           Bit_Address => Bit_Address mod T'Size,
-           Order       => Order);
-   end Bit_Get;
-
-   --
-   procedure Bit_Clear
-     (A           : in out T_Array;
-      Bit_Address :        Natural;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order)
-   is
-   begin
-      Bit_Clear
-        (A           => A (A'First + Bit_Address / T'Size),
-         Bit_Address => Bit_Address mod T'Size,
-         Order       => Order);
-   end Bit_Clear;
-
-   --
-   procedure Bit_Set
-     (A           : in out T_Array;
-      Bit_Address :        Natural;
-      Value       :        Bit              := 1;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order)
-   is
-   begin
-      Bit_Set
-        (A           => A (A'First + Bit_Address / T'Size),
-         Bit_Address => Bit_Address mod T'Size,
-         Value       => Value,
-         Order       => Order);
-   end Bit_Set;
-
-   --
-   procedure Bit_Toggle
-     (A           : in out T_Array;
-      Bit_Address :        Natural;
-      Order       : in     System.Bit_Order := System.Default_Bit_Order)
-   is
-   begin
-      Bit_Set
-        (A           => A (A'First + Bit_Address / T'Size),
-         Bit_Address => Bit_Address mod T'Size,
-         Order       => Order);
-   end Bit_Toggle;
-
-   -- swap two elements
-   procedure Swap (A, B : in out T) is
-      temp : T;
-   begin
-      temp := A;
-      A    := B;
-      B    := temp;
-   end Swap;
-
-   -- swap two Arrays
-   procedure Swap (A, B : in out T_Array) is
-   begin
-      if A'Length /= B'Length then
-         raise Constraint_Error;
-      end if;
-      A := A xor B;
-      B := B xor A;
-      A := A xor B;
-   end Swap;
-
-   function To_Hex (A : T; Upper_Case : Boolean := False) return String is
-      Temp : u8_Array (1 .. T'Size / 8);
-   begin
-      Store_be (A => Temp, value => A);
-      return To_Hex (Temp, Upper_Case => Upper_Case);
-   end To_Hex;
-
-end Crypto_Generic_Utils;
+end Crypto.Types.Generic_Block_Utils;

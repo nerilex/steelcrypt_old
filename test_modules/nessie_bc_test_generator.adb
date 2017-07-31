@@ -18,9 +18,10 @@ with Ada.Float_Text_IO; use Ada.Float_Text_IO;
 --  with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Strings;       use Ada.Strings;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
-with Crypto_Types;      use Crypto_Types;
+with Crypto.Types;      use Crypto.Types;
+with Crypto.Types.X;
 with System;            use System;
-use Crypto_Types.Crypto_Utils_u8;
+use Crypto.Types.X.Utils_u8;
 
 --  ********************************************************************************
 --  *Project NESSIE - New European Schemes for Signature, Integrity, and Encryption*
